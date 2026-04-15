@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors -->
+    <color name="colorPrimary">#5C6BC0</color>
+    <color name="colorPrimaryDark">#3949AB</color>
+    <color name="colorPrimaryLight">#9FA8DA</color>
+    <color name="colorAccent">#FF7043</color>
+
+    <!-- Text Colors -->
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#757575</color>
+    <color name="colorTextHint">#BDBDBD</color>
+
+    <!-- Semantic Colors -->
+    <color name="colorSuccess">#4CAF50</color>
+    <color name="colorWarning">#FFC107</color>
+    <color name="colorError">#F44336</color>
+    <color name="colorInfo">#2196F3</color>
+
+    <!-- Surface Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="colorBackground">#F5F5F5</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorDivider">#E0E0E0</color>
+
+    <!-- Badge / Chip -->
+    <color name="colorBadgeBackground">#EDE7F6</color>
+    <color name="colorBadgeText">#5C6BC0</color>
+
+    <!-- Position Circle -->
+    <color name="colorPositionBg">#5C6BC0</color>
+</resources>

@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">QueueLess+</string>
+
+    <!-- Auth -->
+    <string name="login">Sign In</string>
+    <string name="register">Create Account</string>
+    <string name="email">Email Address</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="full_name">Full Name</string>
+    <string name="dont_have_account">Don\'t have an account? Register</string>
+    <string name="already_have_account">Already have an account? Sign In</string>
+    <string name="logout">Logout</string>
+
+    <!-- Dashboard -->
+    <string name="available_queues">Available Queues</string>
+    <string name="no_queues">No queues available right now</string>
+    <string name="create_queue">Create Queue</string>
+    <string name="admin_panel">Admin Panel</string>
+
+    <!-- Queue -->
+    <string name="join_queue">Join Queue</string>
+    <string name="leave_queue">Leave Queue</string>
+    <string name="view_my_status">View My Status</string>
+    <string name="people_waiting">people waiting</string>
+    <string name="avg_service_time">Avg. service time</string>
+    <string name="estimated_wait">Est. total wait</string>
+    <string name="queue_name">Queue Name</string>
+    <string name="description">Description</string>
+    <string name="location">Location</string>
+    <string name="service_time_minutes">Avg. Service Time (minutes)</string>
+
+    <!-- Status -->
+    <string name="your_position">Your Position</string>
+    <string name="estimated_wait_time">Estimated Wait</string>
+    <string name="almost_your_turn">Almost your turn!</string>
+    <string name="countdown">Countdown</string>
+
+    <!-- Admin -->
+    <string name="manage">Manage</string>
+    <string name="delete">Delete</string>
+    <string name="served">Served</string>
+    <string name="remove">Remove</string>
+    <string name="mark_served">Mark as Served</string>
+    <string name="confirm_delete">Are you sure you want to delete this queue?</string>
+    <string name="confirm_remove">Remove this person from the queue?</string>
+
+    <!-- QR -->
+    <string name="scan_qr">Scan QR Code</string>
+    <string name="qr_instructions">Scan a QueueLess+ QR code to instantly join a queue</string>
+
+    <!-- Errors -->
+    <string name="error_name_required">Name is required</string>
+    <string name="error_email_invalid">Enter a valid email address</string>
+    <string name="error_password_short">Password must be at least 6 characters</string>
+    <string name="error_passwords_mismatch">Passwords do not match</string>
+    <string name="error_queue_name_required">Queue name is required</string>
+    <string name="error_service_time_invalid">Enter a valid number of minutes</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+</resources>

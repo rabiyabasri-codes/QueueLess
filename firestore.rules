@@ -1,0 +1,49 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ───────────────────────────────────────────────────
+    function isLoggedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isLoggedIn() &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ── Users Collection ──────────────────────────────────────────────────
+    // Users can read/write their own profile; admins can read all
+    match /users/{userId} {
+      allow read:   if isLoggedIn() && (isOwner(userId) || isAdmin());
+      allow create: if isLoggedIn() && isOwner(userId);
+      allow update: if isLoggedIn() && isOwner(userId);
+      allow delete: if isAdmin();
+    }
+
+    // ── Queues Collection ─────────────────────────────────────────────────
+    // Any logged-in user can read active queues; only admins can write
+    match /queues/{queueId} {
+      allow read:   if isLoggedIn();
+      allow create: if isAdmin();
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // ── QueueEntries Collection ───────────────────────────────────────────
+    // Users can create/read/update their own entries; admins can manage all
+    match /queueEntries/{entryId} {
+      allow read:   if isLoggedIn() &&
+                       (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isLoggedIn() &&
+                       request.resource.data.userId == request.auth.uid;
+      allow update: if isLoggedIn() &&
+                       (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+  }
+}
