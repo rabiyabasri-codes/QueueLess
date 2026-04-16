@@ -8,20 +8,16 @@ import com.queueless.plus.models.QueueEntry
 import com.queueless.plus.models.User
 import kotlinx.coroutines.tasks.await
 
-/**
- * Single source of truth for all Firestore operations.
- * All suspend functions are safe to call from a coroutine scope.
- */
 object FirestoreRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
-    // ─── Collection references ────────────────────────────────────────────────
+    // ─── Collection references ─────────────────────────────
     private val usersRef        = db.collection("users")
     private val queuesRef       = db.collection("queues")
     private val queueEntriesRef = db.collection("queueEntries")
 
-    // ═════════════════════════ USER OPERATIONS ════════════════════════════════
+    // ═════════════════ USER OPERATIONS ═════════════════════
 
     suspend fun saveUser(user: User) {
         usersRef.document(user.userId).set(user.toMap()).await()
@@ -36,7 +32,7 @@ object FirestoreRepository {
         usersRef.document(userId).update("fcmToken", token).await()
     }
 
-    // ═════════════════════════ QUEUE OPERATIONS ═══════════════════════════════
+    // ═════════════════ QUEUE OPERATIONS ════════════════════
 
     suspend fun createQueue(queue: Queue): String {
         val docRef = queuesRef.document()
@@ -71,12 +67,8 @@ object FirestoreRepository {
             }
     }
 
-    // ═════════════════════ QUEUE ENTRY OPERATIONS ════════════════════════════
+    // ═══════════════ QUEUE ENTRY OPERATIONS ════════════════
 
-    /**
-     * Join a queue — creates a new waiting entry.
-     * Returns the new entryId.
-     */
     suspend fun joinQueue(entry: QueueEntry): String {
         val docRef = queueEntriesRef.document()
         val newEntry = entry.copy(entryId = docRef.id)
@@ -84,10 +76,6 @@ object FirestoreRepository {
         return docRef.id
     }
 
-    /**
-     * Fetch all waiting entries for a queue, sorted by join timestamp.
-     * This list is the canonical queue order.
-     */
     suspend fun getWaitingEntries(queueId: String): List<QueueEntry> {
         val snap = queueEntriesRef
             .whereEqualTo("queueId", queueId)
@@ -98,10 +86,6 @@ object FirestoreRepository {
         return snap.toObjects(QueueEntry::class.java)
     }
 
-    /**
-     * Real-time listener for waiting entries in a queue.
-     * Used by Dashboard and UserStatus screens to react to position changes.
-     */
     fun listenToQueueEntries(
         queueId: String,
         onUpdate: (List<QueueEntry>) -> Unit
@@ -115,9 +99,6 @@ object FirestoreRepository {
             }
     }
 
-    /**
-     * Real-time listener for a specific user's entry across any queue.
-     */
     fun listenToUserEntry(
         userId: String,
         queueId: String,
@@ -128,20 +109,24 @@ object FirestoreRepository {
             .whereEqualTo("queueId", queueId)
             .whereEqualTo("status", QueueEntry.STATUS_WAITING)
             .addSnapshotListener { snap, _ ->
-                val entry = snap?.documents?.firstOrNull()?.toObject(QueueEntry::class.java)
+                val entry = snap?.documents?.firstOrNull()
+                    ?.toObject(QueueEntry::class.java)
                 onUpdate(entry)
             }
     }
 
     suspend fun updateEntryStatus(entryId: String, status: String) {
-        queueEntriesRef.document(entryId).update("status", status).await()
+        queueEntriesRef.document(entryId)
+            .update("status", status)
+            .await()
     }
 
     suspend fun markEntryNotified(entryId: String) {
-        queueEntriesRef.document(entryId).update("notified", true).await()
+        queueEntriesRef.document(entryId)
+            .update("notified", true)
+            .await()
     }
 
-    /** Check if user is already in a given queue. */
     suspend fun isUserInQueue(userId: String, queueId: String): Boolean {
         val snap = queueEntriesRef
             .whereEqualTo("userId", userId)
@@ -152,23 +137,22 @@ object FirestoreRepository {
         return !snap.isEmpty
     }
 
-    // ═════════════════════ QUEUE LOGIC / ALGORITHMS ══════════════════════════
+    // ═══════════════ 🔥 NEW ORDER FUNCTION ════════════════
 
-    /**
-     * Algorithm 1 – Queue Position Calculation
-     * Retrieves sorted waiting list; returns 1-based position of the user.
-     * Returns -1 if user is not found in the queue.
-     */
+    suspend fun updateOrderStatus(entryId: String, status: String) {
+        queueEntriesRef.document(entryId)
+            .update("orderStatus", status)
+            .await()
+    }
+
+    // ═══════════════ LOGIC FUNCTIONS ══════════════════════
+
     suspend fun getUserPosition(userId: String, queueId: String): Int {
         val entries = getWaitingEntries(queueId)
-        val index   = entries.indexOfFirst { it.userId == userId }
+        val index = entries.indexOfFirst { it.userId == userId }
         return if (index >= 0) index + 1 else -1
     }
 
-    /**
-     * Algorithm 2 – Estimated Waiting Time
-     * waitingTime = usersAhead × avgServiceTime (minutes)
-     */
     suspend fun getEstimatedWaitTime(userId: String, queue: Queue): Int {
         val position = getUserPosition(userId, queue.queueId)
         if (position <= 0) return 0

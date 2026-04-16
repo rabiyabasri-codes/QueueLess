@@ -2,12 +2,13 @@ package com.queueless.plus.activities
 
 import android.content.Intent
 import android.os.Bundle
+import kotlinx.coroutines.tasks.await
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.queueless.plus.databinding.ActivityLoginBinding
 import com.queueless.plus.utils.AuthManager
-import com.queueless.plus.utils.Extensions.isValidEmail
-import com.queueless.plus.utils.Extensions.isValidPassword
+import com.queueless.plus.utils.isValidEmail
+import com.queueless.plus.utils.isValidPassword
 import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.hide
@@ -54,19 +55,44 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                val firebaseUser = AuthManager.login(email, password)
-                val user = FirestoreRepository.getUser(firebaseUser.uid)
-                    ?: throw Exception("User profile not found")
+                // 🔥 1. Firebase login
+                val firebaseUser = com.google.firebase.auth.FirebaseAuth
+                    .getInstance()
+                    .signInWithEmailAndPassword(email, password)
+                    .await()
+                    .user ?: throw Exception("Login failed")
 
-                // Save session
-                session.userId   = user.userId
-                session.userName = user.name
-                session.userRole = user.role
+                val uid = firebaseUser.uid
+
+                // 🔥 2. Fetch user directly from Firestore
+                val doc = com.google.firebase.firestore.FirebaseFirestore
+                    .getInstance()
+                    .collection("users")
+                    .document(uid)
+                    .get()
+                    .await()
+
+                if (!doc.exists()) {
+                    toast("User profile not found. Please register again.")
+                    return@launch
+                }
+
+                val name = doc.getString("name") ?: ""
+                val role = doc.getString("role") ?: "user"
+
+                // 🔥 3. Save session
+                session.userId = uid
+                session.userName = name
+                session.userRole = role
+
+                // ✅ SUCCESS
+                toast("Login successful 🎉")
 
                 startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
                 finish()
+
             } catch (e: Exception) {
-                toast("Login failed: ${e.message}")
+                toast("Login failed: ${e.localizedMessage}")
             } finally {
                 binding.progressBar.hide()
                 binding.btnLogin.isEnabled = true

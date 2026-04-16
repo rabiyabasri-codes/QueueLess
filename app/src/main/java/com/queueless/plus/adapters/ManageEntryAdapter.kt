@@ -10,7 +10,9 @@ import com.queueless.plus.models.QueueEntry
 
 class ManageEntryAdapter(
     private val onServed: (QueueEntry) -> Unit,
-    private val onRemove: (QueueEntry) -> Unit
+    private val onRemove: (QueueEntry) -> Unit,
+    private val onPreparing: (QueueEntry) -> Unit,
+    private val onReady: (QueueEntry) -> Unit
 ) : ListAdapter<QueueEntry, ManageEntryAdapter.ManageEntryViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageEntryViewHolder {
@@ -29,15 +31,33 @@ class ManageEntryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(entry: QueueEntry, position: Int) {
+
+            // 🟢 Basic info
             binding.tvPosition.text = "#$position"
             binding.tvUserName.text = entry.userName
+
+            // 🔥 ORDER INFO
+            binding.tvOrder.text =
+                "Order: ${if (entry.orderDetails.isEmpty()) "Not placed" else entry.orderDetails}"
+
+            binding.tvStatus.text =
+                "Status: ${entry.orderStatus}"
+
+            // 🟢 Existing buttons
             binding.btnServed.setOnClickListener { onServed(entry) }
             binding.btnRemove.setOnClickListener { onRemove(entry) }
+
+            // 🔥 NEW ORDER BUTTONS
+            binding.btnPreparing.setOnClickListener { onPreparing(entry) }
+            binding.btnReady.setOnClickListener { onReady(entry) }
         }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<QueueEntry>() {
-        override fun areItemsTheSame(old: QueueEntry, new: QueueEntry) = old.entryId == new.entryId
-        override fun areContentsTheSame(old: QueueEntry, new: QueueEntry) = old == new
+        override fun areItemsTheSame(old: QueueEntry, new: QueueEntry) =
+            old.entryId == new.entryId
+
+        override fun areContentsTheSame(old: QueueEntry, new: QueueEntry) =
+            old == new
     }
 }

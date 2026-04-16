@@ -5,9 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -16,6 +18,7 @@
             app:titleTextColor="@color/white" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- Main Content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +30,7 @@
             android:orientation="vertical"
             android:padding="24dp">
 
-            <!-- Notification Banner -->
+            <!-- 🔔 Notification Banner -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/tvNotifyBanner"
                 android:layout_width="match_parent"
@@ -36,7 +39,9 @@
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/colorSuccess"
                 app:cardCornerRadius="12dp">
+
                 <TextView
+                    android:id="@+id/tvBannerText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -47,7 +52,7 @@
                     android:textStyle="bold" />
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Position Card -->
+            <!-- 📍 Position Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -63,16 +68,12 @@
                     android:padding="32dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="Your Position"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvPosition"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="#—"
                         android:textColor="@color/colorPrimary"
                         android:textSize="64sp"
@@ -80,15 +81,13 @@
 
                     <TextView
                         android:id="@+id/tvUsersAhead"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="Calculating..."
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="14sp" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Wait Time Card -->
+            <!-- ⏳ Wait + Order Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -103,25 +102,20 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
+                    <!-- Wait Time -->
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:text="Estimated Wait"
                         android:textColor="@color/colorTextSecondary"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/tvWaitTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:text="—"
                         android:textSize="28sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"/>
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Countdown"
                         android:textColor="@color/colorTextSecondary"
@@ -129,16 +123,35 @@
 
                     <TextView
                         android:id="@+id/tvCountdown"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:fontFamily="monospace"
                         android:text="00:00"
                         android:textSize="36sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"/>
+
+                    <!-- 🍔 ORDER SECTION -->
+                    <Button
+                        android:id="@+id/btnOrder"
+                        android:text="Place Order 🍔"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:id="@+id/tvOrder"
+                        android:text="Order: Not placed"
+                        android:textColor="@android:color/black"
+                        android:layout_marginTop="8dp"/>
+
+                    <TextView
+                        android:id="@+id/tvOrderStatus"
+                        android:text="Status: waiting"
+                        android:textColor="@android:color/black"/>
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Leave Queue Button -->
+            <!-- 🚪 Leave Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLeaveQueue"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"

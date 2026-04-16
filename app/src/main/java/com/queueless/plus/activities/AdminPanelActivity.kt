@@ -3,6 +3,7 @@ package com.queueless.plus.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.ListenerRegistration
 import com.queueless.plus.adapters.AdminQueueAdapter
 import com.queueless.plus.databinding.ActivityAdminPanelBinding
@@ -11,6 +12,8 @@ import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.hide
 import com.queueless.plus.utils.show
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class AdminPanelActivity : AppCompatActivity() {
 
@@ -23,6 +26,7 @@ class AdminPanelActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminPanelBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         session = SessionManager(this)
 
         setSupportActionBar(binding.toolbar)
@@ -48,10 +52,16 @@ class AdminPanelActivity : AppCompatActivity() {
 
     private fun attachQueueListener() {
         binding.progressBar.show()
+
         queueListener = FirestoreRepository.listenToQueues { queues ->
             binding.progressBar.hide()
             adapter.submitList(queues)
-            if (queues.isEmpty()) binding.tvEmpty.show() else binding.tvEmpty.hide()
+
+            if (queues.isEmpty()) {
+                binding.tvEmpty.show()
+            } else {
+                binding.tvEmpty.hide()
+            }
         }
     }
 
@@ -67,8 +77,10 @@ class AdminPanelActivity : AppCompatActivity() {
             .setTitle("Delete Queue")
             .setMessage("Are you sure you want to delete '${queue.queueName}'?")
             .setPositiveButton("Delete") { _, _ ->
-                kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
-                    com.queueless.plus.utils.FirestoreRepository.deleteQueue(queue.queueId)
+
+                // ✅ FIXED coroutine usage
+                lifecycleScope.launch(Dispatchers.IO) {
+                    FirestoreRepository.deleteQueue(queue.queueId)
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -81,6 +93,7 @@ class AdminPanelActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed(); return true
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

@@ -2,17 +2,38 @@
 
     <!-- Base application theme -->
     <style name="Theme.QueueLessPlus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Primary colors -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
+
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/white</item>
+
+        <!-- Background & surface -->
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorError">@color/colorError</item>
+
+        <!-- Text colors (🔥 MAIN FIX) -->
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">#888888</item>
+        <item name="android:textColorHint">#888888</item>
+
+        <!-- Material fix -->
+        <item name="colorOnSurface">@color/colorTextPrimary</item>
+        <item name="hintTextColor">#888888</item>
+
+        <!-- Status bar -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimaryDark</item>
+
+        <!-- Window -->
         <item name="android:windowBackground">@color/colorBackground</item>
-        <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
+
+        <!-- 🔥 IMPORTANT: Use custom TextInput style -->
+        <item name="textInputStyle">@style/QueueLess.TextInputLayout</item>
+
     </style>
 
     <!-- Splash Screen theme -->
@@ -30,16 +51,30 @@
     <style name="Theme.QueueLessPlus.PopupOverlay"
         parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- TextInputLayout -->
+    <!-- 🔥 TEXT INPUT FIX (VERY IMPORTANT) -->
     <style name="QueueLess.TextInputLayout"
         parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+        <!-- Corners -->
         <item name="boxCornerRadiusTopStart">12dp</item>
         <item name="boxCornerRadiusTopEnd">12dp</item>
         <item name="boxCornerRadiusBottomStart">12dp</item>
         <item name="boxCornerRadiusBottomEnd">12dp</item>
+
+        <!-- 🔥 TEXT VISIBILITY FIX -->
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorHint">#888888</item>
+        <item name="hintTextColor">#888888</item>
+
+        <!-- Border color -->
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+
+        <!-- Material text fix -->
+        <item name="colorOnSurface">@color/colorTextPrimary</item>
+
     </style>
 
-    <!-- MaterialButton -->
+    <!-- Buttons -->
     <style name="QueueLess.Button" parent="Widget.MaterialComponents.Button">
         <item name="cornerRadius">12dp</item>
         <item name="android:textSize">16sp</item>

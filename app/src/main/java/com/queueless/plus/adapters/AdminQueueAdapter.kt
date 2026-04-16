@@ -29,16 +29,28 @@ class AdminQueueAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(queue: Queue) {
-            binding.tvQueueName.text   = queue.queueName
-            binding.tvLocation.text    = queue.location
-            binding.tvServiceTime.text = "${queue.avgServiceTime} min/person"
-            binding.btnManage.setOnClickListener { onManage(queue) }
-            binding.btnDelete.setOnClickListener { onDelete(queue) }
+
+            // 🟢 Basic Info
+            binding.tvQueueName.text = queue.queueName
+            binding.tvLocation.text = "📍 ${queue.location}"
+            binding.tvServiceTime.text = "⏱ ${queue.avgServiceTime} min/person"
+
+            // 🟢 Buttons
+            binding.btnManage.setOnClickListener {
+                onManage(queue)
+            }
+
+            binding.btnDelete.setOnClickListener {
+                onDelete(queue)
+            }
         }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<Queue>() {
-        override fun areItemsTheSame(old: Queue, new: Queue) = old.queueId == new.queueId
-        override fun areContentsTheSame(old: Queue, new: Queue) = old == new
+        override fun areItemsTheSame(old: Queue, new: Queue) =
+            old.queueId == new.queueId
+
+        override fun areContentsTheSame(old: Queue, new: Queue) =
+            old == new
     }
 }

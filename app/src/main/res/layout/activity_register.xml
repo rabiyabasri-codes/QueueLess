@@ -18,6 +18,9 @@
             android:text="Create Account"
             android:textSize="28sp"
             android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
+            android:textColorHighlight="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:hint="Full Name"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
+            android:textColorHighlight="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvSubtitle">
@@ -46,6 +52,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
+                android:textColor="@android:color/black"
+                android:textColorHint="#888888"
+                android:textColorHighlight="@color/colorPrimary"
                 android:imeOptions="actionNext" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -56,6 +65,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Email Address"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
+            android:textColorHighlight="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilName">
@@ -64,6 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:textColor="@android:color/black"
+                android:textColorHint="#888888"
+                android:textColorHighlight="@color/colorPrimary"
                 android:imeOptions="actionNext" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -75,6 +90,9 @@
             android:layout_marginTop="16dp"
             android:hint="Password"
             app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
+            android:textColorHighlight="@color/colorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilEmail"
             app:passwordToggleEnabled="true">
@@ -83,6 +101,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textColorHint="#888888"
+                android:textColorHighlight="@color/colorPrimary"
                 android:imeOptions="actionNext" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +114,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="Confirm Password"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
+            android:textColorHighlight="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilPassword"
@@ -102,6 +126,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textColorHint="#888888"
+                android:textColorHighlight="@color/colorPrimary"
                 android:imeOptions="actionDone" />
         </com.google.android.material.textfield.TextInputLayout>
 

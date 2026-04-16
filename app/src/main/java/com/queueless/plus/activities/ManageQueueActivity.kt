@@ -30,7 +30,9 @@ class ManageQueueActivity : AppCompatActivity() {
         binding = ActivityManageQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val queueId = intent.getStringExtra(EXTRA_QUEUE_ID) ?: run { finish(); return }
+        val queueId = intent.getStringExtra(EXTRA_QUEUE_ID) ?: run {
+            finish(); return
+        }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -49,26 +51,54 @@ class ManageQueueActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         adapter = ManageEntryAdapter(
-            onServed  = { entry -> markServed(entry) },
-            onRemove  = { entry -> removeEntry(entry) }
+
+            // 🟢 EXISTING
+            onServed = { entry -> markServed(entry) },
+            onRemove = { entry -> removeEntry(entry) },
+
+            // 🔥 NEW ORDER CONTROLS
+            onPreparing = { entry -> updateOrder(entry, QueueEntry.ORDER_PREPARING) },
+            onReady = { entry -> updateOrder(entry, QueueEntry.ORDER_READY) }
+
         )
+
         binding.rvEntries.adapter = adapter
     }
 
     private fun attachEntriesListener(queueId: String) {
         binding.progressBar.show()
+
         entriesListener = FirestoreRepository.listenToQueueEntries(queueId) { entries ->
             binding.progressBar.hide()
+
             adapter.submitList(entries)
+
             binding.tvCount.text = "${entries.size} people waiting"
-            if (entries.isEmpty()) binding.tvEmpty.show() else binding.tvEmpty.hide()
+
+            if (entries.isEmpty()) binding.tvEmpty.show()
+            else binding.tvEmpty.hide()
+        }
+    }
+
+    // 🔥 NEW FUNCTION
+    private fun updateOrder(entry: QueueEntry, status: String) {
+        lifecycleScope.launch {
+            try {
+                FirestoreRepository.updateOrderStatus(entry.entryId, status)
+                toast("Order updated to $status")
+            } catch (e: Exception) {
+                toast("Error: ${e.message}")
+            }
         }
     }
 
     private fun markServed(entry: QueueEntry) {
         lifecycleScope.launch {
             try {
-                FirestoreRepository.updateEntryStatus(entry.entryId, QueueEntry.STATUS_COMPLETED)
+                FirestoreRepository.updateEntryStatus(
+                    entry.entryId,
+                    QueueEntry.STATUS_COMPLETED
+                )
                 toast("${entry.userName} marked as served")
             } catch (e: Exception) {
                 toast("Error: ${e.message}")
@@ -82,7 +112,10 @@ class ManageQueueActivity : AppCompatActivity() {
             .setMessage("Remove ${entry.userName} from the queue?")
             .setPositiveButton("Remove") { _, _ ->
                 lifecycleScope.launch {
-                    FirestoreRepository.updateEntryStatus(entry.entryId, QueueEntry.STATUS_LEFT)
+                    FirestoreRepository.updateEntryStatus(
+                        entry.entryId,
+                        QueueEntry.STATUS_LEFT
+                    )
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -95,6 +128,7 @@ class ManageQueueActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed(); return true
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

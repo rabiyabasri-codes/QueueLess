@@ -1,8 +1,10 @@
 package com.queueless.plus.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.ListenerRegistration
 import com.queueless.plus.databinding.ActivityUserStatusBinding
 import com.queueless.plus.models.QueueEntry
@@ -12,7 +14,6 @@ import com.queueless.plus.utils.formatWaitTime
 import com.queueless.plus.utils.hide
 import com.queueless.plus.utils.show
 import com.queueless.plus.utils.toast
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -34,9 +35,12 @@ class UserStatusActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserStatusBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         session = SessionManager(this)
 
-        val queueId = intent.getStringExtra(EXTRA_QUEUE_ID) ?: run { finish(); return }
+        val queueId = intent.getStringExtra(EXTRA_QUEUE_ID) ?: run {
+            finish(); return
+        }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -44,49 +48,72 @@ class UserStatusActivity : AppCompatActivity() {
 
         attachListeners(queueId)
 
-        binding.btnLeaveQueue.setOnClickListener { leaveQueue() }
+        // 🔥 Leave Queue
+        binding.btnLeaveQueue.setOnClickListener {
+            leaveQueue()
+        }
+
+        // 🔥 Open Order Screen
+        binding.btnOrder.setOnClickListener {
+            val entryId = currentEntry?.entryId ?: return@setOnClickListener
+            val intent = Intent(this, OrderActivity::class.java)
+            intent.putExtra("ENTRY_ID", entryId)
+            startActivity(intent)
+        }
     }
 
-    /**
-     * Two listeners run simultaneously:
-     *   1. listenToUserEntry  – tracks this user's entry document (for status changes)
-     *   2. listenToQueueEntries – tracks the full sorted queue (for position + wait time)
-     */
     private fun attachListeners(queueId: String) {
-        // Listener 1 – user's own entry
+
+        // 🔹 Listen to THIS user's entry
         entryListener = FirestoreRepository.listenToUserEntry(
-            userId  = session.userId,
+            userId = session.userId,
             queueId = queueId
         ) { entry ->
+
             currentEntry = entry
+
             if (entry == null) {
-                // User's entry is gone — they've been served or removed
                 toast("Your turn is complete!")
                 finish()
+                return@listenToUserEntry
+            }
+
+            // 🔥 SHOW ORDER DETAILS
+            binding.tvOrder.text =
+                "Order: ${if (entry.orderDetails.isEmpty()) "Not placed" else entry.orderDetails}"
+
+            binding.tvOrderStatus.text =
+                "Status: ${entry.orderStatus}"
+
+            // 🔔 If order ready
+            if (entry.orderStatus == QueueEntry.ORDER_READY) {
+                toast("Your order is ready! 🍔")
             }
         }
 
-        // Listener 2 – full queue (position + estimated wait)
+        // 🔹 Listen to queue for position
         entriesListener = FirestoreRepository.listenToQueueEntries(queueId) { entries ->
+
             val position = entries.indexOfFirst { it.userId == session.userId } + 1
-            if (position == 0) return@listenToQueueEntries   // not in list yet
+            if (position == 0) return@listenToQueueEntries
 
-            val usersAhead   = position - 1
-            val avgTime      = 5   // fallback; ideally load from queue object
-            val waitMinutes  = usersAhead * avgTime
+            val usersAhead = position - 1
+            val waitMinutes = usersAhead * 5
 
-            binding.tvPosition.text     = "#$position"
-            binding.tvUsersAhead.text   = "$usersAhead ahead of you"
-            binding.tvWaitTime.text     = waitMinutes.formatWaitTime()
+            binding.tvPosition.text = "#$position"
+            binding.tvUsersAhead.text = "$usersAhead ahead of you"
+            binding.tvWaitTime.text = waitMinutes.formatWaitTime()
 
             startCountdown(waitMinutes)
 
-            // Algorithm 3 – Notify when position ≤ 2
+            // 🔔 Notify when near turn
             if (position <= 2 && currentEntry?.notified == false) {
+
                 binding.tvNotifyBanner.show()
-                binding.tvNotifyBanner.text = "🔔 Almost your turn!"
+                binding.tvBannerText.text = "🔔 Almost your turn!"
+
                 currentEntry?.entryId?.let { id ->
-                    CoroutineScope(Dispatchers.IO).launch {
+                    lifecycleScope.launch(Dispatchers.IO) {
                         FirestoreRepository.markEntryNotified(id)
                     }
                 }
@@ -96,13 +123,16 @@ class UserStatusActivity : AppCompatActivity() {
 
     private fun startCountdown(waitMinutes: Int) {
         countdownTimer?.cancel()
+
         val totalMs = waitMinutes * 60 * 1000L
+
         countdownTimer = object : CountDownTimer(totalMs, 1000) {
             override fun onTick(millisLeft: Long) {
                 val m = millisLeft / 60000
                 val s = (millisLeft % 60000) / 1000
                 binding.tvCountdown.text = String.format("%02d:%02d", m, s)
             }
+
             override fun onFinish() {
                 binding.tvCountdown.text = "00:00"
             }
@@ -111,9 +141,14 @@ class UserStatusActivity : AppCompatActivity() {
 
     private fun leaveQueue() {
         val entry = currentEntry ?: return
-        CoroutineScope(Dispatchers.IO).launch {
-            FirestoreRepository.updateEntryStatus(entry.entryId, QueueEntry.STATUS_LEFT)
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            FirestoreRepository.updateEntryStatus(
+                entry.entryId,
+                QueueEntry.STATUS_LEFT
+            )
         }
+
         toast("You have left the queue.")
         finish()
     }
@@ -125,5 +160,8 @@ class UserStatusActivity : AppCompatActivity() {
         countdownTimer?.cancel()
     }
 
-    override fun onSupportNavigateUp(): Boolean { onBackPressedDispatcher.onBackPressed(); return true }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
 }
