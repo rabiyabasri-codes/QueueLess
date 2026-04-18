@@ -1,11 +1,14 @@
 package com.queueless.plus.activities
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.zxing.BarcodeFormat
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.queueless.plus.databinding.ActivityUserStatusBinding
 import com.queueless.plus.models.QueueEntry
 import com.queueless.plus.utils.FirestoreRepository
@@ -21,6 +24,7 @@ class UserStatusActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_QUEUE_ID = "extra_queue_id"
+        const val EXTRA_ENTRY_ID = "extra_entry_id"
     }
 
     private lateinit var binding: ActivityUserStatusBinding
@@ -29,7 +33,9 @@ class UserStatusActivity : AppCompatActivity() {
     private var entryListener: ListenerRegistration? = null
     private var entriesListener: ListenerRegistration? = null
     private var countdownTimer: CountDownTimer? = null
+
     private var currentEntry: QueueEntry? = null
+    private var entryId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,60 +48,58 @@ class UserStatusActivity : AppCompatActivity() {
             finish(); return
         }
 
+        entryId = intent.getStringExtra(EXTRA_ENTRY_ID) ?: ""
+
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "My Queue Status"
 
         attachListeners(queueId)
 
-        // 🔥 Leave Queue
         binding.btnLeaveQueue.setOnClickListener {
             leaveQueue()
         }
 
-        // 🔥 Open Order Screen
         binding.btnOrder.setOnClickListener {
-            val entryId = currentEntry?.entryId ?: return@setOnClickListener
+
+            val entry = currentEntry
+
+            if (entry == null) {
+                toast("Still joining queue... ⏳")
+                return@setOnClickListener
+            }
+
             val intent = Intent(this, OrderActivity::class.java)
-            intent.putExtra("ENTRY_ID", entryId)
+            intent.putExtra("ENTRY_ID", entry.entryId)
+            intent.putExtra("QUEUE_ID", queueId)
             startActivity(intent)
         }
     }
 
     private fun attachListeners(queueId: String) {
 
-        // 🔹 Listen to THIS user's entry
-        entryListener = FirestoreRepository.listenToUserEntry(
-            userId = session.userId,
-            queueId = queueId
-        ) { entry ->
-
-            currentEntry = entry
-
-            if (entry == null) {
-                toast("Your turn is complete!")
-                finish()
-                return@listenToUserEntry
+        // 🔥 Listen to specific entry
+        if (entryId.isNotEmpty()) {
+            entryListener = FirestoreRepository.listenToEntry(entryId) { entry ->
+                handleEntryUpdate(entry)
             }
-
-            // 🔥 SHOW ORDER DETAILS
-            binding.tvOrder.text =
-                "Order: ${if (entry.orderDetails.isEmpty()) "Not placed" else entry.orderDetails}"
-
-            binding.tvOrderStatus.text =
-                "Status: ${entry.orderStatus}"
-
-            // 🔔 If order ready
-            if (entry.orderStatus == QueueEntry.ORDER_READY) {
-                toast("Your order is ready! 🍔")
+        } else {
+            entryListener = FirestoreRepository.listenToUserEntry(
+                session.userId,
+                queueId
+            ) { entry ->
+                handleEntryUpdate(entry)
             }
         }
 
-        // 🔹 Listen to queue for position
+        // 🔥 Listen to full queue
         entriesListener = FirestoreRepository.listenToQueueEntries(queueId) { entries ->
 
-            val position = entries.indexOfFirst { it.userId == session.userId } + 1
-            if (position == 0) return@listenToQueueEntries
+            val position = entries.indexOfFirst {
+                it.userId == session.userId
+            } + 1
+
+            if (position <= 0) return@listenToQueueEntries
 
             val usersAhead = position - 1
             val waitMinutes = usersAhead * 5
@@ -106,7 +110,7 @@ class UserStatusActivity : AppCompatActivity() {
 
             startCountdown(waitMinutes)
 
-            // 🔔 Notify when near turn
+            // 🔔 Notify when near
             if (position <= 2 && currentEntry?.notified == false) {
 
                 binding.tvNotifyBanner.show()
@@ -121,7 +125,54 @@ class UserStatusActivity : AppCompatActivity() {
         }
     }
 
+    // 🔥 HANDLE ENTRY UPDATE + QR
+    private fun handleEntryUpdate(entry: QueueEntry?) {
+
+        currentEntry = entry
+
+        if (entry == null) {
+            binding.tvOrder.text = "Order: Not available"
+            binding.tvOrderStatus.text = "Status: Not in queue"
+            binding.ivQR.hide()
+            return
+        }
+
+        // 🍔 Order
+        binding.tvOrder.text =
+            "Order: ${if (entry.orderDetails.isEmpty()) "Not placed" else entry.orderDetails}"
+
+        // 📦 Status
+        binding.tvOrderStatus.text =
+            "Status: ${entry.orderStatus.uppercase()}"
+
+        // 🔳 Generate QR
+        generateQR(entry.entryId)
+
+        // 🔔 Ready alert
+        if (entry.orderStatus == QueueEntry.ORDER_READY) {
+            toast("Your order is ready! 🍔")
+        }
+    }
+
+    // 🔥 QR CODE GENERATOR
+    private fun generateQR(entryId: String) {
+        try {
+            val encoder = BarcodeEncoder()
+            val bitmap: Bitmap = encoder.encodeBitmap(
+                entryId,
+                BarcodeFormat.QR_CODE,
+                400,
+                400
+            )
+            binding.ivQR.setImageBitmap(bitmap)
+            binding.ivQR.show()
+        } catch (e: Exception) {
+            binding.ivQR.hide()
+        }
+    }
+
     private fun startCountdown(waitMinutes: Int) {
+
         countdownTimer?.cancel()
 
         val totalMs = waitMinutes * 60 * 1000L
@@ -140,6 +191,7 @@ class UserStatusActivity : AppCompatActivity() {
     }
 
     private fun leaveQueue() {
+
         val entry = currentEntry ?: return
 
         lifecycleScope.launch(Dispatchers.IO) {

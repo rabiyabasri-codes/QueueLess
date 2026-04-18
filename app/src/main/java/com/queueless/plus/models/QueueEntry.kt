@@ -9,16 +9,15 @@ data class QueueEntry(
     val userName: String = "",
     val timestamp: Timestamp = Timestamp.now(),
 
-    // 🔥 EXISTING STATUS (queue flow)
+    // 🟢 Queue status
     val status: String = STATUS_WAITING,   // waiting / completed / left
 
     val notified: Boolean = false,
 
-    // 🔥 NEW FIELDS (ORDER SYSTEM)
+    // 🍔 Order system
     val orderDetails: String = "",
-
-    // Order status: waiting → preparing → ready
     val orderStatus: String = ORDER_WAITING
+
 ) {
 
     companion object {
@@ -27,23 +26,26 @@ data class QueueEntry(
         const val STATUS_COMPLETED = "completed"
         const val STATUS_LEFT      = "left"
 
-        // 🔥 Order status
+        // Order status
         const val ORDER_WAITING    = "waiting"
         const val ORDER_PREPARING  = "preparing"
         const val ORDER_READY      = "ready"
     }
 
-    fun toMap(): Map<String, Any> = mapOf(
-        "entryId"     to entryId,
-        "userId"      to userId,
-        "queueId"     to queueId,
-        "userName"    to userName,
-        "timestamp"   to timestamp,
-        "status"      to status,
-        "notified"    to notified,
+    // 🔥 Firestore safe map
+    fun toMap(): Map<String, Any> {
+        return hashMapOf(
+            "entryId" to entryId,
+            "userId" to userId,
+            "queueId" to queueId,
+            "userName" to userName,
+            "timestamp" to timestamp,
+            "status" to status,
+            "notified" to notified,
 
-        // 🔥 NEW FIELDS
-        "orderDetails" to orderDetails,
-        "orderStatus"  to orderStatus
-    )
+            // Order fields (always included for consistency)
+            "orderDetails" to orderDetails,
+            "orderStatus" to orderStatus
+        )
+    }
 }

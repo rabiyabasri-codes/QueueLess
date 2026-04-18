@@ -32,32 +32,58 @@ class ManageEntryAdapter(
 
         fun bind(entry: QueueEntry, position: Int) {
 
-            // 🟢 Basic info
+            // 🟢 Position + Name
             binding.tvPosition.text = "#$position"
             binding.tvUserName.text = entry.userName
 
-            // 🔥 ORDER INFO
-            binding.tvOrder.text =
-                "Order: ${if (entry.orderDetails.isEmpty()) "Not placed" else entry.orderDetails}"
+            // 🍔 Order Details
+            val orderText = if (entry.orderDetails.isBlank()) {
+                "Not placed"
+            } else entry.orderDetails
 
-            binding.tvStatus.text =
-                "Status: ${entry.orderStatus}"
+            binding.tvOrder.text = "Order: $orderText"
 
-            // 🟢 Existing buttons
+            // 🔥 Order Status (formatted)
+            val statusText = entry.orderStatus.replaceFirstChar { it.uppercase() }
+            binding.tvStatus.text = "Status: $statusText"
+
+            // 🟢 Queue Actions
             binding.btnServed.setOnClickListener { onServed(entry) }
             binding.btnRemove.setOnClickListener { onRemove(entry) }
 
-            // 🔥 NEW ORDER BUTTONS
+            // 🔥 Order Actions
             binding.btnPreparing.setOnClickListener { onPreparing(entry) }
             binding.btnReady.setOnClickListener { onReady(entry) }
+
+            // 🚀 SMART UI CONTROL (IMPORTANT)
+            when (entry.orderStatus) {
+
+                QueueEntry.ORDER_WAITING -> {
+                    binding.btnPreparing.isEnabled = true
+                    binding.btnReady.isEnabled = false
+                }
+
+                QueueEntry.ORDER_PREPARING -> {
+                    binding.btnPreparing.isEnabled = false
+                    binding.btnReady.isEnabled = true
+                }
+
+                QueueEntry.ORDER_READY -> {
+                    binding.btnPreparing.isEnabled = false
+                    binding.btnReady.isEnabled = false
+                }
+            }
         }
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<QueueEntry>() {
-        override fun areItemsTheSame(old: QueueEntry, new: QueueEntry) =
-            old.entryId == new.entryId
 
-        override fun areContentsTheSame(old: QueueEntry, new: QueueEntry) =
-            old == new
+        override fun areItemsTheSame(old: QueueEntry, new: QueueEntry): Boolean {
+            return old.entryId == new.entryId
+        }
+
+        override fun areContentsTheSame(old: QueueEntry, new: QueueEntry): Boolean {
+            return old == new
+        }
     }
 }

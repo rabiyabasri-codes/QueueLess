@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -21,7 +22,7 @@
         android:theme="@style/Theme.QueueLessPlus"
         tools:targetApi="31">
 
-        <!-- ✅ MAIN ENTRY POINT -->
+        <!-- 🔥 MAIN ENTRY (Launcher) -->
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
@@ -34,22 +35,57 @@
             </intent-filter>
         </activity>
 
-        <!-- Auth -->
-        <activity android:name=".activities.LoginActivity" android:exported="false" />
-        <activity android:name=".activities.RegisterActivity" android:exported="false" />
+        <!-- 🔐 Auth -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
 
-        <!-- User -->
-        <activity android:name=".activities.DashboardActivity" android:exported="false" />
-        <activity android:name=".activities.QueueDetailActivity" android:exported="false" />
-        <activity android:name=".activities.UserStatusActivity" android:exported="false" />
-        <activity android:name=".activities.QRScanActivity" android:exported="false" />
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
 
-        <!-- Admin -->
-        <activity android:name=".activities.AdminPanelActivity" android:exported="false" />
-        <activity android:name=".activities.CreateQueueActivity" android:exported="false" />
-        <activity android:name=".activities.ManageQueueActivity" android:exported="false" />
+        <!-- 👤 User -->
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false" />
 
-        <!-- Firebase Messaging -->
+        <activity
+            android:name=".activities.QueueDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.UserStatusActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.QRScanActivity"
+            android:exported="false" />
+
+        <!-- 🍔 Order -->
+        <activity
+            android:name=".activities.OrderActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.OrderHistoryActivity"
+            android:exported="false" />
+
+        <!-- 🛠 Admin -->
+        <activity
+            android:name=".activities.AdminPanelActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.CreateQueueActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.ManageQueueActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.AdminMenuActivity" android:exported="false"/>
+
+        <!-- 🔔 Firebase Messaging -->
         <service
             android:name=".utils.FCMService"
             android:exported="false">
@@ -59,4 +95,5 @@
         </service>
 
     </application>
+
 </manifest>

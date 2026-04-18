@@ -3,6 +3,7 @@ package com.queueless.plus.utils
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
+import com.queueless.plus.models.MenuItem
 import com.queueless.plus.models.Queue
 import com.queueless.plus.models.QueueEntry
 import com.queueless.plus.models.User
@@ -12,12 +13,15 @@ object FirestoreRepository {
 
     private val db = FirebaseFirestore.getInstance()
 
-    // ─── Collection references ─────────────────────────────
+    // Collections
     private val usersRef        = db.collection("users")
     private val queuesRef       = db.collection("queues")
     private val queueEntriesRef = db.collection("queueEntries")
 
-    // ═════════════════ USER OPERATIONS ═════════════════════
+    // 🔥 NEW COLLECTION
+    private val menuRef         = db.collection("menu")
+
+    // ═════════ USER ═════════
 
     suspend fun saveUser(user: User) {
         usersRef.document(user.userId).set(user.toMap()).await()
@@ -32,7 +36,7 @@ object FirestoreRepository {
         usersRef.document(userId).update("fcmToken", token).await()
     }
 
-    // ═════════════════ QUEUE OPERATIONS ════════════════════
+    // ═════════ QUEUE ═════════
 
     suspend fun createQueue(queue: Queue): String {
         val docRef = queuesRef.document()
@@ -67,13 +71,25 @@ object FirestoreRepository {
             }
     }
 
-    // ═══════════════ QUEUE ENTRY OPERATIONS ════════════════
+    // ═════════ QUEUE ENTRY ═════════
 
     suspend fun joinQueue(entry: QueueEntry): String {
         val docRef = queueEntriesRef.document()
         val newEntry = entry.copy(entryId = docRef.id)
         docRef.set(newEntry.toMap()).await()
         return docRef.id
+    }
+
+    suspend fun getUserEntry(userId: String, queueId: String): QueueEntry? {
+        val snap = queueEntriesRef
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("queueId", queueId)
+            .whereEqualTo("status", QueueEntry.STATUS_WAITING)
+            .limit(1)
+            .get()
+            .await()
+
+        return snap.documents.firstOrNull()?.toObject(QueueEntry::class.java)
     }
 
     suspend fun getWaitingEntries(queueId: String): List<QueueEntry> {
@@ -115,6 +131,18 @@ object FirestoreRepository {
             }
     }
 
+    fun listenToEntry(
+        entryId: String,
+        onUpdate: (QueueEntry?) -> Unit
+    ): ListenerRegistration {
+        return queueEntriesRef
+            .document(entryId)
+            .addSnapshotListener { snapshot, _ ->
+                val entry = snapshot?.toObject(QueueEntry::class.java)
+                onUpdate(entry)
+            }
+    }
+
     suspend fun updateEntryStatus(entryId: String, status: String) {
         queueEntriesRef.document(entryId)
             .update("status", status)
@@ -137,7 +165,7 @@ object FirestoreRepository {
         return !snap.isEmpty
     }
 
-    // ═══════════════ 🔥 NEW ORDER FUNCTION ════════════════
+    // ═════════ ORDER SYSTEM ═════════
 
     suspend fun updateOrderStatus(entryId: String, status: String) {
         queueEntriesRef.document(entryId)
@@ -145,7 +173,34 @@ object FirestoreRepository {
             .await()
     }
 
-    // ═══════════════ LOGIC FUNCTIONS ══════════════════════
+    suspend fun updateOrderDetails(entryId: String, order: String) {
+        queueEntriesRef.document(entryId)
+            .update("orderDetails", order)
+            .await()
+    }
+
+    // ═════════ MENU SYSTEM (🔥 NEW) ═════════
+
+    fun listenToMenu(onResult: (List<MenuItem>) -> Unit): ListenerRegistration {
+        return menuRef.addSnapshotListener { snapshot, _ ->
+            val list = snapshot?.documents?.mapNotNull { doc ->
+                doc.toObject(MenuItem::class.java)?.copy(id = doc.id)
+            } ?: emptyList()
+
+            onResult(list)
+        }
+    }
+
+    suspend fun addMenuItem(item: MenuItem) {
+        val doc = menuRef.document()
+        menuRef.document(doc.id).set(item.copy(id = doc.id)).await()
+    }
+
+    suspend fun deleteMenuItem(id: String) {
+        menuRef.document(id).delete().await()
+    }
+
+    // ═════════ LOGIC ═════════
 
     suspend fun getUserPosition(userId: String, queueId: String): Int {
         val entries = getWaitingEntries(queueId)

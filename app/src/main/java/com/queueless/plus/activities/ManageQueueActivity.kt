@@ -30,68 +30,79 @@ class ManageQueueActivity : AppCompatActivity() {
         binding = ActivityManageQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val queueId = intent.getStringExtra(EXTRA_QUEUE_ID) ?: run {
-            finish(); return
+        val queueId = intent.getStringExtra(EXTRA_QUEUE_ID)
+        if (queueId.isNullOrEmpty()) {
+            toast("Invalid queue")
+            finish()
+            return
         }
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        loadQueue(queueId)
         setupRecyclerView()
+        loadQueue(queueId)
         attachEntriesListener(queueId)
     }
 
+    // 🔥 Load queue details
     private fun loadQueue(queueId: String) {
         lifecycleScope.launch {
-            queue = FirestoreRepository.getQueue(queueId)
-            supportActionBar?.title = "Manage: ${queue?.queueName}"
+            try {
+                queue = FirestoreRepository.getQueue(queueId)
+                supportActionBar?.title = "Manage: ${queue?.queueName ?: "Queue"}"
+            } catch (e: Exception) {
+                toast("Failed to load queue")
+            }
         }
     }
 
+    // 🔥 Setup RecyclerView
     private fun setupRecyclerView() {
         adapter = ManageEntryAdapter(
-
-            // 🟢 EXISTING
             onServed = { entry -> markServed(entry) },
             onRemove = { entry -> removeEntry(entry) },
-
-            // 🔥 NEW ORDER CONTROLS
             onPreparing = { entry -> updateOrder(entry, QueueEntry.ORDER_PREPARING) },
             onReady = { entry -> updateOrder(entry, QueueEntry.ORDER_READY) }
-
         )
 
         binding.rvEntries.adapter = adapter
     }
 
+    // 🔥 Listen to queue entries (REAL-TIME)
     private fun attachEntriesListener(queueId: String) {
         binding.progressBar.show()
 
         entriesListener = FirestoreRepository.listenToQueueEntries(queueId) { entries ->
-            binding.progressBar.hide()
 
+            if (isFinishing) return@listenToQueueEntries
+
+            binding.progressBar.hide()
             adapter.submitList(entries)
 
             binding.tvCount.text = "${entries.size} people waiting"
 
-            if (entries.isEmpty()) binding.tvEmpty.show()
-            else binding.tvEmpty.hide()
+            if (entries.isEmpty()) {
+                binding.tvEmpty.show()
+            } else {
+                binding.tvEmpty.hide()
+            }
         }
     }
 
-    // 🔥 NEW FUNCTION
+    // 🔥 Update order status (Preparing / Ready)
     private fun updateOrder(entry: QueueEntry, status: String) {
         lifecycleScope.launch {
             try {
                 FirestoreRepository.updateOrderStatus(entry.entryId, status)
-                toast("Order updated to $status")
+                toast("Order updated to ${status.uppercase()}")
             } catch (e: Exception) {
                 toast("Error: ${e.message}")
             }
         }
     }
 
+    // 🔥 Mark user served
     private fun markServed(entry: QueueEntry) {
         lifecycleScope.launch {
             try {
@@ -99,23 +110,29 @@ class ManageQueueActivity : AppCompatActivity() {
                     entry.entryId,
                     QueueEntry.STATUS_COMPLETED
                 )
-                toast("${entry.userName} marked as served")
+                toast("${entry.userName} served")
             } catch (e: Exception) {
                 toast("Error: ${e.message}")
             }
         }
     }
 
+    // 🔥 Remove user
     private fun removeEntry(entry: QueueEntry) {
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle("Remove from Queue")
-            .setMessage("Remove ${entry.userName} from the queue?")
+            .setMessage("Remove ${entry.userName}?")
             .setPositiveButton("Remove") { _, _ ->
                 lifecycleScope.launch {
-                    FirestoreRepository.updateEntryStatus(
-                        entry.entryId,
-                        QueueEntry.STATUS_LEFT
-                    )
+                    try {
+                        FirestoreRepository.updateEntryStatus(
+                            entry.entryId,
+                            QueueEntry.STATUS_LEFT
+                        )
+                        toast("Removed successfully")
+                    } catch (e: Exception) {
+                        toast("Error: ${e.message}")
+                    }
                 }
             }
             .setNegativeButton("Cancel", null)
