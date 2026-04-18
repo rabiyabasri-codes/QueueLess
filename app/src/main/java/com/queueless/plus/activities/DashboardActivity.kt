@@ -32,7 +32,16 @@ class DashboardActivity : AppCompatActivity() {
         setupRecyclerView()
         setupFab()
         setupActions()
+    }
+
+    override fun onStart() {
+        super.onStart()
         attachQueueListener()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        queueListener?.remove()
     }
 
     // 🔝 Toolbar
@@ -58,6 +67,7 @@ class DashboardActivity : AppCompatActivity() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        finish()
     }
 
     // 📜 RecyclerView
@@ -95,11 +105,13 @@ class DashboardActivity : AppCompatActivity() {
 
         binding.progressBar.show()
 
-        queueListener?.remove() // 🔥 prevent duplicate listeners
+        // 🔥 Remove old listener (IMPORTANT)
+        queueListener?.remove()
 
         queueListener = FirestoreRepository.listenToQueues { queues ->
 
-            if (isFinishing) return@listenToQueues
+            // 🔥 Prevent crash if activity closed
+            if (isFinishing || isDestroyed) return@listenToQueues
 
             binding.progressBar.hide()
             binding.swipeRefresh.isRefreshing = false

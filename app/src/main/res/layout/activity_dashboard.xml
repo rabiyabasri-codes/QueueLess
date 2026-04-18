@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <!-- 🔝 Toolbar -->
+    <!-- 🔝 AppBar -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- 🔧 FIXED TOOLBAR -->
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -19,31 +20,36 @@
             android:elevation="4dp"
             app:titleTextColor="@color/white">
 
-            <!-- 📜 Order History Button -->
-            <ImageButton
-                android:id="@+id/btnHistory"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="48dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="My Orders"
-                android:padding="8dp"
-                android:src="@android:drawable/ic_menu_agenda"
-                android:tint="@color/white" />
+            <!-- Right-side buttons container -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="end|center_vertical"
+                android:paddingEnd="8dp">
 
-            <!-- 🚪 Logout -->
-            <ImageButton
-                android:id="@+id/btnLogout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="8dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="Logout"
-                android:padding="8dp"
-                android:src="@drawable/ic_logout"
-                android:tint="@color/white" />
+                <!-- 📜 Order History -->
+                <ImageButton
+                    android:id="@+id/btnHistory"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="My Orders"
+                    android:src="@android:drawable/ic_menu_agenda"
+                    app:tint="@color/white" />
+
+                <!-- 🚪 Logout -->
+                <ImageButton
+                    android:id="@+id/btnLogout"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Logout"
+                    android:src="@drawable/ic_logout"
+                    app:tint="@color/white" />
+
+            </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -53,6 +59,7 @@
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
