@@ -1,0 +1,90 @@
+[
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_cart.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_cart.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_admin_menu.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_admin_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_manage_entry.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_manage_entry.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_dashboard.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_register.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_queue_detail.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_queue_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_login.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_queue.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_queue.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_user_status.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_user_status.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_queue_entry.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_queue_entry.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_splash.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_order_history.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_order_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_manage_queue.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_manage_queue.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_admin_menu.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_admin_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_admin_panel.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_admin_panel.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_create_queue.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_create_queue.xml"
+    },
+    {
+        "merged": "com.queueless.plus.app-mergeDebugResources-59:/layout/activity_dashboard.xml",
+        "source": "com.queueless.plus.app-main-62:/layout/activity_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_order.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_order.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_menu.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_order_history.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_order_history.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\activity_qr_scan.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\activity_qr_scan.xml"
+    },
+    {
+        "merged": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-mergeDebugResources-59:\\layout\\item_admin_queue.xml",
+        "source": "C:\\Users\\Rabiya Basri\\.gradle\\daemon\\9.0-milestone-1\\com.queueless.plus.app-main-62:\\layout\\item_admin_queue.xml"
+    }
+]

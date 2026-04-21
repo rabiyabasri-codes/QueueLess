@@ -1,0 +1,645 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.queueless.plus"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <!-- Permissions -->
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:6:5-67
+12-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:6:22-64
+13    <uses-permission android:name="android.permission.CAMERA" />
+13-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:7:5-65
+13-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:7:22-62
+14    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+14-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:8:5-77
+14-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:8:22-74
+15    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+15-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:9:5-81
+15-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:9:22-78
+16
+17    <uses-feature
+17-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:11:5-13:36
+18        android:name="android.hardware.camera"
+18-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:12:9-47
+19        android:required="false" />
+19-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:13:9-33
+20
+21    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+21-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:26:5-79
+21-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:26:22-76
+22    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Required by older versions of Google Play services to create IID tokens -->
+22-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:24:5-68
+22-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:24:22-65
+23    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+23-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:26:5-82
+23-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:26:22-79
+24    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+24-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:25:5-79
+24-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:25:22-76
+25    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" />
+25-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:26:5-88
+25-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:26:22-85
+26    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" />
+26-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:27:5-82
+26-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:27:22-79
+27    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+27-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:26:5-110
+27-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:26:22-107
+28
+29    <permission
+29-->[androidx.core:core:1.12.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7b2ebd1df2b4c0fea01fa4f1920b28e5\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
+30        android:name="com.queueless.plus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+30-->[androidx.core:core:1.12.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7b2ebd1df2b4c0fea01fa4f1920b28e5\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
+31        android:protectionLevel="signature" />
+31-->[androidx.core:core:1.12.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7b2ebd1df2b4c0fea01fa4f1920b28e5\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
+32
+33    <uses-permission android:name="com.queueless.plus.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+33-->[androidx.core:core:1.12.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7b2ebd1df2b4c0fea01fa4f1920b28e5\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
+33-->[androidx.core:core:1.12.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7b2ebd1df2b4c0fea01fa4f1920b28e5\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
+34
+35    <uses-feature
+35-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:28:5-30:36
+36        android:name="android.hardware.camera.front"
+36-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:29:9-53
+37        android:required="false" /> <!-- TODO replace above two with next line after Android 4.2 -->
+37-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:30:9-33
+38    <!-- <uses-feature android:name="android.hardware.camera.any"/> -->
+39    <uses-feature
+39-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:33:5-35:36
+40        android:name="android.hardware.camera.autofocus"
+40-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:34:9-57
+41        android:required="false" />
+41-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:35:9-33
+42    <uses-feature
+42-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:36:5-38:36
+43        android:name="android.hardware.camera.flash"
+43-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:37:9-53
+44        android:required="false" />
+44-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:38:9-33
+45    <uses-feature
+45-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:39:5-41:36
+46        android:name="android.hardware.screen.landscape"
+46-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:40:9-57
+47        android:required="false" />
+47-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:41:9-33
+48    <uses-feature
+48-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:42:5-44:36
+49        android:name="android.hardware.wifi"
+49-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:43:9-45
+50        android:required="false" />
+50-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:44:9-33
+51
+52    <application
+52-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:15:5-97:19
+53        android:allowBackup="true"
+53-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:16:9-35
+54        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+54-->[androidx.core:core:1.12.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7b2ebd1df2b4c0fea01fa4f1920b28e5\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
+55        android:dataExtractionRules="@xml/data_extraction_rules"
+55-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:17:9-65
+56        android:debuggable="true"
+57        android:extractNativeLibs="false"
+58        android:fullBackupContent="@xml/backup_rules"
+58-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:18:9-54
+59        android:icon="@android:drawable/sym_def_app_icon"
+59-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:19:9-58
+60        android:label="@string/app_name"
+60-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:20:9-41
+61        android:supportsRtl="true"
+61-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:21:9-35
+62        android:testOnly="true"
+63        android:theme="@style/Theme.QueueLessPlus" >
+63-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:22:9-51
+64
+65        <!-- 🔥 MAIN ENTRY (Launcher) -->
+66        <activity
+66-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:26:9-36:20
+67            android:name="com.queueless.plus.activities.SplashActivity"
+67-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:27:13-54
+68            android:exported="true"
+68-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:28:13-36
+69            android:noHistory="true"
+69-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:29:13-37
+70            android:theme="@style/Theme.QueueLessPlus.Splash" >
+70-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:30:13-62
+71            <intent-filter>
+71-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:32:13-35:29
+72                <action android:name="android.intent.action.MAIN" />
+72-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:33:17-69
+72-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:33:25-66
+73
+74                <category android:name="android.intent.category.LAUNCHER" />
+74-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:34:17-77
+74-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:34:27-74
+75            </intent-filter>
+76        </activity>
+77
+78        <!-- 🔐 Auth -->
+79        <activity
+79-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:39:9-41:40
+80            android:name="com.queueless.plus.activities.LoginActivity"
+80-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:40:13-53
+81            android:exported="false" />
+81-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:41:13-37
+82        <activity
+82-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:43:9-45:40
+83            android:name="com.queueless.plus.activities.RegisterActivity"
+83-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:44:13-56
+84            android:exported="false" />
+84-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:45:13-37
+85
+86        <!-- 👤 User -->
+87        <activity
+87-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:48:9-50:40
+88            android:name="com.queueless.plus.activities.DashboardActivity"
+88-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:49:13-57
+89            android:exported="false" />
+89-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:50:13-37
+90        <activity
+90-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:52:9-54:40
+91            android:name="com.queueless.plus.activities.QueueDetailActivity"
+91-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:53:13-59
+92            android:exported="false" />
+92-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:54:13-37
+93        <activity
+93-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:56:9-58:40
+94            android:name="com.queueless.plus.activities.UserStatusActivity"
+94-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:57:13-58
+95            android:exported="false" />
+95-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:58:13-37
+96        <activity
+96-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:60:9-62:40
+97            android:name="com.queueless.plus.activities.QRScanActivity"
+97-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:61:13-54
+98            android:exported="false" />
+98-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:62:13-37
+99
+100        <!-- 🍔 Order -->
+101        <activity
+101-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:65:9-67:40
+102            android:name="com.queueless.plus.activities.OrderActivity"
+102-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:66:13-53
+103            android:exported="false" />
+103-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:67:13-37
+104        <activity
+104-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:69:9-71:40
+105            android:name="com.queueless.plus.activities.OrderHistoryActivity"
+105-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:70:13-60
+106            android:exported="false" />
+106-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:71:13-37
+107
+108        <!-- 🛠 Admin -->
+109        <activity
+109-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:74:9-76:40
+110            android:name="com.queueless.plus.activities.AdminPanelActivity"
+110-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:75:13-58
+111            android:exported="false" />
+111-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:76:13-37
+112        <activity
+112-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:78:9-80:40
+113            android:name="com.queueless.plus.activities.CreateQueueActivity"
+113-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:79:13-59
+114            android:exported="false" />
+114-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:80:13-37
+115        <activity
+115-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:82:9-84:40
+116            android:name="com.queueless.plus.activities.ManageQueueActivity"
+116-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:83:13-59
+117            android:exported="false" />
+117-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:84:13-37
+118        <activity
+118-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:86:9-90
+119            android:name="com.queueless.plus.activities.AdminMenuActivity"
+119-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:86:19-63
+120            android:exported="false" />
+120-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:86:64-88
+121
+122        <!-- 🔔 Firebase Messaging -->
+123        <service
+123-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:89:9-95:19
+124            android:name="com.queueless.plus.utils.FCMService"
+124-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:90:13-45
+125            android:exported="false" >
+125-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:91:13-37
+126            <intent-filter>
+126-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:92:13-94:29
+127                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+127-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:17-78
+127-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:25-75
+128            </intent-filter>
+129        </service>
+130        <service
+130-->[com.google.firebase:firebase-auth-ktx:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\baa3dba110db9e90213f2170c3cdf337\transformed\firebase-auth-ktx-22.3.0\AndroidManifest.xml:8:9-14:19
+131            android:name="com.google.firebase.components.ComponentDiscoveryService"
+131-->[com.google.firebase:firebase-auth-ktx:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\baa3dba110db9e90213f2170c3cdf337\transformed\firebase-auth-ktx-22.3.0\AndroidManifest.xml:9:13-84
+132            android:directBootAware="true"
+132-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:32:13-43
+133            android:exported="false" >
+133-->[com.google.firebase:firebase-auth-ktx:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\baa3dba110db9e90213f2170c3cdf337\transformed\firebase-auth-ktx-22.3.0\AndroidManifest.xml:10:13-37
+134            <meta-data
+134-->[com.google.firebase:firebase-auth-ktx:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\baa3dba110db9e90213f2170c3cdf337\transformed\firebase-auth-ktx-22.3.0\AndroidManifest.xml:11:13-13:85
+135                android:name="com.google.firebase.components:com.google.firebase.auth.ktx.FirebaseAuthLegacyRegistrar"
+135-->[com.google.firebase:firebase-auth-ktx:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\baa3dba110db9e90213f2170c3cdf337\transformed\firebase-auth-ktx-22.3.0\AndroidManifest.xml:12:17-119
+136                android:value="com.google.firebase.components.ComponentRegistrar" />
+136-->[com.google.firebase:firebase-auth-ktx:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\baa3dba110db9e90213f2170c3cdf337\transformed\firebase-auth-ktx-22.3.0\AndroidManifest.xml:13:17-82
+137            <meta-data
+137-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:69:13-71:85
+138                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+138-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:70:17-109
+139                android:value="com.google.firebase.components.ComponentRegistrar" />
+139-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:71:17-82
+140            <meta-data
+140-->[com.google.firebase:firebase-analytics-ktx:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\024f13476fdf9d727f4075ab6f70e41b\transformed\firebase-analytics-ktx-21.5.0\AndroidManifest.xml:11:13-13:85
+141                android:name="com.google.firebase.components:com.google.firebase.analytics.ktx.FirebaseAnalyticsLegacyRegistrar"
+141-->[com.google.firebase:firebase-analytics-ktx:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\024f13476fdf9d727f4075ab6f70e41b\transformed\firebase-analytics-ktx-21.5.0\AndroidManifest.xml:12:17-129
+142                android:value="com.google.firebase.components.ComponentRegistrar" />
+142-->[com.google.firebase:firebase-analytics-ktx:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\024f13476fdf9d727f4075ab6f70e41b\transformed\firebase-analytics-ktx-21.5.0\AndroidManifest.xml:13:17-82
+143            <meta-data
+143-->[com.google.firebase:firebase-firestore-ktx:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\a7b60901e92c46323183e84b16345a8e\transformed\firebase-firestore-ktx-24.10.0\AndroidManifest.xml:12:13-14:85
+144                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
+144-->[com.google.firebase:firebase-firestore-ktx:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\a7b60901e92c46323183e84b16345a8e\transformed\firebase-firestore-ktx-24.10.0\AndroidManifest.xml:13:17-129
+145                android:value="com.google.firebase.components.ComponentRegistrar" />
+145-->[com.google.firebase:firebase-firestore-ktx:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\a7b60901e92c46323183e84b16345a8e\transformed\firebase-firestore-ktx-24.10.0\AndroidManifest.xml:14:17-82
+146            <meta-data
+146-->[com.google.firebase:firebase-messaging-ktx:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c054eadd33976946ec4012e2eae64dc1\transformed\firebase-messaging-ktx-23.4.0\AndroidManifest.xml:26:13-28:85
+147                android:name="com.google.firebase.components:com.google.firebase.messaging.ktx.FirebaseMessagingLegacyRegistrar"
+147-->[com.google.firebase:firebase-messaging-ktx:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c054eadd33976946ec4012e2eae64dc1\transformed\firebase-messaging-ktx-23.4.0\AndroidManifest.xml:27:17-129
+148                android:value="com.google.firebase.components.ComponentRegistrar" />
+148-->[com.google.firebase:firebase-messaging-ktx:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c054eadd33976946ec4012e2eae64dc1\transformed\firebase-messaging-ktx-23.4.0\AndroidManifest.xml:28:17-82
+149            <meta-data
+149-->[com.google.firebase:firebase-firestore:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\0b280e3a5206c6d3a3bbc7c85293b1f8\transformed\firebase-firestore-24.10.0\AndroidManifest.xml:17:13-19:85
+150                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+150-->[com.google.firebase:firebase-firestore:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\0b280e3a5206c6d3a3bbc7c85293b1f8\transformed\firebase-firestore-24.10.0\AndroidManifest.xml:18:17-122
+151                android:value="com.google.firebase.components.ComponentRegistrar" />
+151-->[com.google.firebase:firebase-firestore:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\0b280e3a5206c6d3a3bbc7c85293b1f8\transformed\firebase-firestore-24.10.0\AndroidManifest.xml:19:17-82
+152            <meta-data
+152-->[com.google.firebase:firebase-firestore:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\0b280e3a5206c6d3a3bbc7c85293b1f8\transformed\firebase-firestore-24.10.0\AndroidManifest.xml:20:13-22:85
+153                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+153-->[com.google.firebase:firebase-firestore:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\0b280e3a5206c6d3a3bbc7c85293b1f8\transformed\firebase-firestore-24.10.0\AndroidManifest.xml:21:17-111
+154                android:value="com.google.firebase.components.ComponentRegistrar" />
+154-->[com.google.firebase:firebase-firestore:24.10.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\0b280e3a5206c6d3a3bbc7c85293b1f8\transformed\firebase-firestore-24.10.0\AndroidManifest.xml:22:17-82
+155            <meta-data
+155-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:57:13-59:85
+156                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingKtxRegistrar"
+156-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:58:17-122
+157                android:value="com.google.firebase.components.ComponentRegistrar" />
+157-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:59:17-82
+158            <meta-data
+158-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:60:13-62:85
+159                android:name="com.google.firebase.components:com.google.firebase.messaging.FirebaseMessagingRegistrar"
+159-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:61:17-119
+160                android:value="com.google.firebase.components.ComponentRegistrar" />
+160-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:62:17-82
+161            <meta-data
+161-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:37:13-39:85
+162                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+162-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:38:17-139
+163                android:value="com.google.firebase.components.ComponentRegistrar" />
+163-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:39:17-82
+164            <meta-data
+164-->[com.google.firebase:firebase-installations:17.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d923b7bf8e79faaff28d99df876f8068\transformed\firebase-installations-17.2.0\AndroidManifest.xml:15:13-17:85
+165                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+165-->[com.google.firebase:firebase-installations:17.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d923b7bf8e79faaff28d99df876f8068\transformed\firebase-installations-17.2.0\AndroidManifest.xml:16:17-130
+166                android:value="com.google.firebase.components.ComponentRegistrar" />
+166-->[com.google.firebase:firebase-installations:17.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d923b7bf8e79faaff28d99df876f8068\transformed\firebase-installations-17.2.0\AndroidManifest.xml:17:17-82
+167            <meta-data
+167-->[com.google.firebase:firebase-installations:17.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d923b7bf8e79faaff28d99df876f8068\transformed\firebase-installations-17.2.0\AndroidManifest.xml:18:13-20:85
+168                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+168-->[com.google.firebase:firebase-installations:17.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d923b7bf8e79faaff28d99df876f8068\transformed\firebase-installations-17.2.0\AndroidManifest.xml:19:17-127
+169                android:value="com.google.firebase.components.ComponentRegistrar" />
+169-->[com.google.firebase:firebase-installations:17.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d923b7bf8e79faaff28d99df876f8068\transformed\firebase-installations-17.2.0\AndroidManifest.xml:20:17-82
+170            <meta-data
+170-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\78b166eda10bb5120dff4bdfa9e7ddb4\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:12:13-14:85
+171                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+171-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\78b166eda10bb5120dff4bdfa9e7ddb4\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:13:17-116
+172                android:value="com.google.firebase.components.ComponentRegistrar" />
+172-->[com.google.firebase:firebase-common-ktx:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\78b166eda10bb5120dff4bdfa9e7ddb4\transformed\firebase-common-ktx-20.4.2\AndroidManifest.xml:14:17-82
+173            <meta-data
+173-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:35:13-37:85
+174                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+174-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:36:17-109
+175                android:value="com.google.firebase.components.ComponentRegistrar" />
+175-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:37:17-82
+176            <meta-data
+176-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\89c57ffb50cef4009333ebfe7630e57b\transformed\firebase-datatransport-18.1.7\AndroidManifest.xml:27:13-29:85
+177                android:name="com.google.firebase.components:com.google.firebase.datatransport.TransportRegistrar"
+177-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\89c57ffb50cef4009333ebfe7630e57b\transformed\firebase-datatransport-18.1.7\AndroidManifest.xml:28:17-115
+178                android:value="com.google.firebase.components.ComponentRegistrar" />
+178-->[com.google.firebase:firebase-datatransport:18.1.7] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\89c57ffb50cef4009333ebfe7630e57b\transformed\firebase-datatransport-18.1.7\AndroidManifest.xml:29:17-82
+179        </service>
+180
+181        <activity
+181-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:29:9-46:20
+182            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+182-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:30:13-80
+183            android:excludeFromRecents="true"
+183-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:31:13-46
+184            android:exported="true"
+184-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:32:13-36
+185            android:launchMode="singleTask"
+185-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:33:13-44
+186            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+186-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:34:13-72
+187            <intent-filter>
+187-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:35:13-45:29
+188                <action android:name="android.intent.action.VIEW" />
+188-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:36:17-69
+188-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:36:25-66
+189
+190                <category android:name="android.intent.category.DEFAULT" />
+190-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:38:17-76
+190-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:38:27-73
+191                <category android:name="android.intent.category.BROWSABLE" />
+191-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:39:17-78
+191-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:39:27-75
+192
+193                <data
+193-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:41:17-44:51
+194                    android:host="firebase.auth"
+194-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:42:21-49
+195                    android:path="/"
+195-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:43:21-37
+196                    android:scheme="genericidp" />
+196-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:44:21-48
+197            </intent-filter>
+198        </activity>
+199        <activity
+199-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:47:9-64:20
+200            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+200-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:48:13-79
+201            android:excludeFromRecents="true"
+201-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:49:13-46
+202            android:exported="true"
+202-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:50:13-36
+203            android:launchMode="singleTask"
+203-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:51:13-44
+204            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+204-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:52:13-72
+205            <intent-filter>
+205-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:53:13-63:29
+206                <action android:name="android.intent.action.VIEW" />
+206-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:36:17-69
+206-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:36:25-66
+207
+208                <category android:name="android.intent.category.DEFAULT" />
+208-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:38:17-76
+208-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:38:27-73
+209                <category android:name="android.intent.category.BROWSABLE" />
+209-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:39:17-78
+209-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:39:27-75
+210
+211                <data
+211-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:41:17-44:51
+212                    android:host="firebase.auth"
+212-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:42:21-49
+213                    android:path="/"
+213-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:43:21-37
+214                    android:scheme="recaptcha" />
+214-->[com.google.firebase:firebase-auth:22.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\c9431b3d9ae67f4b49545885bae4965d\transformed\firebase-auth-22.3.0\AndroidManifest.xml:44:21-48
+215            </intent-filter>
+216        </activity>
+217
+218        <receiver
+218-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:29:9-40:20
+219            android:name="com.google.firebase.iid.FirebaseInstanceIdReceiver"
+219-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:30:13-78
+220            android:exported="true"
+220-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:31:13-36
+221            android:permission="com.google.android.c2dm.permission.SEND" >
+221-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:32:13-73
+222            <intent-filter>
+222-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:33:13-35:29
+223                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+223-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:34:17-81
+223-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:34:25-78
+224            </intent-filter>
+225
+226            <meta-data
+226-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:37:13-39:40
+227                android:name="com.google.android.gms.cloudmessaging.FINISHED_AFTER_HANDLED"
+227-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:38:17-92
+228                android:value="true" />
+228-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:39:17-37
+229        </receiver>
+230        <!--
+231             FirebaseMessagingService performs security checks at runtime,
+232             but set to not exported to explicitly avoid allowing another app to call it.
+233        -->
+234        <service
+234-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:46:9-53:19
+235            android:name="com.google.firebase.messaging.FirebaseMessagingService"
+235-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:47:13-82
+236            android:directBootAware="true"
+236-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:48:13-43
+237            android:exported="false" >
+237-->[com.google.firebase:firebase-messaging:23.4.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\818f9cad638cdc8da79bf2fca821b707\transformed\firebase-messaging-23.4.0\AndroidManifest.xml:49:13-37
+238            <intent-filter android:priority="-500" >
+238-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:92:13-94:29
+239                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+239-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:17-78
+239-->C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:25-75
+240            </intent-filter>
+241        </service>
+242
+243        <property
+243-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:30:9-32:61
+244            android:name="android.adservices.AD_SERVICES_CONFIG"
+244-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:31:13-65
+245            android:resource="@xml/ga_ad_services_config" />
+245-->[com.google.android.gms:play-services-measurement-api:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7ab28284210589b00a4c8ea8d982b690\transformed\play-services-measurement-api-21.5.0\AndroidManifest.xml:32:13-58
+246
+247        <provider
+247-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:23:9-28:39
+248            android:name="com.google.firebase.provider.FirebaseInitProvider"
+248-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:24:13-77
+249            android:authorities="com.queueless.plus.firebaseinitprovider"
+249-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:25:13-72
+250            android:directBootAware="true"
+250-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:26:13-43
+251            android:exported="false"
+251-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:27:13-37
+252            android:initOrder="100" />
+252-->[com.google.firebase:firebase-common:20.4.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\3370b18ed0db680839001dfaa02f5007\transformed\firebase-common-20.4.2\AndroidManifest.xml:28:13-36
+253
+254        <receiver
+254-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:29:9-33:20
+255            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+255-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:30:13-85
+256            android:enabled="true"
+256-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:31:13-35
+257            android:exported="false" >
+257-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:32:13-37
+258        </receiver>
+259
+260        <service
+260-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:35:9-38:40
+261            android:name="com.google.android.gms.measurement.AppMeasurementService"
+261-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:36:13-84
+262            android:enabled="true"
+262-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:37:13-35
+263            android:exported="false" />
+263-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:38:13-37
+264        <service
+264-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:39:9-43:72
+265            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+265-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:40:13-87
+266            android:enabled="true"
+266-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:41:13-35
+267            android:exported="false"
+267-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:42:13-37
+268            android:permission="android.permission.BIND_JOB_SERVICE" />
+268-->[com.google.android.gms:play-services-measurement:21.5.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\4df62d040ff1d9dd29acce57095ad6c9\transformed\play-services-measurement-21.5.0\AndroidManifest.xml:43:13-69
+269
+270        <provider
+270-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+271            android:name="androidx.startup.InitializationProvider"
+271-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+272            android:authorities="com.queueless.plus.androidx-startup"
+272-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+273            android:exported="false" >
+273-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+274            <meta-data
+274-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+275                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+275-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+276                android:value="androidx.startup" />
+276-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\844ef304500431f9efdde4a5e41e5503\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+277            <meta-data
+277-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\1dc0eee3a85ff2c322399ae29ab79eb3\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+278                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+278-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\1dc0eee3a85ff2c322399ae29ab79eb3\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+279                android:value="androidx.startup" />
+279-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\1dc0eee3a85ff2c322399ae29ab79eb3\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+280            <meta-data
+280-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:29:13-31:52
+281                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+281-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:30:17-85
+282                android:value="androidx.startup" />
+282-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:31:17-49
+283        </provider>
+284
+285        <activity
+285-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\9c35014dc8d1a1b614ddd3ef5a112ef9\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+286            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+286-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\9c35014dc8d1a1b614ddd3ef5a112ef9\transformed\play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+287            android:exported="false"
+287-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\9c35014dc8d1a1b614ddd3ef5a112ef9\transformed\play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+288            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+288-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\9c35014dc8d1a1b614ddd3ef5a112ef9\transformed\play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+289
+290        <uses-library
+290-->[androidx.window:window:1.0.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d9e66d12c43f8c9e7c82a8caabef44e9\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+291            android:name="androidx.window.extensions"
+291-->[androidx.window:window:1.0.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d9e66d12c43f8c9e7c82a8caabef44e9\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+292            android:required="false" />
+292-->[androidx.window:window:1.0.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d9e66d12c43f8c9e7c82a8caabef44e9\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+293        <uses-library
+293-->[androidx.window:window:1.0.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d9e66d12c43f8c9e7c82a8caabef44e9\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+294            android:name="androidx.window.sidecar"
+294-->[androidx.window:window:1.0.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d9e66d12c43f8c9e7c82a8caabef44e9\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+295            android:required="false" />
+295-->[androidx.window:window:1.0.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\d9e66d12c43f8c9e7c82a8caabef44e9\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+296        <uses-library
+296-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\864065d62f57d95652074b26d92caa56\transformed\ads-adservices-1.0.0-beta05\AndroidManifest.xml:23:9-25:40
+297            android:name="android.ext.adservices"
+297-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\864065d62f57d95652074b26d92caa56\transformed\ads-adservices-1.0.0-beta05\AndroidManifest.xml:24:13-50
+298            android:required="false" />
+298-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\864065d62f57d95652074b26d92caa56\transformed\ads-adservices-1.0.0-beta05\AndroidManifest.xml:25:13-37
+299
+300        <meta-data
+300-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7f0803eb0207a18d1ac650aea6feb5dc\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+301            android:name="com.google.android.gms.version"
+301-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7f0803eb0207a18d1ac650aea6feb5dc\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+302            android:value="@integer/google_play_services_version" />
+302-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\7f0803eb0207a18d1ac650aea6feb5dc\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+303
+304        <receiver
+304-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:34:9-52:20
+305            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+305-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:35:13-76
+306            android:directBootAware="false"
+306-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:36:13-44
+307            android:enabled="true"
+307-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:37:13-35
+308            android:exported="true"
+308-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:38:13-36
+309            android:permission="android.permission.DUMP" >
+309-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:39:13-57
+310            <intent-filter>
+310-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:40:13-42:29
+311                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+311-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:17-91
+311-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:41:25-88
+312            </intent-filter>
+313            <intent-filter>
+313-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:43:13-45:29
+314                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+314-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:17-85
+314-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:44:25-82
+315            </intent-filter>
+316            <intent-filter>
+316-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:46:13-48:29
+317                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+317-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:17-88
+317-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:47:25-85
+318            </intent-filter>
+319            <intent-filter>
+319-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:49:13-51:29
+320                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+320-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:17-95
+320-->[androidx.profileinstaller:profileinstaller:1.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\6f35dd86c0c2c3cd61b91ea67080efa2\transformed\profileinstaller-1.3.0\AndroidManifest.xml:50:25-92
+321            </intent-filter>
+322        </receiver>
+323
+324        <service
+324-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\8b50a223252cd0d55677fb61c2f5d4d9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:28:9-34:19
+325            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+325-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\8b50a223252cd0d55677fb61c2f5d4d9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:29:13-103
+326            android:exported="false" >
+326-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\8b50a223252cd0d55677fb61c2f5d4d9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:30:13-37
+327            <meta-data
+327-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\8b50a223252cd0d55677fb61c2f5d4d9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:31:13-33:39
+328                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+328-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\8b50a223252cd0d55677fb61c2f5d4d9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:32:17-94
+329                android:value="cct" />
+329-->[com.google.android.datatransport:transport-backend-cct:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\8b50a223252cd0d55677fb61c2f5d4d9\transformed\transport-backend-cct-3.1.8\AndroidManifest.xml:33:17-36
+330        </service>
+331        <service
+331-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:26:9-30:19
+332            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+332-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:27:13-117
+333            android:exported="false"
+333-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:28:13-37
+334            android:permission="android.permission.BIND_JOB_SERVICE" >
+334-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:29:13-69
+335        </service>
+336
+337        <receiver
+337-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:32:9-34:40
+338            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+338-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:33:13-132
+339            android:exported="false" />
+339-->[com.google.android.datatransport:transport-runtime:3.1.8] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\f9fd00a53ff2aa434eef7db83fd4fc00\transformed\transport-runtime-3.1.8\AndroidManifest.xml:34:13-37
+340
+341        <activity
+341-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:47:9-53:63
+342            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+342-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:48:13-74
+343            android:clearTaskOnLaunch="true"
+343-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:49:13-45
+344            android:screenOrientation="sensorLandscape"
+344-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:50:13-56
+345            android:stateNotNeeded="true"
+345-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:51:13-42
+346            android:theme="@style/zxing_CaptureTheme"
+346-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:52:13-54
+347            android:windowSoftInputMode="stateAlwaysHidden" />
+347-->[com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b6d3daa73f1348b99b0566daaf8e9e8c\transformed\zxing-android-embedded-4.3.0\AndroidManifest.xml:53:13-60
+348    </application>
+349
+350</manifest>

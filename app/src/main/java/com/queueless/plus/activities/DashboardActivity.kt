@@ -2,6 +2,7 @@ package com.queueless.plus.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.firestore.ListenerRegistration
@@ -30,7 +31,7 @@ class DashboardActivity : AppCompatActivity() {
 
         setupToolbar()
         setupRecyclerView()
-        setupFab()
+        setupAdminControls()
         setupActions()
     }
 
@@ -49,12 +50,8 @@ class DashboardActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "Hi, ${session.userName}"
 
-        // 🚪 Logout
-        binding.btnLogout.setOnClickListener {
-            logout()
-        }
+        binding.btnLogout.setOnClickListener { logout() }
 
-        // 📜 Order History
         binding.btnHistory.setOnClickListener {
             startActivity(Intent(this, OrderHistoryActivity::class.java))
         }
@@ -80,6 +77,44 @@ class DashboardActivity : AppCompatActivity() {
         binding.rvQueues.adapter = adapter
     }
 
+    // 🔥 ADMIN CONTROLS (FINAL FIX)
+    private fun setupAdminControls() {
+
+        if (session.isAdmin) {
+
+            // ✅ Show FAB
+            binding.fabCreateQueue.show()
+
+            // ✅ Show Manage Menu button
+            binding.btnManageMenu.visibility = View.VISIBLE
+
+            // 🔥 Button → direct open menu
+            binding.btnManageMenu.setOnClickListener {
+                startActivity(Intent(this, AdminMenuActivity::class.java))
+            }
+
+            // 🔥 FAB → chooser dialog
+            binding.fabCreateQueue.setOnClickListener {
+
+                val options = arrayOf("Create Queue", "Manage Menu")
+
+                androidx.appcompat.app.AlertDialog.Builder(this)
+                    .setTitle("Admin Actions")
+                    .setItems(options) { _, which ->
+                        when (which) {
+                            0 -> startActivity(Intent(this, CreateQueueActivity::class.java))
+                            1 -> startActivity(Intent(this, AdminMenuActivity::class.java))
+                        }
+                    }
+                    .show()
+            }
+
+        } else {
+            binding.fabCreateQueue.hide()
+            binding.btnManageMenu.visibility = View.GONE
+        }
+    }
+
     // 🔄 Swipe Refresh
     private fun setupActions() {
         binding.swipeRefresh.setOnRefreshListener {
@@ -87,30 +122,14 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    // ➕ Admin FAB
-    private fun setupFab() {
-        if (session.isAdmin) {
-            binding.fabCreateQueue.show()
-
-            binding.fabCreateQueue.setOnClickListener {
-                startActivity(Intent(this, CreateQueueActivity::class.java))
-            }
-        } else {
-            binding.fabCreateQueue.hide()
-        }
-    }
-
     // 🔄 Real-time queues
     private fun attachQueueListener() {
 
         binding.progressBar.show()
-
-        // 🔥 Remove old listener (IMPORTANT)
         queueListener?.remove()
 
         queueListener = FirestoreRepository.listenToQueues { queues ->
 
-            // 🔥 Prevent crash if activity closed
             if (isFinishing || isDestroyed) return@listenToQueues
 
             binding.progressBar.hide()
@@ -118,11 +137,8 @@ class DashboardActivity : AppCompatActivity() {
 
             adapter.submitList(queues)
 
-            if (queues.isEmpty()) {
-                binding.tvEmpty.show()
-            } else {
-                binding.tvEmpty.hide()
-            }
+            if (queues.isEmpty()) binding.tvEmpty.show()
+            else binding.tvEmpty.hide()
         }
     }
 
