@@ -13,6 +13,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.queueless.plus.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -21,6 +23,21 @@ import java.lang.String;
 public final class ActivityManageQueueBinding implements ViewBinding {
   @NonNull
   private final CoordinatorLayout rootView;
+
+  @NonNull
+  public final MaterialButton btnAutoSkipNoShow;
+
+  @NonNull
+  public final MaterialButton btnClearBroadcast;
+
+  @NonNull
+  public final MaterialButton btnPauseResume;
+
+  @NonNull
+  public final MaterialButton btnSendBroadcast;
+
+  @NonNull
+  public final TextInputEditText etBroadcast;
 
   @NonNull
   public final ProgressBar progressBar;
@@ -38,9 +55,17 @@ public final class ActivityManageQueueBinding implements ViewBinding {
   public final TextView tvEmpty;
 
   private ActivityManageQueueBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull ProgressBar progressBar, @NonNull RecyclerView rvEntries, @NonNull Toolbar toolbar,
-      @NonNull TextView tvCount, @NonNull TextView tvEmpty) {
+      @NonNull MaterialButton btnAutoSkipNoShow, @NonNull MaterialButton btnClearBroadcast,
+      @NonNull MaterialButton btnPauseResume, @NonNull MaterialButton btnSendBroadcast,
+      @NonNull TextInputEditText etBroadcast, @NonNull ProgressBar progressBar,
+      @NonNull RecyclerView rvEntries, @NonNull Toolbar toolbar, @NonNull TextView tvCount,
+      @NonNull TextView tvEmpty) {
     this.rootView = rootView;
+    this.btnAutoSkipNoShow = btnAutoSkipNoShow;
+    this.btnClearBroadcast = btnClearBroadcast;
+    this.btnPauseResume = btnPauseResume;
+    this.btnSendBroadcast = btnSendBroadcast;
+    this.etBroadcast = etBroadcast;
     this.progressBar = progressBar;
     this.rvEntries = rvEntries;
     this.toolbar = toolbar;
@@ -75,6 +100,36 @@ public final class ActivityManageQueueBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnAutoSkipNoShow;
+      MaterialButton btnAutoSkipNoShow = ViewBindings.findChildViewById(rootView, id);
+      if (btnAutoSkipNoShow == null) {
+        break missingId;
+      }
+
+      id = R.id.btnClearBroadcast;
+      MaterialButton btnClearBroadcast = ViewBindings.findChildViewById(rootView, id);
+      if (btnClearBroadcast == null) {
+        break missingId;
+      }
+
+      id = R.id.btnPauseResume;
+      MaterialButton btnPauseResume = ViewBindings.findChildViewById(rootView, id);
+      if (btnPauseResume == null) {
+        break missingId;
+      }
+
+      id = R.id.btnSendBroadcast;
+      MaterialButton btnSendBroadcast = ViewBindings.findChildViewById(rootView, id);
+      if (btnSendBroadcast == null) {
+        break missingId;
+      }
+
+      id = R.id.etBroadcast;
+      TextInputEditText etBroadcast = ViewBindings.findChildViewById(rootView, id);
+      if (etBroadcast == null) {
+        break missingId;
+      }
+
       id = R.id.progressBar;
       ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
       if (progressBar == null) {
@@ -105,7 +160,8 @@ public final class ActivityManageQueueBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityManageQueueBinding((CoordinatorLayout) rootView, progressBar, rvEntries,
+      return new ActivityManageQueueBinding((CoordinatorLayout) rootView, btnAutoSkipNoShow,
+          btnClearBroadcast, btnPauseResume, btnSendBroadcast, etBroadcast, progressBar, rvEntries,
           toolbar, tvCount, tvEmpty);
     }
     String missingId = rootView.getResources().getResourceName(id);

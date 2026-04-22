@@ -32,7 +32,7 @@ class DashboardActivity : AppCompatActivity() {
         setupToolbar()
         setupRecyclerView()
         setupAdminControls()
-        setupActions()
+        setupSwipeRefresh()
     }
 
     override fun onStart() {
@@ -50,9 +50,16 @@ class DashboardActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "Hi, ${session.userName}"
 
-        binding.btnLogout.setOnClickListener { logout() }
+        binding.btnLogout.setOnClickListener {
+            logout()
+        }
 
         binding.btnHistory.setOnClickListener {
+            startActivity(Intent(this, OrderHistoryActivity::class.java))
+        }
+
+        binding.btnNotifications.setOnClickListener {
+            // Temporary: just open history or remove later
             startActivity(Intent(this, OrderHistoryActivity::class.java))
         }
     }
@@ -77,36 +84,20 @@ class DashboardActivity : AppCompatActivity() {
         binding.rvQueues.adapter = adapter
     }
 
-    // 🔥 ADMIN CONTROLS (FINAL FIX)
+    // 🔥 Admin controls
     private fun setupAdminControls() {
 
         if (session.isAdmin) {
 
-            // ✅ Show FAB
             binding.fabCreateQueue.show()
-
-            // ✅ Show Manage Menu button
             binding.btnManageMenu.visibility = View.VISIBLE
 
-            // 🔥 Button → direct open menu
             binding.btnManageMenu.setOnClickListener {
                 startActivity(Intent(this, AdminMenuActivity::class.java))
             }
 
-            // 🔥 FAB → chooser dialog
             binding.fabCreateQueue.setOnClickListener {
-
-                val options = arrayOf("Create Queue", "Manage Menu")
-
-                androidx.appcompat.app.AlertDialog.Builder(this)
-                    .setTitle("Admin Actions")
-                    .setItems(options) { _, which ->
-                        when (which) {
-                            0 -> startActivity(Intent(this, CreateQueueActivity::class.java))
-                            1 -> startActivity(Intent(this, AdminMenuActivity::class.java))
-                        }
-                    }
-                    .show()
+                startActivity(Intent(this, CreateQueueActivity::class.java))
             }
 
         } else {
@@ -115,14 +106,14 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    // 🔄 Swipe Refresh
-    private fun setupActions() {
+    // 🔄 Swipe refresh
+    private fun setupSwipeRefresh() {
         binding.swipeRefresh.setOnRefreshListener {
             attachQueueListener()
         }
     }
 
-    // 🔄 Real-time queues
+    // 🔄 Firebase listener
     private fun attachQueueListener() {
 
         binding.progressBar.show()
@@ -137,16 +128,18 @@ class DashboardActivity : AppCompatActivity() {
 
             adapter.submitList(queues)
 
-            if (queues.isEmpty()) binding.tvEmpty.show()
-            else binding.tvEmpty.hide()
+            if (queues.isEmpty()) {
+                binding.tvEmpty.show()
+            } else {
+                binding.tvEmpty.hide()
+            }
         }
     }
 
-    // 📍 Navigate
+    // 📍 Open queue
     private fun openQueueDetail(queue: Queue) {
-        val intent = Intent(this, QueueDetailActivity::class.java).apply {
-            putExtra(QueueDetailActivity.EXTRA_QUEUE_ID, queue.queueId)
-        }
+        val intent = Intent(this, QueueDetailActivity::class.java)
+        intent.putExtra(QueueDetailActivity.EXTRA_QUEUE_ID, queue.queueId)
         startActivity(intent)
     }
 

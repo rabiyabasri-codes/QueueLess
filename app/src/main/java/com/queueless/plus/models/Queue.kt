@@ -7,6 +7,9 @@ data class Queue(
     val avgServiceTime: Int = 5,   // in minutes
     val createdBy: String = "",    // admin userId
     val isActive: Boolean = true,
+    val isPaused: Boolean = false,
+    val pauseReason: String = "",
+    val broadcastMessage: String = "",
     val location: String = "",
     val currentCount: Int = 0
 ) {
@@ -17,6 +20,9 @@ data class Queue(
         "avgServiceTime" to avgServiceTime,
         "createdBy"      to createdBy,
         "isActive"       to isActive,
+        "isPaused"       to isPaused,
+        "pauseReason"    to pauseReason,
+        "broadcastMessage" to broadcastMessage,
         "location"       to location,
         "currentCount"   to currentCount
     )

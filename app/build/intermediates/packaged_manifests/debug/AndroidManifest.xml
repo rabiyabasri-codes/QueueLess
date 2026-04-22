@@ -104,6 +104,15 @@
         <activity
             android:name="com.queueless.plus.activities.OrderHistoryActivity"
             android:exported="false" />
+        <activity
+            android:name="com.queueless.plus.activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.queueless.plus.activities.FavoritesRecentActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.queueless.plus.activities.NotificationCenterActivity"
+            android:exported="false" />
 
         <!-- 🛠 Admin -->
         <activity
@@ -117,6 +126,9 @@
             android:exported="false" />
         <activity
             android:name="com.queueless.plus.activities.AdminMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.queueless.plus.activities.AdminAnalyticsActivity"
             android:exported="false" />
 
         <!-- 🔔 Firebase Messaging -->

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.queueless.plus.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -24,6 +25,9 @@ public final class ActivityOrderBinding implements ViewBinding {
 
   @NonNull
   public final MaterialButton btnPlaceOrder;
+
+  @NonNull
+  public final TextInputEditText etMenuSearch;
 
   @NonNull
   public final RecyclerView rvCart;
@@ -38,10 +42,12 @@ public final class ActivityOrderBinding implements ViewBinding {
   public final TextView tvTotal;
 
   private ActivityOrderBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull MaterialButton btnPlaceOrder, @NonNull RecyclerView rvCart,
-      @NonNull RecyclerView rvMenu, @NonNull Toolbar toolbar, @NonNull TextView tvTotal) {
+      @NonNull MaterialButton btnPlaceOrder, @NonNull TextInputEditText etMenuSearch,
+      @NonNull RecyclerView rvCart, @NonNull RecyclerView rvMenu, @NonNull Toolbar toolbar,
+      @NonNull TextView tvTotal) {
     this.rootView = rootView;
     this.btnPlaceOrder = btnPlaceOrder;
+    this.etMenuSearch = etMenuSearch;
     this.rvCart = rvCart;
     this.rvMenu = rvMenu;
     this.toolbar = toolbar;
@@ -81,6 +87,12 @@ public final class ActivityOrderBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.etMenuSearch;
+      TextInputEditText etMenuSearch = ViewBindings.findChildViewById(rootView, id);
+      if (etMenuSearch == null) {
+        break missingId;
+      }
+
       id = R.id.rvCart;
       RecyclerView rvCart = ViewBindings.findChildViewById(rootView, id);
       if (rvCart == null) {
@@ -105,8 +117,8 @@ public final class ActivityOrderBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityOrderBinding((CoordinatorLayout) rootView, btnPlaceOrder, rvCart, rvMenu,
-          toolbar, tvTotal);
+      return new ActivityOrderBinding((CoordinatorLayout) rootView, btnPlaceOrder, etMenuSearch,
+          rvCart, rvMenu, toolbar, tvTotal);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

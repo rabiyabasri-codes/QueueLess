@@ -6,11 +6,14 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import com.queueless.plus.databinding.ActivityQrScanBinding
+import com.queueless.plus.utils.SessionManager
+import com.queueless.plus.utils.requireAdminAccess
 import com.queueless.plus.utils.toast
 
 class QRScanActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityQrScanBinding
+    private lateinit var session: SessionManager
     private val db = FirebaseFirestore.getInstance()
 
     private var scannedEntryId: String = ""
@@ -19,6 +22,8 @@ class QRScanActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQrScanBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        session = SessionManager(this)
+        if (!requireAdminAccess(session)) return
 
         setSupportActionBar(null)
 

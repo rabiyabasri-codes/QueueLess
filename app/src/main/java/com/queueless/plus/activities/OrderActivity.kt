@@ -3,9 +3,11 @@ package com.queueless.plus.activities
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.FirebaseFirestore
 import com.queueless.plus.adapters.CartAdapter
 import com.queueless.plus.adapters.MenuAdapter
@@ -15,6 +17,7 @@ import com.queueless.plus.models.MenuItem
 import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.toast
+import kotlinx.coroutines.launch
 
 class OrderActivity : AppCompatActivity() {
 
@@ -26,8 +29,10 @@ class OrderActivity : AppCompatActivity() {
     private var queueId: String = ""
 
     private val cart = mutableListOf<CartItem>()
+    private var latestMenu: List<MenuItem> = emptyList()
+
     private lateinit var cartAdapter: CartAdapter
-    private lateinit var menuAdapter: MenuAdapter   // 🔥 NEW
+    private lateinit var menuAdapter: MenuAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +49,10 @@ class OrderActivity : AppCompatActivity() {
         }
 
         setupToolbar()
-        setupMenu()        // 🔥 Firebase menu
+        setupMenu()
         setupCart()
         setupSwipeToDelete()
+        setupSearch()
 
         updateTotal()
 
@@ -61,21 +67,36 @@ class OrderActivity : AppCompatActivity() {
         supportActionBar?.title = "Order Food 🍔"
     }
 
-    // 🔥 UPDATED: Firebase menu
+    // 🔥 MENU FROM FIREBASE
     private fun setupMenu() {
 
         binding.rvMenu.layoutManager = LinearLayoutManager(this)
 
-        menuAdapter = MenuAdapter(emptyList()) { item ->
-            addToCart(item)
-        }
+        menuAdapter = MenuAdapter(
+            emptyList(),
+            onAdd = { item -> addToCart(item) },
+            onToggleFavorite = { item ->
+                val nowFavorite = session.toggleFavoriteItem(item.name)
+                toast(if (nowFavorite) "Added to favorites" else "Removed from favorites")
+                updateVisibleMenu()
+            }
+        )
 
         binding.rvMenu.adapter = menuAdapter
 
-        // 🔥 LISTEN TO FIREBASE MENU
         FirestoreRepository.listenToMenu { list ->
-            menuAdapter.updateData(list)
+            latestMenu = list
+            updateVisibleMenu()
         }
+    }
+
+    private fun updateVisibleMenu() {
+        val sorted = latestMenu.sortedWith(
+            compareByDescending<MenuItem> { session.isFavoriteItem(it.name) }
+                .thenBy { it.name.lowercase() }
+        )
+        menuAdapter.updateData(sorted)
+        menuAdapter.filter(binding.etMenuSearch.text?.toString().orEmpty())
     }
 
     private fun setupCart() {
@@ -86,6 +107,12 @@ class OrderActivity : AppCompatActivity() {
         }
 
         binding.rvCart.adapter = cartAdapter
+    }
+
+    private fun setupSearch() {
+        binding.etMenuSearch.doAfterTextChanged { text ->
+            menuAdapter.filter(text?.toString().orEmpty())
+        }
     }
 
     private fun addToCart(item: MenuItem) {
@@ -170,6 +197,20 @@ class OrderActivity : AppCompatActivity() {
                 )
 
                 db.collection("orders").add(orderMap)
+                session.addRecentOrder(orderText, total)
+
+                // ✅ FIXED COROUTINE CALL
+                lifecycleScope.launch {
+                    try {
+                        FirestoreRepository.pushNotification(
+                            userId = session.userId,
+                            title = "Order placed",
+                            message = "Your order for Rs. $total has been placed."
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
 
                 toast("Order placed ₹$total")
 

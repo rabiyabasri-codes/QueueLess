@@ -8,12 +8,15 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.queueless.plus.R
 import com.queueless.plus.utils.AuthManager
+import com.queueless.plus.utils.SessionManager
+import com.queueless.plus.utils.ThemeUtils
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ThemeUtils.applyTheme(this, SessionManager(this))
         setContentView(R.layout.activity_splash)
 
         // Navigate after 2 seconds

@@ -36,6 +36,9 @@ public final class ActivityDashboardBinding implements ViewBinding {
   public final Button btnManageMenu;
 
   @NonNull
+  public final ImageButton btnNotifications;
+
+  @NonNull
   public final FloatingActionButton fabCreateQueue;
 
   @NonNull
@@ -58,14 +61,15 @@ public final class ActivityDashboardBinding implements ViewBinding {
 
   private ActivityDashboardBinding(@NonNull CoordinatorLayout rootView,
       @NonNull ImageButton btnHistory, @NonNull ImageButton btnLogout,
-      @NonNull Button btnManageMenu, @NonNull FloatingActionButton fabCreateQueue,
-      @NonNull ProgressBar progressBar, @NonNull RecyclerView rvQueues,
-      @NonNull SwipeRefreshLayout swipeRefresh, @NonNull Toolbar toolbar, @NonNull TextView tvEmpty,
-      @NonNull TextView tvWelcome) {
+      @NonNull Button btnManageMenu, @NonNull ImageButton btnNotifications,
+      @NonNull FloatingActionButton fabCreateQueue, @NonNull ProgressBar progressBar,
+      @NonNull RecyclerView rvQueues, @NonNull SwipeRefreshLayout swipeRefresh,
+      @NonNull Toolbar toolbar, @NonNull TextView tvEmpty, @NonNull TextView tvWelcome) {
     this.rootView = rootView;
     this.btnHistory = btnHistory;
     this.btnLogout = btnLogout;
     this.btnManageMenu = btnManageMenu;
+    this.btnNotifications = btnNotifications;
     this.fabCreateQueue = fabCreateQueue;
     this.progressBar = progressBar;
     this.rvQueues = rvQueues;
@@ -120,6 +124,12 @@ public final class ActivityDashboardBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.btnNotifications;
+      ImageButton btnNotifications = ViewBindings.findChildViewById(rootView, id);
+      if (btnNotifications == null) {
+        break missingId;
+      }
+
       id = R.id.fabCreateQueue;
       FloatingActionButton fabCreateQueue = ViewBindings.findChildViewById(rootView, id);
       if (fabCreateQueue == null) {
@@ -163,8 +173,8 @@ public final class ActivityDashboardBinding implements ViewBinding {
       }
 
       return new ActivityDashboardBinding((CoordinatorLayout) rootView, btnHistory, btnLogout,
-          btnManageMenu, fabCreateQueue, progressBar, rvQueues, swipeRefresh, toolbar, tvEmpty,
-          tvWelcome);
+          btnManageMenu, btnNotifications, fabCreateQueue, progressBar, rvQueues, swipeRefresh,
+          toolbar, tvEmpty, tvWelcome);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -13,6 +13,7 @@ import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.hide
 import com.queueless.plus.utils.show
+import com.queueless.plus.utils.ThemeUtils
 import com.queueless.plus.utils.toast
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         session = SessionManager(this)
+        ThemeUtils.applyTheme(this, session)
 
         setupClickListeners()
     }

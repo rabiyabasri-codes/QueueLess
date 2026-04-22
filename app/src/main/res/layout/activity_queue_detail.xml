@@ -84,6 +84,25 @@
                     android:layout_marginTop="4dp"
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvQueueNotice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvQueuePaused"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Queue is temporarily paused"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 

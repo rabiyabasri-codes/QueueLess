@@ -48,14 +48,20 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
   public final TextView tvQueueCount;
 
   @NonNull
+  public final TextView tvQueueNotice;
+
+  @NonNull
+  public final TextView tvQueuePaused;
+
+  @NonNull
   public final TextView tvServiceTime;
 
   private ActivityQueueDetailBinding(@NonNull CoordinatorLayout rootView,
       @NonNull MaterialButton btnJoinQueue, @NonNull ProgressBar progressBar,
       @NonNull RecyclerView rvQueueEntries, @NonNull Toolbar toolbar,
       @NonNull TextView tvDescription, @NonNull TextView tvEstimatedWait,
-      @NonNull TextView tvLocation, @NonNull TextView tvQueueCount,
-      @NonNull TextView tvServiceTime) {
+      @NonNull TextView tvLocation, @NonNull TextView tvQueueCount, @NonNull TextView tvQueueNotice,
+      @NonNull TextView tvQueuePaused, @NonNull TextView tvServiceTime) {
     this.rootView = rootView;
     this.btnJoinQueue = btnJoinQueue;
     this.progressBar = progressBar;
@@ -65,6 +71,8 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
     this.tvEstimatedWait = tvEstimatedWait;
     this.tvLocation = tvLocation;
     this.tvQueueCount = tvQueueCount;
+    this.tvQueueNotice = tvQueueNotice;
+    this.tvQueuePaused = tvQueuePaused;
     this.tvServiceTime = tvServiceTime;
   }
 
@@ -143,6 +151,18 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvQueueNotice;
+      TextView tvQueueNotice = ViewBindings.findChildViewById(rootView, id);
+      if (tvQueueNotice == null) {
+        break missingId;
+      }
+
+      id = R.id.tvQueuePaused;
+      TextView tvQueuePaused = ViewBindings.findChildViewById(rootView, id);
+      if (tvQueuePaused == null) {
+        break missingId;
+      }
+
       id = R.id.tvServiceTime;
       TextView tvServiceTime = ViewBindings.findChildViewById(rootView, id);
       if (tvServiceTime == null) {
@@ -151,7 +171,7 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
 
       return new ActivityQueueDetailBinding((CoordinatorLayout) rootView, btnJoinQueue, progressBar,
           rvQueueEntries, toolbar, tvDescription, tvEstimatedWait, tvLocation, tvQueueCount,
-          tvServiceTime);
+          tvQueueNotice, tvQueuePaused, tvServiceTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

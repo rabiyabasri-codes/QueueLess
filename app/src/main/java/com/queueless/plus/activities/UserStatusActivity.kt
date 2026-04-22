@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.zxing.BarcodeFormat
 import com.journeyapps.barcodescanner.BarcodeEncoder
@@ -32,10 +33,12 @@ class UserStatusActivity : AppCompatActivity() {
 
     private var entryListener: ListenerRegistration? = null
     private var entriesListener: ListenerRegistration? = null
+    private var queueMetaListener: ListenerRegistration? = null
     private var countdownTimer: CountDownTimer? = null
 
     private var currentEntry: QueueEntry? = null
     private var entryId: String = ""
+    private var avgServiceMinutes: Int = 5
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,7 @@ class UserStatusActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "My Queue Status"
 
+        loadQueueMeta(queueId)
         attachListeners(queueId)
 
         binding.btnLeaveQueue.setOnClickListener {
@@ -102,7 +106,7 @@ class UserStatusActivity : AppCompatActivity() {
             if (position <= 0) return@listenToQueueEntries
 
             val usersAhead = position - 1
-            val waitMinutes = usersAhead * 5
+            val waitMinutes = usersAhead * avgServiceMinutes
 
             binding.tvPosition.text = "#$position"
             binding.tvUsersAhead.text = "$usersAhead ahead of you"
@@ -122,6 +126,29 @@ class UserStatusActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        queueMetaListener = FirebaseFirestore.getInstance()
+            .collection("queues")
+            .document(queueId)
+            .addSnapshotListener { snapshot, _ ->
+                val paused = snapshot?.getBoolean("isPaused") == true
+                val message = snapshot?.getString("broadcastMessage").orEmpty()
+
+                binding.btnOrder.isEnabled = !paused
+                if (message.isNotBlank()) {
+                    binding.tvNotifyBanner.show()
+                    binding.tvBannerText.text = message
+                } else if (!paused) {
+                    binding.tvNotifyBanner.hide()
+                }
+            }
+    }
+
+    private fun loadQueueMeta(queueId: String) {
+        lifecycleScope.launch {
+            val queue = FirestoreRepository.getQueue(queueId)
+            avgServiceMinutes = queue?.avgServiceTime?.takeIf { it > 0 } ?: 5
         }
     }
 
@@ -209,6 +236,7 @@ class UserStatusActivity : AppCompatActivity() {
         super.onDestroy()
         entryListener?.remove()
         entriesListener?.remove()
+        queueMetaListener?.remove()
         countdownTimer?.cancel()
     }
 

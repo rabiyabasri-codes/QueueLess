@@ -4,14 +4,15 @@ package com.queueless.plus.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.queueless.plus.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -19,37 +20,46 @@ import java.lang.String;
 
 public final class ActivityAdminMenuBinding implements ViewBinding {
   @NonNull
-  private final LinearLayout rootView;
+  private final CoordinatorLayout rootView;
 
   @NonNull
-  public final Button btnAdd;
+  public final MaterialButton btnAdd;
 
   @NonNull
-  public final EditText etImage;
+  public final MaterialButton btnLoadSamples;
 
   @NonNull
-  public final EditText etName;
+  public final TextInputEditText etImage;
 
   @NonNull
-  public final EditText etPrice;
+  public final TextInputEditText etName;
+
+  @NonNull
+  public final TextInputEditText etPrice;
 
   @NonNull
   public final RecyclerView rvMenu;
 
-  private ActivityAdminMenuBinding(@NonNull LinearLayout rootView, @NonNull Button btnAdd,
-      @NonNull EditText etImage, @NonNull EditText etName, @NonNull EditText etPrice,
-      @NonNull RecyclerView rvMenu) {
+  @NonNull
+  public final Toolbar toolbar;
+
+  private ActivityAdminMenuBinding(@NonNull CoordinatorLayout rootView,
+      @NonNull MaterialButton btnAdd, @NonNull MaterialButton btnLoadSamples,
+      @NonNull TextInputEditText etImage, @NonNull TextInputEditText etName,
+      @NonNull TextInputEditText etPrice, @NonNull RecyclerView rvMenu, @NonNull Toolbar toolbar) {
     this.rootView = rootView;
     this.btnAdd = btnAdd;
+    this.btnLoadSamples = btnLoadSamples;
     this.etImage = etImage;
     this.etName = etName;
     this.etPrice = etPrice;
     this.rvMenu = rvMenu;
+    this.toolbar = toolbar;
   }
 
   @Override
   @NonNull
-  public LinearLayout getRoot() {
+  public CoordinatorLayout getRoot() {
     return rootView;
   }
 
@@ -75,25 +85,31 @@ public final class ActivityAdminMenuBinding implements ViewBinding {
     int id;
     missingId: {
       id = R.id.btnAdd;
-      Button btnAdd = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnAdd = ViewBindings.findChildViewById(rootView, id);
       if (btnAdd == null) {
         break missingId;
       }
 
+      id = R.id.btnLoadSamples;
+      MaterialButton btnLoadSamples = ViewBindings.findChildViewById(rootView, id);
+      if (btnLoadSamples == null) {
+        break missingId;
+      }
+
       id = R.id.etImage;
-      EditText etImage = ViewBindings.findChildViewById(rootView, id);
+      TextInputEditText etImage = ViewBindings.findChildViewById(rootView, id);
       if (etImage == null) {
         break missingId;
       }
 
       id = R.id.etName;
-      EditText etName = ViewBindings.findChildViewById(rootView, id);
+      TextInputEditText etName = ViewBindings.findChildViewById(rootView, id);
       if (etName == null) {
         break missingId;
       }
 
       id = R.id.etPrice;
-      EditText etPrice = ViewBindings.findChildViewById(rootView, id);
+      TextInputEditText etPrice = ViewBindings.findChildViewById(rootView, id);
       if (etPrice == null) {
         break missingId;
       }
@@ -104,8 +120,14 @@ public final class ActivityAdminMenuBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityAdminMenuBinding((LinearLayout) rootView, btnAdd, etImage, etName, etPrice,
-          rvMenu);
+      id = R.id.toolbar;
+      Toolbar toolbar = ViewBindings.findChildViewById(rootView, id);
+      if (toolbar == null) {
+        break missingId;
+      }
+
+      return new ActivityAdminMenuBinding((CoordinatorLayout) rootView, btnAdd, btnLoadSamples,
+          etImage, etName, etPrice, rvMenu, toolbar);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

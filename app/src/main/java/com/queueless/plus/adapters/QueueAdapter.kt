@@ -29,7 +29,8 @@ class QueueAdapter(
 
         fun bind(queue: Queue) {
             binding.tvQueueName.text    = queue.queueName
-            binding.tvDescription.text  = queue.description
+            val pausedLabel = if (queue.isPaused) " (Paused)" else ""
+            binding.tvDescription.text  = queue.description + pausedLabel
             binding.tvLocation.text     = queue.location
             binding.tvServiceTime.text  = "~${queue.avgServiceTime} min/person"
             binding.tvCount.text        = "${queue.currentCount} waiting"

@@ -3,7 +3,10 @@ package com.queueless.plus.utils
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
+import com.google.firebase.Timestamp
+import com.queueless.plus.models.AppNotification
 import com.queueless.plus.models.MenuItem
+import com.queueless.plus.models.Order
 import com.queueless.plus.models.Queue
 import com.queueless.plus.models.QueueEntry
 import com.queueless.plus.models.User
@@ -17,6 +20,8 @@ object FirestoreRepository {
     private val usersRef        = db.collection("users")
     private val queuesRef       = db.collection("queues")
     private val queueEntriesRef = db.collection("queueEntries")
+    private val ordersRef       = db.collection("orders")
+    private val notificationsRef = db.collection("notifications")
 
     // 🔥 NEW COLLECTION
     private val menuRef         = db.collection("menu")
@@ -34,6 +39,10 @@ object FirestoreRepository {
 
     suspend fun updateFcmToken(userId: String, token: String) {
         usersRef.document(userId).update("fcmToken", token).await()
+    }
+
+    suspend fun updateUserName(userId: String, name: String) {
+        usersRef.document(userId).update("name", name).await()
     }
 
     // ═════════ QUEUE ═════════
@@ -59,6 +68,19 @@ object FirestoreRepository {
         queuesRef.document(queueId).update(updates).await()
     }
 
+    suspend fun setQueuePaused(queueId: String, paused: Boolean, reason: String) {
+        queuesRef.document(queueId).update(
+            mapOf(
+                "isPaused" to paused,
+                "pauseReason" to reason
+            )
+        ).await()
+    }
+
+    suspend fun updateQueueBroadcast(queueId: String, message: String) {
+        queuesRef.document(queueId).update("broadcastMessage", message).await()
+    }
+
     suspend fun deleteQueue(queueId: String) {
         queuesRef.document(queueId).update("isActive", false).await()
     }
@@ -77,6 +99,7 @@ object FirestoreRepository {
         val docRef = queueEntriesRef.document()
         val newEntry = entry.copy(entryId = docRef.id)
         docRef.set(newEntry.toMap()).await()
+        incrementQueueCount(entry.queueId, 1)
         return docRef.id
     }
 
@@ -97,6 +120,18 @@ object FirestoreRepository {
             .whereEqualTo("queueId", queueId)
             .whereEqualTo("status", QueueEntry.STATUS_WAITING)
             .orderBy("timestamp", Query.Direction.ASCENDING)
+            .get()
+            .await()
+        return snap.toObjects(QueueEntry::class.java)
+    }
+
+    suspend fun getStaleWaitingEntries(queueId: String, olderThanMinutes: Long): List<QueueEntry> {
+        val cutoffMillis = System.currentTimeMillis() - olderThanMinutes * 60_000
+        val cutoffTime = Timestamp(cutoffMillis / 1000, ((cutoffMillis % 1000) * 1_000_000).toInt())
+        val snap = queueEntriesRef
+            .whereEqualTo("queueId", queueId)
+            .whereEqualTo("status", QueueEntry.STATUS_WAITING)
+            .whereLessThan("timestamp", cutoffTime)
             .get()
             .await()
         return snap.toObjects(QueueEntry::class.java)
@@ -144,9 +179,23 @@ object FirestoreRepository {
     }
 
     suspend fun updateEntryStatus(entryId: String, status: String) {
+        val entrySnapshot = queueEntriesRef.document(entryId).get().await()
+        val entry = entrySnapshot.toObject(QueueEntry::class.java)
+
         queueEntriesRef.document(entryId)
             .update("status", status)
             .await()
+
+        if (entry == null) return
+        val leavingWaitingState =
+            entry.status == QueueEntry.STATUS_WAITING &&
+                status != QueueEntry.STATUS_WAITING
+        val returningToWaitingState =
+            entry.status != QueueEntry.STATUS_WAITING &&
+                status == QueueEntry.STATUS_WAITING
+
+        if (leavingWaitingState) incrementQueueCount(entry.queueId, -1)
+        if (returningToWaitingState) incrementQueueCount(entry.queueId, 1)
     }
 
     suspend fun markEntryNotified(entryId: String) {
@@ -200,6 +249,45 @@ object FirestoreRepository {
         menuRef.document(id).delete().await()
     }
 
+    suspend fun incrementQueueCount(queueId: String, delta: Int) {
+        if (queueId.isBlank() || delta == 0) return
+        db.runTransaction { transaction ->
+            val queueDoc = queuesRef.document(queueId)
+            val snapshot = transaction.get(queueDoc)
+            val currentCount = snapshot.getLong("currentCount") ?: 0L
+            val nextCount = (currentCount + delta).coerceAtLeast(0)
+            transaction.update(queueDoc, "currentCount", nextCount)
+        }.await()
+    }
+
+    suspend fun getTodayOrders(): List<Order> {
+        val startOfDayMillis = System.currentTimeMillis() - (System.currentTimeMillis() % 86_400_000)
+        val snap = ordersRef
+            .whereGreaterThanOrEqualTo("timestamp", startOfDayMillis)
+            .get()
+            .await()
+        return snap.toObjects(Order::class.java)
+    }
+
+    suspend fun getActiveQueueCount(): Int {
+        val snap = queuesRef
+            .whereEqualTo("isActive", true)
+            .get()
+            .await()
+        return snap.size()
+    }
+
+    suspend fun getTodayServedEntriesCount(): Int {
+        val startOfDayMillis = System.currentTimeMillis() - (System.currentTimeMillis() % 86_400_000)
+        val cutoffTime = Timestamp(startOfDayMillis / 1000, ((startOfDayMillis % 1000) * 1_000_000).toInt())
+        val snap = queueEntriesRef
+            .whereEqualTo("status", QueueEntry.STATUS_COMPLETED)
+            .whereGreaterThanOrEqualTo("timestamp", cutoffTime)
+            .get()
+            .await()
+        return snap.size()
+    }
+
     // ═════════ LOGIC ═════════
 
     suspend fun getUserPosition(userId: String, queueId: String): Int {
@@ -213,5 +301,48 @@ object FirestoreRepository {
         if (position <= 0) return 0
         val usersAhead = position - 1
         return usersAhead * queue.avgServiceTime
+    }
+
+    suspend fun getLatestActiveEntry(userId: String): QueueEntry? {
+        val snap = queueEntriesRef
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("status", QueueEntry.STATUS_WAITING)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(1)
+            .get()
+            .await()
+        return snap.documents.firstOrNull()?.toObject(QueueEntry::class.java)
+    }
+
+    suspend fun pushNotification(userId: String, title: String, message: String) {
+        val doc = notificationsRef.document()
+        val payload = AppNotification(
+            id = doc.id,
+            userId = userId,
+            title = title,
+            message = message,
+            timestamp = System.currentTimeMillis(),
+            read = false
+        )
+        doc.set(payload).await()
+    }
+
+    fun listenToNotifications(
+        userId: String,
+        onResult: (List<AppNotification>) -> Unit
+    ): ListenerRegistration {
+        return notificationsRef
+            .whereEqualTo("userId", userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshot, _ ->
+                val items = snapshot?.documents?.mapNotNull { doc ->
+                    doc.toObject(AppNotification::class.java)
+                } ?: emptyList()
+                onResult(items)
+            }
+    }
+
+    suspend fun markNotificationRead(id: String) {
+        notificationsRef.document(id).update("read", true).await()
     }
 }

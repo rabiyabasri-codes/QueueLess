@@ -8,6 +8,7 @@ import com.queueless.plus.models.Queue
 import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.hide
+import com.queueless.plus.utils.requireAdminAccess
 import com.queueless.plus.utils.show
 import com.queueless.plus.utils.toast
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ class CreateQueueActivity : AppCompatActivity() {
         binding = ActivityCreateQueueBinding.inflate(layoutInflater)
         setContentView(binding.root)
         session = SessionManager(this)
+        if (!requireAdminAccess(session)) return
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "Create Queue"

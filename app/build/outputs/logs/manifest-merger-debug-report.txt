@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-99:12
-INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-99:12
-INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-99:12
-INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-99:12
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-109:12
+INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-109:12
+INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-109:12
+INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:2:1-109:12
 MERGED from [androidx.databinding:viewbinding:8.2.2] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\623583231fb1d52e31ac21abfbcd7874\transformed\viewbinding-8.2.2\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.navigation:navigation-common:2.7.6] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\1b8e4ed979d8a4c9ea4a36edbb81994e\transformed\navigation-common-2.7.6\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-common-ktx:2.7.6] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\9cce83a2d1bf1d08d15ed1c6415f924d\transformed\navigation-common-ktx-2.7.6\AndroidManifest.xml:2:1-7:12
@@ -168,8 +168,8 @@ MERGED from [com.journeyapps:zxing-android-embedded:4.3.0] C:\Users\Rabiya Basri
 	android:name
 		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:12:9-47
 application
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:15:5-97:19
-INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:15:5-97:19
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:15:5-107:19
+INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:15:5-107:19
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\56f3511660c341e41fe99d5458f213f6\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.11.0] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\56f3511660c341e41fe99d5458f213f6\transformed\material-1.11.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Rabiya Basri\.gradle\caches\9.0-milestone-1\transforms\b1472cdf6754d7966a9b7815798b7fce\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
@@ -338,42 +338,66 @@ ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\m
 		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:71:13-37
 	android:name
 		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:70:13-60
-activity#com.queueless.plus.activities.AdminPanelActivity
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:74:9-76:40
+activity#com.queueless.plus.activities.ProfileActivity
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:72:9-74:40
 	android:exported
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:76:13-37
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:74:13-37
 	android:name
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:75:13-58
-activity#com.queueless.plus.activities.CreateQueueActivity
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:73:13-55
+activity#com.queueless.plus.activities.FavoritesRecentActivity
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:75:9-77:40
+	android:exported
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:77:13-37
+	android:name
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:76:13-63
+activity#com.queueless.plus.activities.NotificationCenterActivity
 ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:78:9-80:40
 	android:exported
 		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:80:13-37
 	android:name
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:79:13-59
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:79:13-66
+activity#com.queueless.plus.activities.AdminPanelActivity
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:83:9-85:40
+	android:exported
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:85:13-37
+	android:name
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:84:13-58
+activity#com.queueless.plus.activities.CreateQueueActivity
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:87:9-89:40
+	android:exported
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:89:13-37
+	android:name
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:88:13-59
 activity#com.queueless.plus.activities.ManageQueueActivity
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:82:9-84:40
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:91:9-93:40
 	android:exported
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:84:13-37
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:13-37
 	android:name
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:83:13-59
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:92:13-59
 activity#com.queueless.plus.activities.AdminMenuActivity
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:86:9-90
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:95:9-90
 	android:exported
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:86:64-88
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:95:64-88
 	android:name
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:86:19-63
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:95:19-63
+activity#com.queueless.plus.activities.AdminAnalyticsActivity
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:96:9-95
+	android:exported
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:96:69-93
+	android:name
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:96:19-68
 service#com.queueless.plus.utils.FCMService
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:89:9-95:19
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:99:9-105:19
 	android:exported
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:91:13-37
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:101:13-37
 	android:name
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:90:13-45
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:100:13-45
 intent-filter#action:name:com.google.firebase.MESSAGING_EVENT
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:92:13-94:29
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:102:13-104:29
 action#com.google.firebase.MESSAGING_EVENT
-ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:17-78
+ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:103:17-78
 	android:name
-		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:93:25-75
+		ADDED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml:103:25-75
 uses-sdk
 INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Rabiya Basri\Downloads\QueueLessPlus\QueueLessPlus\app\src\main\AndroidManifest.xml

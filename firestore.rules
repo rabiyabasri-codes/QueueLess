@@ -45,5 +45,35 @@ service cloud.firestore {
                        (resource.data.userId == request.auth.uid || isAdmin());
       allow delete: if isAdmin();
     }
+
+    // ── Menu Collection ───────────────────────────────────────────────────
+    // Any logged-in user can read menu; only admins can manage items
+    match /menu/{itemId} {
+      allow read: if isLoggedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── Orders Collection ─────────────────────────────────────────────────
+    // Users can manage their own orders; admins can read all
+    match /orders/{orderId} {
+      allow read: if isLoggedIn() &&
+                    (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isLoggedIn() &&
+                    request.resource.data.userId == request.auth.uid;
+      allow update: if isLoggedIn() &&
+                    (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // ── Notifications Collection ──────────────────────────────────────────
+    match /notifications/{notificationId} {
+      allow read: if isLoggedIn() &&
+                    (resource.data.userId == request.auth.uid || isAdmin());
+      allow create: if isLoggedIn() &&
+                    request.resource.data.userId == request.auth.uid;
+      allow update: if isLoggedIn() &&
+                    (resource.data.userId == request.auth.uid || isAdmin());
+      allow delete: if isAdmin();
+    }
   }
 }

@@ -13,6 +13,7 @@ import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.hide
 import com.queueless.plus.utils.show
+import com.queueless.plus.utils.ThemeUtils
 import com.queueless.plus.utils.toast
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -28,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         session = SessionManager(this)
+        ThemeUtils.applyTheme(this, session)
 
         binding.btnRegister.setOnClickListener { attemptRegister() }
         binding.tvLogin.setOnClickListener { finish() }

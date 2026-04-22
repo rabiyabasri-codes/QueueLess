@@ -59,6 +59,15 @@ class QueueDetailActivity : AppCompatActivity() {
                     binding.tvDescription.text = q.description
                     binding.tvServiceTime.text = "Avg. service time: ${q.avgServiceTime} min"
                     binding.tvLocation.text = q.location
+                    binding.tvQueuePaused.visibility =
+                        if (q.isPaused) android.view.View.VISIBLE else android.view.View.GONE
+
+                    if (q.broadcastMessage.isNotBlank()) {
+                        binding.tvQueueNotice.text = "Notice: ${q.broadcastMessage}"
+                        binding.tvQueueNotice.visibility = android.view.View.VISIBLE
+                    } else {
+                        binding.tvQueueNotice.visibility = android.view.View.GONE
+                    }
 
                     isUserInQueue =
                         FirestoreRepository.isUserInQueue(session.userId, q.queueId)
@@ -94,11 +103,17 @@ class QueueDetailActivity : AppCompatActivity() {
     private fun updateJoinButton() {
         if (isUserInQueue) {
             binding.btnJoinQueue.text = "View My Status"
+            binding.btnJoinQueue.isEnabled = true
             binding.btnJoinQueue.setOnClickListener {
                 openUserStatus()
             }
+        } else if (queue?.isPaused == true) {
+            binding.btnJoinQueue.text = "Queue Paused"
+            binding.btnJoinQueue.isEnabled = false
+            binding.btnJoinQueue.setOnClickListener(null)
         } else {
             binding.btnJoinQueue.text = "Join Queue"
+            binding.btnJoinQueue.isEnabled = true
             binding.btnJoinQueue.setOnClickListener {
                 joinQueue()
             }
@@ -107,6 +122,10 @@ class QueueDetailActivity : AppCompatActivity() {
 
     private fun joinQueue() {
         val q = queue ?: return
+        if (q.isPaused) {
+            toast("Queue is paused. Please try later.")
+            return
+        }
         binding.btnJoinQueue.isEnabled = false
 
         lifecycleScope.launch {
@@ -121,6 +140,11 @@ class QueueDetailActivity : AppCompatActivity() {
                 )
 
                 val entryId = FirestoreRepository.joinQueue(entry)
+                FirestoreRepository.pushNotification(
+                    userId = session.userId,
+                    title = "Queue joined",
+                    message = "You joined ${q.queueName}. Track your live status now."
+                )
 
                 currentEntryId = entryId
                 isUserInQueue = true

@@ -8,8 +8,10 @@ import com.queueless.plus.models.MenuItem
 
 class MenuAdapter(
     private var items: List<MenuItem>,
-    private val onAdd: (MenuItem) -> Unit
+    private val onAdd: (MenuItem) -> Unit,
+    private val onToggleFavorite: (MenuItem) -> Unit
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+    private var allItems: List<MenuItem> = items
 
     inner class MenuViewHolder(val binding: ItemMenuBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -49,13 +51,29 @@ class MenuAdapter(
         holder.binding.btnAdd.setOnClickListener {
             onAdd(item)
         }
+
+        holder.binding.root.setOnLongClickListener {
+            onToggleFavorite(item)
+            true
+        }
     }
 
     override fun getItemCount(): Int = items.size
 
     // 🔥 Update list dynamically from Firebase
     fun updateData(newList: List<MenuItem>) {
+        allItems = newList
         items = newList
+        notifyDataSetChanged()
+    }
+
+    fun filter(query: String) {
+        val q = query.trim().lowercase()
+        items = if (q.isEmpty()) {
+            allItems
+        } else {
+            allItems.filter { it.name.lowercase().contains(q) }
+        }
         notifyDataSetChanged()
     }
 }
