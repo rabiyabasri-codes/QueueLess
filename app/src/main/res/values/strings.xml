@@ -57,4 +57,15 @@
     <string name="error_queue_name_required">Queue name is required</string>
     <string name="error_service_time_invalid">Enter a valid number of minutes</string>
     <string name="error_generic">Something went wrong. Please try again.</string>
+
+    <!-- Languages -->
+    <string-array name="languages">
+        <item>English</item>
+        <item>Hindi</item>
+    </string-array>
+
+    <!-- Chat -->
+    <string name="support_chat">Support Chat</string>
+    <string name="type_message">Type your message...</string>
+    <string name="send">Send</string>
 </resources>

@@ -4,7 +4,6 @@ package com.queueless.plus.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,7 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.queueless.plus.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -33,10 +38,31 @@ public final class ActivityDashboardBinding implements ViewBinding {
   public final ImageButton btnLogout;
 
   @NonNull
-  public final Button btnManageMenu;
+  public final MaterialButton btnManageMenu;
 
   @NonNull
   public final ImageButton btnNotifications;
+
+  @NonNull
+  public final MaterialCardView cardSummary;
+
+  @NonNull
+  public final Chip chipFood;
+
+  @NonNull
+  public final ChipGroup chipGroupFilters;
+
+  @NonNull
+  public final Chip chipNearby;
+
+  @NonNull
+  public final Chip chipRetail;
+
+  @NonNull
+  public final Chip chipShortWait;
+
+  @NonNull
+  public final TextInputEditText etSearch;
 
   @NonNull
   public final FloatingActionButton fabCreateQueue;
@@ -51,31 +77,59 @@ public final class ActivityDashboardBinding implements ViewBinding {
   public final SwipeRefreshLayout swipeRefresh;
 
   @NonNull
+  public final TextInputLayout tilSearch;
+
+  @NonNull
   public final Toolbar toolbar;
 
   @NonNull
+  public final TextView tvActiveQueues;
+
+  @NonNull
   public final TextView tvEmpty;
+
+  @NonNull
+  public final TextView tvTodayOrders;
+
+  @NonNull
+  public final TextView tvWaitingUsers;
 
   @NonNull
   public final TextView tvWelcome;
 
   private ActivityDashboardBinding(@NonNull CoordinatorLayout rootView,
       @NonNull ImageButton btnHistory, @NonNull ImageButton btnLogout,
-      @NonNull Button btnManageMenu, @NonNull ImageButton btnNotifications,
+      @NonNull MaterialButton btnManageMenu, @NonNull ImageButton btnNotifications,
+      @NonNull MaterialCardView cardSummary, @NonNull Chip chipFood,
+      @NonNull ChipGroup chipGroupFilters, @NonNull Chip chipNearby, @NonNull Chip chipRetail,
+      @NonNull Chip chipShortWait, @NonNull TextInputEditText etSearch,
       @NonNull FloatingActionButton fabCreateQueue, @NonNull ProgressBar progressBar,
       @NonNull RecyclerView rvQueues, @NonNull SwipeRefreshLayout swipeRefresh,
-      @NonNull Toolbar toolbar, @NonNull TextView tvEmpty, @NonNull TextView tvWelcome) {
+      @NonNull TextInputLayout tilSearch, @NonNull Toolbar toolbar,
+      @NonNull TextView tvActiveQueues, @NonNull TextView tvEmpty, @NonNull TextView tvTodayOrders,
+      @NonNull TextView tvWaitingUsers, @NonNull TextView tvWelcome) {
     this.rootView = rootView;
     this.btnHistory = btnHistory;
     this.btnLogout = btnLogout;
     this.btnManageMenu = btnManageMenu;
     this.btnNotifications = btnNotifications;
+    this.cardSummary = cardSummary;
+    this.chipFood = chipFood;
+    this.chipGroupFilters = chipGroupFilters;
+    this.chipNearby = chipNearby;
+    this.chipRetail = chipRetail;
+    this.chipShortWait = chipShortWait;
+    this.etSearch = etSearch;
     this.fabCreateQueue = fabCreateQueue;
     this.progressBar = progressBar;
     this.rvQueues = rvQueues;
     this.swipeRefresh = swipeRefresh;
+    this.tilSearch = tilSearch;
     this.toolbar = toolbar;
+    this.tvActiveQueues = tvActiveQueues;
     this.tvEmpty = tvEmpty;
+    this.tvTodayOrders = tvTodayOrders;
+    this.tvWaitingUsers = tvWaitingUsers;
     this.tvWelcome = tvWelcome;
   }
 
@@ -119,7 +173,7 @@ public final class ActivityDashboardBinding implements ViewBinding {
       }
 
       id = R.id.btnManageMenu;
-      Button btnManageMenu = ViewBindings.findChildViewById(rootView, id);
+      MaterialButton btnManageMenu = ViewBindings.findChildViewById(rootView, id);
       if (btnManageMenu == null) {
         break missingId;
       }
@@ -127,6 +181,48 @@ public final class ActivityDashboardBinding implements ViewBinding {
       id = R.id.btnNotifications;
       ImageButton btnNotifications = ViewBindings.findChildViewById(rootView, id);
       if (btnNotifications == null) {
+        break missingId;
+      }
+
+      id = R.id.cardSummary;
+      MaterialCardView cardSummary = ViewBindings.findChildViewById(rootView, id);
+      if (cardSummary == null) {
+        break missingId;
+      }
+
+      id = R.id.chipFood;
+      Chip chipFood = ViewBindings.findChildViewById(rootView, id);
+      if (chipFood == null) {
+        break missingId;
+      }
+
+      id = R.id.chipGroupFilters;
+      ChipGroup chipGroupFilters = ViewBindings.findChildViewById(rootView, id);
+      if (chipGroupFilters == null) {
+        break missingId;
+      }
+
+      id = R.id.chipNearby;
+      Chip chipNearby = ViewBindings.findChildViewById(rootView, id);
+      if (chipNearby == null) {
+        break missingId;
+      }
+
+      id = R.id.chipRetail;
+      Chip chipRetail = ViewBindings.findChildViewById(rootView, id);
+      if (chipRetail == null) {
+        break missingId;
+      }
+
+      id = R.id.chipShortWait;
+      Chip chipShortWait = ViewBindings.findChildViewById(rootView, id);
+      if (chipShortWait == null) {
+        break missingId;
+      }
+
+      id = R.id.etSearch;
+      TextInputEditText etSearch = ViewBindings.findChildViewById(rootView, id);
+      if (etSearch == null) {
         break missingId;
       }
 
@@ -154,15 +250,39 @@ public final class ActivityDashboardBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tilSearch;
+      TextInputLayout tilSearch = ViewBindings.findChildViewById(rootView, id);
+      if (tilSearch == null) {
+        break missingId;
+      }
+
       id = R.id.toolbar;
       Toolbar toolbar = ViewBindings.findChildViewById(rootView, id);
       if (toolbar == null) {
         break missingId;
       }
 
+      id = R.id.tvActiveQueues;
+      TextView tvActiveQueues = ViewBindings.findChildViewById(rootView, id);
+      if (tvActiveQueues == null) {
+        break missingId;
+      }
+
       id = R.id.tvEmpty;
       TextView tvEmpty = ViewBindings.findChildViewById(rootView, id);
       if (tvEmpty == null) {
+        break missingId;
+      }
+
+      id = R.id.tvTodayOrders;
+      TextView tvTodayOrders = ViewBindings.findChildViewById(rootView, id);
+      if (tvTodayOrders == null) {
+        break missingId;
+      }
+
+      id = R.id.tvWaitingUsers;
+      TextView tvWaitingUsers = ViewBindings.findChildViewById(rootView, id);
+      if (tvWaitingUsers == null) {
         break missingId;
       }
 
@@ -173,8 +293,9 @@ public final class ActivityDashboardBinding implements ViewBinding {
       }
 
       return new ActivityDashboardBinding((CoordinatorLayout) rootView, btnHistory, btnLogout,
-          btnManageMenu, btnNotifications, fabCreateQueue, progressBar, rvQueues, swipeRefresh,
-          toolbar, tvEmpty, tvWelcome);
+          btnManageMenu, btnNotifications, cardSummary, chipFood, chipGroupFilters, chipNearby,
+          chipRetail, chipShortWait, etSearch, fabCreateQueue, progressBar, rvQueues, swipeRefresh,
+          tilSearch, toolbar, tvActiveQueues, tvEmpty, tvTodayOrders, tvWaitingUsers, tvWelcome);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

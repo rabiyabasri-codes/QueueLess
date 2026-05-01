@@ -26,6 +26,9 @@ public final class ItemQueueBinding implements ViewBinding {
   public final TextView tvDescription;
 
   @NonNull
+  public final TextView tvEstimatedWait;
+
+  @NonNull
   public final TextView tvLocation;
 
   @NonNull
@@ -35,11 +38,13 @@ public final class ItemQueueBinding implements ViewBinding {
   public final TextView tvServiceTime;
 
   private ItemQueueBinding(@NonNull MaterialCardView rootView, @NonNull TextView tvCount,
-      @NonNull TextView tvDescription, @NonNull TextView tvLocation, @NonNull TextView tvQueueName,
+      @NonNull TextView tvDescription, @NonNull TextView tvEstimatedWait,
+      @NonNull TextView tvLocation, @NonNull TextView tvQueueName,
       @NonNull TextView tvServiceTime) {
     this.rootView = rootView;
     this.tvCount = tvCount;
     this.tvDescription = tvDescription;
+    this.tvEstimatedWait = tvEstimatedWait;
     this.tvLocation = tvLocation;
     this.tvQueueName = tvQueueName;
     this.tvServiceTime = tvServiceTime;
@@ -84,6 +89,12 @@ public final class ItemQueueBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvEstimatedWait;
+      TextView tvEstimatedWait = ViewBindings.findChildViewById(rootView, id);
+      if (tvEstimatedWait == null) {
+        break missingId;
+      }
+
       id = R.id.tvLocation;
       TextView tvLocation = ViewBindings.findChildViewById(rootView, id);
       if (tvLocation == null) {
@@ -102,8 +113,8 @@ public final class ItemQueueBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemQueueBinding((MaterialCardView) rootView, tvCount, tvDescription, tvLocation,
-          tvQueueName, tvServiceTime);
+      return new ItemQueueBinding((MaterialCardView) rootView, tvCount, tvDescription,
+          tvEstimatedWait, tvLocation, tvQueueName, tvServiceTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

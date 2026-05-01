@@ -56,6 +56,42 @@
             android:layout_height="200dp"
             android:layout_marginBottom="12dp"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment Method"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp" />
+
+        <RadioGroup
+            android:id="@+id/paymentMethodGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rbCash"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cash on Delivery"
+                android:checked="true" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rbUPI"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UPI / Wallet" />
+
+            <com.google.android.material.radiobutton.MaterialRadioButton
+                android:id="@+id/rbCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Card Payment" />
+        </RadioGroup>
+
         <!-- 🛒 Cart Title -->
         <TextView
             android:layout_width="wrap_content"

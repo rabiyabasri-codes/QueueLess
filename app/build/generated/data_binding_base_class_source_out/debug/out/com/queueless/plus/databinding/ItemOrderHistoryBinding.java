@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
 import com.queueless.plus.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -20,15 +21,28 @@ public final class ItemOrderHistoryBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
+  public final MaterialButton btnReview;
+
+  @NonNull
   public final TextView tvItems;
+
+  @NonNull
+  public final TextView tvPayment;
+
+  @NonNull
+  public final TextView tvStatus;
 
   @NonNull
   public final TextView tvTotal;
 
-  private ItemOrderHistoryBinding(@NonNull LinearLayout rootView, @NonNull TextView tvItems,
+  private ItemOrderHistoryBinding(@NonNull LinearLayout rootView, @NonNull MaterialButton btnReview,
+      @NonNull TextView tvItems, @NonNull TextView tvPayment, @NonNull TextView tvStatus,
       @NonNull TextView tvTotal) {
     this.rootView = rootView;
+    this.btnReview = btnReview;
     this.tvItems = tvItems;
+    this.tvPayment = tvPayment;
+    this.tvStatus = tvStatus;
     this.tvTotal = tvTotal;
   }
 
@@ -59,9 +73,27 @@ public final class ItemOrderHistoryBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnReview;
+      MaterialButton btnReview = ViewBindings.findChildViewById(rootView, id);
+      if (btnReview == null) {
+        break missingId;
+      }
+
       id = R.id.tvItems;
       TextView tvItems = ViewBindings.findChildViewById(rootView, id);
       if (tvItems == null) {
+        break missingId;
+      }
+
+      id = R.id.tvPayment;
+      TextView tvPayment = ViewBindings.findChildViewById(rootView, id);
+      if (tvPayment == null) {
+        break missingId;
+      }
+
+      id = R.id.tvStatus;
+      TextView tvStatus = ViewBindings.findChildViewById(rootView, id);
+      if (tvStatus == null) {
         break missingId;
       }
 
@@ -71,7 +103,8 @@ public final class ItemOrderHistoryBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemOrderHistoryBinding((LinearLayout) rootView, tvItems, tvTotal);
+      return new ItemOrderHistoryBinding((LinearLayout) rootView, btnReview, tvItems, tvPayment,
+          tvStatus, tvTotal);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

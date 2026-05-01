@@ -1,61 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.queueless.plus.app-mergeDebugResources-58:/values-eu/values-eu.xml",
+            "outputFile": "com.queueless.plus.app-mergeDebugResources-59:/values-eu/values-eu.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\7f0803eb0207a18d1ac650aea6feb5dc\\transformed\\play-services-basement-18.1.0\\res\\values-eu\\values.xml",
-                    "from": {
-                        "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "195",
-                        "endColumns": "138",
-                        "endOffsets": "333"
-                    },
-                    "to": {
-                        "startLines": "56",
-                        "startColumns": "4",
-                        "startOffsets": "5614",
-                        "endColumns": "142",
-                        "endOffsets": "5752"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\9c35014dc8d1a1b614ddd3ef5a112ef9\\transformed\\play-services-base-18.0.1\\res\\values-eu\\values.xml",
-                    "from": {
-                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
-                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
-                        "startOffsets": "193,293,461,581,686,834,955,1075,1179,1353,1457,1616,1740,1890,2046,2108,2169",
-                        "endColumns": "99,167,119,104,147,120,119,103,173,103,158,123,149,155,61,60,87",
-                        "endOffsets": "292,460,580,685,833,954,1074,1178,1352,1456,1615,1739,1889,2045,2107,2168,2256"
-                    },
-                    "to": {
-                        "startLines": "48,49,50,51,52,53,54,55,57,58,59,60,61,62,63,64,65",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "4596,4700,4872,4996,5105,5257,5382,5506,5757,5935,6043,6206,6334,6488,6648,6714,6779",
-                        "endColumns": "103,171,123,108,151,124,123,107,177,107,162,127,153,159,65,64,91",
-                        "endOffsets": "4695,4867,4991,5100,5252,5377,5501,5609,5930,6038,6201,6329,6483,6643,6709,6774,6866"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\a9666ac97ddb312a41205b888ff825f3\\transformed\\appcompat-1.6.1\\res\\values-eu\\values-eu.xml",
-                    "from": {
-                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "105,214,312,422,508,614,738,824,905,997,1091,1187,1281,1382,1476,1572,1669,1761,1854,1936,2045,2154,2253,2362,2469,2580,2751,2850",
-                        "endColumns": "108,97,109,85,105,123,85,80,91,93,95,93,100,93,95,96,91,92,81,108,108,98,108,106,110,170,98,82",
-                        "endOffsets": "209,307,417,503,609,733,819,900,992,1086,1182,1276,1377,1471,1567,1664,1756,1849,1931,2040,2149,2248,2357,2464,2575,2746,2845,2928"
-                    },
-                    "to": {
-                        "startLines": "6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,132",
-                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "325,434,532,642,728,834,958,1044,1125,1217,1311,1407,1501,1602,1696,1792,1889,1981,2074,2156,2265,2374,2473,2582,2689,2800,2971,12298",
-                        "endColumns": "108,97,109,85,105,123,85,80,91,93,95,93,100,93,95,96,91,92,81,108,108,98,108,106,110,170,98,82",
-                        "endOffsets": "429,527,637,723,829,953,1039,1120,1212,1306,1402,1496,1597,1691,1787,1884,1976,2069,2151,2260,2369,2468,2577,2684,2795,2966,3065,12376"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\b6d3daa73f1348b99b0566daaf8e9e8c\\transformed\\zxing-android-embedded-4.3.0\\res\\values-eu\\values-eu.xml",
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\01ee0895d9dd29ab24c562cca3122acf\\transformed\\zxing-android-embedded-4.3.0\\res\\values-eu\\values-eu.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -72,7 +21,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\fc620e62c9372706ce9248150f755ebf\\transformed\\browser-1.4.0\\res\\values-eu\\values-eu.xml",
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\95ee3af98532083ff480511a1c7b5653\\transformed\\play-services-basement-18.1.0\\res\\values-eu\\values.xml",
+                    "from": {
+                        "startLines": "4",
+                        "startColumns": "0",
+                        "startOffsets": "195",
+                        "endColumns": "138",
+                        "endOffsets": "333"
+                    },
+                    "to": {
+                        "startLines": "56",
+                        "startColumns": "4",
+                        "startOffsets": "5614",
+                        "endColumns": "142",
+                        "endOffsets": "5752"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\e0c753b1b21f15e9220486f2d7e9a2e3\\transformed\\browser-1.4.0\\res\\values-eu\\values-eu.xml",
                     "from": {
                         "startLines": "2,3,4,5",
                         "startColumns": "4,4,4,4",
@@ -89,7 +55,41 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\7b2ebd1df2b4c0fea01fa4f1920b28e5\\transformed\\core-1.12.0\\res\\values-eu\\values-eu.xml",
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\a47c2111ac7ab3746e2e7387214ff244\\transformed\\navigation-ui-2.7.6\\res\\values-eu\\values-eu.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,159",
+                        "endColumns": "103,126",
+                        "endOffsets": "154,281"
+                    },
+                    "to": {
+                        "startLines": "129,130",
+                        "startColumns": "4,4",
+                        "startOffsets": "11984,12088",
+                        "endColumns": "103,126",
+                        "endOffsets": "12083,12210"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\cfa369bf72ce5024ed713660f528f2f7\\transformed\\appcompat-1.6.1\\res\\values-eu\\values-eu.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "105,214,312,422,508,614,738,824,905,997,1091,1187,1281,1382,1476,1572,1669,1761,1854,1936,2045,2154,2253,2362,2469,2580,2751,2850",
+                        "endColumns": "108,97,109,85,105,123,85,80,91,93,95,93,100,93,95,96,91,92,81,108,108,98,108,106,110,170,98,82",
+                        "endOffsets": "209,307,417,503,609,733,819,900,992,1086,1182,1276,1377,1471,1567,1664,1756,1849,1931,2040,2149,2248,2357,2464,2575,2746,2845,2928"
+                    },
+                    "to": {
+                        "startLines": "6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,132",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "325,434,532,642,728,834,958,1044,1125,1217,1311,1407,1501,1602,1696,1792,1889,1981,2074,2156,2265,2374,2473,2582,2689,2800,2971,12298",
+                        "endColumns": "108,97,109,85,105,123,85,80,91,93,95,93,100,93,95,96,91,92,81,108,108,98,108,106,110,170,98,82",
+                        "endOffsets": "429,527,637,723,829,953,1039,1120,1212,1306,1402,1496,1597,1691,1787,1884,1976,2069,2151,2260,2369,2468,2577,2684,2795,2966,3065,12376"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\6fa6448c82e442aa42963df5bd5c7af6\\transformed\\core-1.12.0\\res\\values-eu\\values-eu.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -106,7 +106,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\56f3511660c341e41fe99d5458f213f6\\transformed\\material-1.11.0\\res\\values-eu\\values-eu.xml",
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\53a7177dff0c64a3c1cedafe5709cde6\\transformed\\play-services-base-18.1.0\\res\\values-eu\\values.xml",
+                    "from": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
+                        "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
+                        "startOffsets": "193,293,461,581,686,834,955,1075,1179,1353,1457,1616,1740,1890,2046,2108,2169",
+                        "endColumns": "99,167,119,104,147,120,119,103,173,103,158,123,149,155,61,60,87",
+                        "endOffsets": "292,460,580,685,833,954,1074,1178,1352,1456,1615,1739,1889,2045,2107,2168,2256"
+                    },
+                    "to": {
+                        "startLines": "48,49,50,51,52,53,54,55,57,58,59,60,61,62,63,64,65",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "4596,4700,4872,4996,5105,5257,5382,5506,5757,5935,6043,6206,6334,6488,6648,6714,6779",
+                        "endColumns": "103,171,123,108,151,124,123,107,177,107,162,127,153,159,65,64,91",
+                        "endOffsets": "4695,4867,4991,5100,5252,5377,5501,5609,5930,6038,6201,6329,6483,6643,6709,6774,6866"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\8.11.1\\transforms\\1ffd7e42e161670fcc9c00561d9b3b63\\transformed\\material-1.11.0\\res\\values-eu\\values-eu.xml",
                     "from": {
                         "startLines": "2,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -122,23 +139,6 @@
                         "endLines": "5,33,34,35,36,37,45,46,47,67,68,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,131",
                         "endColumns": "12,106,104,79,106,99,97,114,82,66,98,67,60,87,62,65,63,70,62,53,108,58,62,53,73,124,89,79,144,82,81,137,90,82,51,52,65,70,79,85,79,77,77,72,74,106,86,86,90,92,71,75,91,50,81,65,83,85,61,63,62,67,106,108,95,104,55,56,82",
                         "endOffsets": "320,3172,3277,3357,3464,3564,4393,4508,4591,7033,7132,7520,7581,7669,7732,7798,7862,7933,7996,8050,8159,8218,8281,8335,8409,8534,8624,8704,8849,8932,9014,9152,9243,9326,9378,9431,9497,9568,9648,9734,9814,9892,9970,10043,10118,10225,10312,10399,10490,10583,10655,10731,10823,10874,10956,11022,11106,11192,11254,11318,11381,11449,11556,11665,11761,11866,11922,11979,12293"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Rabiya Basri\\.gradle\\caches\\9.0-milestone-1\\transforms\\af185c587048cc9409dbc59c64826d2a\\transformed\\navigation-ui-2.7.6\\res\\values-eu\\values-eu.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,159",
-                        "endColumns": "103,126",
-                        "endOffsets": "154,281"
-                    },
-                    "to": {
-                        "startLines": "129,130",
-                        "startColumns": "4,4",
-                        "startOffsets": "11984,12088",
-                        "endColumns": "103,126",
-                        "endOffsets": "12083,12210"
                     }
                 }
             ]

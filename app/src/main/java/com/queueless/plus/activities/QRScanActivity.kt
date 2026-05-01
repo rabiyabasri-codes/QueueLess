@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
+import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.queueless.plus.databinding.ActivityQrScanBinding
+import com.queueless.plus.models.QueueEntry
+import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.requireAdminAccess
 import com.queueless.plus.utils.toast
+import kotlinx.coroutines.launch
 
 class QRScanActivity : AppCompatActivity() {
 
@@ -94,10 +99,22 @@ class QRScanActivity : AppCompatActivity() {
 
         db.collection("queueEntries")
             .document(scannedEntryId)
-            .update("orderStatus", "ready")
-            .addOnSuccessListener {
-                toast("Order marked READY ✅")
-                binding.btnMarkReady.visibility = android.view.View.GONE
+            .get()
+            .addOnSuccessListener { doc ->
+                val orderId = doc.getString("orderId")
+                if (orderId != null) {
+                    lifecycleScope.launch {
+                        try {
+                            FirestoreRepository.updateQueueEntryOrderStatus(scannedEntryId, QueueEntry.ORDER_READY)
+                            toast("Order marked READY ✅")
+                            binding.btnMarkReady.visibility = android.view.View.GONE
+                        } catch (e: Exception) {
+                            toast("Failed: ${e.message}")
+                        }
+                    }
+                } else {
+                    toast("No order attached")
+                }
             }
             .addOnFailureListener {
                 toast("Failed: ${it.message}")

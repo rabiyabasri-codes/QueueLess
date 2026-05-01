@@ -1,15 +1,29 @@
 package com.queueless.plus.activities
 
+import android.Manifest
+import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.Timestamp
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.common.BitMatrix
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.queueless.plus.adapters.QueueEntryAdapter
 import com.queueless.plus.databinding.ActivityQueueDetailBinding
 import com.queueless.plus.models.Queue
 import com.queueless.plus.models.QueueEntry
 import com.queueless.plus.utils.FirestoreRepository
+import com.queueless.plus.utils.NotificationScheduler
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.formatWaitTime
 import com.queueless.plus.utils.toast
@@ -27,6 +41,8 @@ class QueueDetailActivity : AppCompatActivity() {
     private var queue: Queue? = null
     private var isUserInQueue = false
     private var currentEntryId: String = ""
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val locationRequestCode = 101
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +56,18 @@ class QueueDetailActivity : AppCompatActivity() {
         }
 
         setupToolbar()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         loadQueueData(queueId)
         setupEntryListener(queueId)
+        binding.btnEnableLocation.setOnClickListener {
+            requestLocationPermission()
+        }
+        binding.btnShowQR.setOnClickListener {
+            showQRCode()
+        }
+        binding.btnShare.setOnClickListener {
+            shareQueue()
+        }
     }
 
     private fun setupToolbar() {
@@ -59,6 +85,16 @@ class QueueDetailActivity : AppCompatActivity() {
                     binding.tvDescription.text = q.description
                     binding.tvServiceTime.text = "Avg. service time: ${q.avgServiceTime} min"
                     binding.tvLocation.text = q.location
+
+                    // Load rating
+                    lifecycleScope.launch {
+                        try {
+                            val avgRating = FirestoreRepository.getAverageRating(q.queueId)
+                            binding.tvRating.text = if (avgRating > 0) "⭐ ${String.format("%.1f", avgRating)}/5" else "No ratings yet"
+                        } catch (e: Exception) {
+                            binding.tvRating.text = "Rating unavailable"
+                        }
+                    }
                     binding.tvQueuePaused.visibility =
                         if (q.isPaused) android.view.View.VISIBLE else android.view.View.GONE
 
@@ -120,6 +156,56 @@ class QueueDetailActivity : AppCompatActivity() {
         }
     }
 
+    private fun requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fetchCurrentLocation()
+        } else {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                locationRequestCode
+            )
+        }
+    }
+
+    private fun fetchCurrentLocation() {
+        try {
+            fusedLocationClient.lastLocation
+                .addOnSuccessListener { location ->
+                    if (location != null) {
+                        binding.tvYourLocation.text =
+                            "Your location: ${String.format("%.4f", location.latitude)}, ${String.format("%.4f", location.longitude)}"
+                    } else {
+                        toast("Unable to get location. Try again.")
+                    }
+                }
+                .addOnFailureListener {
+                    toast("Location request failed")
+                }
+        } catch (e: Exception) {
+            toast("Location error: ${e.message}")
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == locationRequestCode) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                fetchCurrentLocation()
+            } else {
+                toast("Location permission denied")
+            }
+        }
+    }
+
     private fun joinQueue() {
         val q = queue ?: return
         if (q.isPaused) {
@@ -145,6 +231,13 @@ class QueueDetailActivity : AppCompatActivity() {
                     title = "Queue joined",
                     message = "You joined ${q.queueName}. Track your live status now."
                 )
+
+                // Schedule notification for when turn is approaching
+                val estimatedWait = FirestoreRepository.getEstimatedWaitTime(session.userId, q)
+                val notificationDelay = (estimatedWait * 0.8).toInt() // Notify 80% through wait time
+                if (notificationDelay > 0) {
+                    NotificationScheduler(this@QueueDetailActivity).scheduleQueueNotification(q.queueName, notificationDelay)
+                }
 
                 currentEntryId = entryId
                 isUserInQueue = true
@@ -178,6 +271,41 @@ class QueueDetailActivity : AppCompatActivity() {
         }
 
         startActivity(intent)
+    }
+
+    private fun showQRCode() {
+        val queueId = queue?.queueId ?: return
+        try {
+            val bitMatrix: BitMatrix = MultiFormatWriter().encode(queueId, BarcodeFormat.QR_CODE, 400, 400)
+            val barcodeEncoder = BarcodeEncoder()
+            val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
+
+            val imageView = ImageView(this).apply {
+                setImageBitmap(bitmap)
+                setPadding(20, 20, 20, 20)
+            }
+
+            AlertDialog.Builder(this)
+                .setTitle("QR Code for ${queue?.queueName}")
+                .setView(imageView)
+                .setPositiveButton("Share") { _, _ ->
+                    shareQueue()
+                }
+                .setNegativeButton("Close", null)
+                .show()
+        } catch (e: Exception) {
+            toast("Failed to generate QR code")
+        }
+    }
+
+    private fun shareQueue() {
+        val queue = queue ?: return
+        val shareText = "Join the queue for ${queue.queueName} at ${queue.location}. Download QueueLess+ app!"
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_TEXT, shareText)
+        }
+        startActivity(Intent.createChooser(intent, "Share Queue"))
     }
 
     override fun onSupportNavigateUp(): Boolean {

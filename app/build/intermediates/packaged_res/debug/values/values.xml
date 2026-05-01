@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
+    <string-array name="languages">
+        <item>English</item>
+        <item>Hindi</item>
+    </string-array>
+    <color name="background">#F3E5F5</color>
     <color name="colorAccent">#FF7043</color>
-    <color name="colorBackground">#F5F5F5</color>
-    <color name="colorBadgeBackground">#EDE7F6</color>
-    <color name="colorBadgeText">#5C6BC0</color>
-    <color name="colorDivider">#E0E0E0</color>
+    <color name="colorBackground">#F3E5F5</color>
+    <color name="colorBadgeBackground">#E1BEE7</color>
+    <color name="colorBadgeText">#4A148C</color>
+    <color name="colorDivider">#D1C4E9</color>
     <color name="colorError">#F44336</color>
     <color name="colorInfo">#2196F3</color>
-    <color name="colorPositionBg">#5C6BC0</color>
-    <color name="colorPrimary">#5C6BC0</color>
-    <color name="colorPrimaryDark">#3949AB</color>
-    <color name="colorPrimaryLight">#9FA8DA</color>
+    <color name="colorPositionBg">#7B1FA2</color>
+    <color name="colorPrimary">#6A1B9A</color>
+    <color name="colorPrimaryDark">#4A148C</color>
+    <color name="colorPrimaryLight">#8E24AA</color>
     <color name="colorSuccess">#4CAF50</color>
     <color name="colorSurface">#FFFFFF</color>
     <color name="colorTextHint">#BDBDBD</color>
     <color name="colorTextPrimary">#000000</color>
     <color name="colorTextSecondary">#666666</color>
     <color name="colorWarning">#FFC107</color>
+    <color name="primary">#6A1B9A</color>
+    <color name="text_secondary">#666666</color>
     <color name="white">#FFFFFF</color>
     <dimen name="avatar_size">44dp</dimen>
     <dimen name="button_height">56dp</dimen>
@@ -91,8 +98,11 @@
     <string name="register">Create Account</string>
     <string name="remove">Remove</string>
     <string name="scan_qr">Scan QR Code</string>
+    <string name="send">Send</string>
     <string name="served">Served</string>
     <string name="service_time_minutes">Avg. Service Time (minutes)</string>
+    <string name="support_chat">Support Chat</string>
+    <string name="type_message">Type your message...</string>
     <string name="view_my_status">View My Status</string>
     <string name="your_position">Your Position</string>
     <style name="QueueLess.Button" parent="Widget.MaterialComponents.Button">
@@ -133,16 +143,18 @@
 
         <item name="colorSecondary">@color/colorAccent</item>
         <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
 
         
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorSurfaceVariant">#EDE7F6</item>
 
         
         <item name="android:textColor">@color/colorTextPrimary</item>
         <item name="android:textColorPrimary">@color/colorTextPrimary</item>
-        <item name="android:textColorSecondary">#888888</item>
-        <item name="android:textColorHint">#888888</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="android:textColorHint">@color/colorTextHint</item>
 
         
         <item name="colorOnSurface">@color/colorTextPrimary</item>

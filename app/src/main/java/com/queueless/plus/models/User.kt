@@ -5,7 +5,9 @@ data class User(
     val name: String = "",
     val email: String = "",
     val role: String = "user",   // "user" or "admin"
-    val fcmToken: String = ""
+    val fcmToken: String = "",
+    val avatarUrl: String = "",
+    val loyaltyPoints: Int = 0
 ) {
     fun isAdmin(): Boolean = role == "admin"
 
@@ -14,6 +16,8 @@ data class User(
         "name"     to name,
         "email"    to email,
         "role"     to role,
-        "fcmToken" to fcmToken
+        "fcmToken" to fcmToken,
+        "avatarUrl" to avatarUrl,
+        "loyaltyPoints" to loyaltyPoints
     )
 }

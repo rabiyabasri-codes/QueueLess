@@ -1,20 +1,27 @@
 package com.queueless.plus.utils
 
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.Timestamp
 import com.queueless.plus.models.AppNotification
+import com.queueless.plus.models.ChatMessage
 import com.queueless.plus.models.MenuItem
 import com.queueless.plus.models.Order
 import com.queueless.plus.models.Queue
 import com.queueless.plus.models.QueueEntry
+import com.queueless.plus.models.Review
 import com.queueless.plus.models.User
 import kotlinx.coroutines.tasks.await
 
 object FirestoreRepository {
 
-    private val db = FirebaseFirestore.getInstance()
+    private val db = FirebaseFirestore.getInstance().apply {
+        firestoreSettings = FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build()
+    }
 
     // Collections
     private val usersRef        = db.collection("users")
@@ -22,6 +29,7 @@ object FirestoreRepository {
     private val queueEntriesRef = db.collection("queueEntries")
     private val ordersRef       = db.collection("orders")
     private val notificationsRef = db.collection("notifications")
+    private val reviewsRef      = db.collection("reviews")
 
     // 🔥 NEW COLLECTION
     private val menuRef         = db.collection("menu")
@@ -43,6 +51,19 @@ object FirestoreRepository {
 
     suspend fun updateUserName(userId: String, name: String) {
         usersRef.document(userId).update("name", name).await()
+    }
+
+    suspend fun updateUserAvatar(userId: String, avatarUrl: String) {
+        usersRef.document(userId).update("avatarUrl", avatarUrl).await()
+    }
+
+    suspend fun updateUserPoints(userId: String, points: Int) {
+        usersRef.document(userId).update("loyaltyPoints", points).await()
+    }
+
+    suspend fun addUserPoints(userId: String, delta: Int) {
+        val user = getUser(userId) ?: return
+        updateUserPoints(userId, user.loyaltyPoints + delta)
     }
 
     // ═════════ QUEUE ═════════
@@ -89,8 +110,43 @@ object FirestoreRepository {
         return queuesRef
             .whereEqualTo("isActive", true)
             .addSnapshotListener { snap, _ ->
-                snap?.let { onUpdate(it.toObjects(Queue::class.java)) }
+                snap?.let {
+                    onUpdate(
+                        it.toObjects(Queue::class.java)
+                            .sortedBy { queue -> queue.currentCount * queue.avgServiceTime }
+                    )
+                }
             }
+    }
+
+    suspend fun getActiveQueuesSortedByWaitTime(): List<Queue> {
+        return getQueues().sortedBy { it.currentCount * it.avgServiceTime }
+    }
+
+    suspend fun createOrder(order: Order): String {
+        val docRef = ordersRef.document()
+        val newOrder = order.copy(orderId = docRef.id)
+        docRef.set(newOrder).await()
+        return docRef.id
+    }
+
+    suspend fun getOrdersForUser(userId: String): List<Order> {
+        val snap = ordersRef
+            .whereEqualTo("userId", userId)
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .get()
+            .await()
+        return snap.toObjects(Order::class.java)
+    }
+
+    suspend fun updateOrderStatus(orderId: String, status: String) {
+        ordersRef.document(orderId).update("status", status).await()
+    }
+
+    suspend fun attachOrderToEntry(entryId: String, orderId: String) {
+        queueEntriesRef.document(entryId)
+            .update("orderId", orderId)
+            .await()
     }
 
     // ═════════ QUEUE ENTRY ═════════
@@ -216,7 +272,7 @@ object FirestoreRepository {
 
     // ═════════ ORDER SYSTEM ═════════
 
-    suspend fun updateOrderStatus(entryId: String, status: String) {
+    suspend fun updateQueueEntryOrderStatus(entryId: String, status: String) {
         queueEntriesRef.document(entryId)
             .update("orderStatus", status)
             .await()
@@ -344,5 +400,40 @@ object FirestoreRepository {
 
     suspend fun markNotificationRead(id: String) {
         notificationsRef.document(id).update("read", true).await()
+    }
+
+    // ═════════ REVIEWS ═════════
+
+    suspend fun addReview(review: Review) {
+        val doc = reviewsRef.document()
+        reviewsRef.document(doc.id).set(review.copy(reviewId = doc.id)).await()
+    }
+
+    suspend fun getReviewsForQueue(queueId: String): List<Review> {
+        val snap = reviewsRef.whereEqualTo("queueId", queueId).get().await()
+        return snap.toObjects(Review::class.java)
+    }
+
+    suspend fun getAverageRating(queueId: String): Double {
+        val reviews = getReviewsForQueue(queueId)
+        return if (reviews.isEmpty()) 0.0 else reviews.map { it.rating }.average()
+    }
+
+    // ═════════ CHAT SYSTEM ═════════
+
+    fun sendChatMessage(message: ChatMessage, callback: (Boolean) -> Unit) {
+        db.collection("chat").add(message)
+            .addOnSuccessListener { callback(true) }
+            .addOnFailureListener { callback(false) }
+    }
+
+    fun listenToChatMessages(callback: (List<ChatMessage>) -> Unit): ListenerRegistration {
+        return db.collection("chat")
+            .orderBy("timestamp")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) return@addSnapshotListener
+                val messages = snapshot?.documents?.mapNotNull { it.toObject(ChatMessage::class.java) } ?: emptyList()
+                callback(messages)
+            }
     }
 }

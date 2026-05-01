@@ -11,6 +11,7 @@ anim abc_slide_out_bottom
 anim abc_slide_out_top
 anim abc_tooltip_enter
 anim abc_tooltip_exit
+anim bounce
 anim btn_checkbox_to_checked_box_inner_merged_animation
 anim btn_checkbox_to_checked_box_outer_merged_animation
 anim btn_checkbox_to_checked_icon_null_animation
@@ -27,6 +28,7 @@ anim design_bottom_sheet_slide_in
 anim design_bottom_sheet_slide_out
 anim design_snackbar_in
 anim design_snackbar_out
+anim fade_in
 anim fragment_fast_out_extra_slow_in
 anim linear_indeterminate_line1_head_interpolator
 anim linear_indeterminate_line1_tail_interpolator
@@ -47,6 +49,8 @@ anim nav_default_enter_anim
 anim nav_default_exit_anim
 anim nav_default_pop_enter_anim
 anim nav_default_pop_exit_anim
+anim pulse
+anim slide_in_from_top
 animator design_appbar_state_list_animator
 animator design_fab_hide_motion_spec
 animator design_fab_show_motion_spec
@@ -85,6 +89,7 @@ animator nav_default_enter_anim
 animator nav_default_exit_anim
 animator nav_default_pop_enter_anim
 animator nav_default_pop_exit_anim
+array languages
 attr SharedValue
 attr SharedValueId
 attr action
@@ -1412,6 +1417,7 @@ color accent_material_dark
 color accent_material_light
 color androidx_core_ripple_material_light
 color androidx_core_secondary_text_default_material_light
+color background
 color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
@@ -2163,6 +2169,7 @@ color mtrl_textinput_focused_box_stroke_color
 color mtrl_textinput_hovered_box_stroke_color
 color notification_action_color_filter
 color notification_icon_bg_color
+color primary
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -2183,6 +2190,7 @@ color switch_thumb_material_dark
 color switch_thumb_material_light
 color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
+color text_secondary
 color tooltip_background_dark
 color tooltip_background_light
 color white
@@ -3114,6 +3122,7 @@ drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
 drawable burger
+drawable circle_background
 drawable coke
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
@@ -3164,11 +3173,13 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_person
 drawable ic_qr_code
 drawable ic_qr_scan
 drawable ic_queue_logo
 drawable ic_queue_notification
 drawable ic_search_black_24
+drawable ic_send
 drawable ic_time
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3243,6 +3254,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable pizza
+drawable rounded_bg
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
@@ -3354,9 +3366,11 @@ id browser_actions_menu_items
 id browser_actions_menu_view
 id btnAdd
 id btnAutoSkipNoShow
+id btnChangeAvatar
 id btnClearBroadcast
 id btnCreateQueue
 id btnDelete
+id btnEnableLocation
 id btnHistory
 id btnJoinQueue
 id btnLeaveQueue
@@ -3368,6 +3382,7 @@ id btnManageMenu
 id btnMarkReady
 id btnMinus
 id btnNotifications
+id btnOpenChat
 id btnOpenFavoritesRecent
 id btnOpenNotificationCenter
 id btnOrder
@@ -3378,14 +3393,20 @@ id btnPreparing
 id btnReady
 id btnRegister
 id btnRemove
+id btnReview
 id btnSaveProfile
 id btnScan
+id btnSend
 id btnSendBroadcast
 id btnServed
+id btnShare
+id btnShowQR
 id buttonPanel
 id cache_measures
 id callMeasure
 id cancel_button
+id cardMessage
+id cardSummary
 id carryVelocity
 id center
 id centerCrop
@@ -3397,6 +3418,11 @@ id chain2
 id chains
 id checkbox
 id checked
+id chipFood
+id chipGroupFilters
+id chipNearby
+id chipRetail
+id chipShortWait
 id chronometer
 id circle_center
 id clear_text
@@ -3471,10 +3497,12 @@ id etEmail
 id etImage
 id etLocation
 id etMenuSearch
+id etMessage
 id etName
 id etPassword
 id etPrice
 id etQueueName
+id etSearch
 id etServiceTime
 id exitUntilCollapsed
 id expand_activities_button
@@ -3499,6 +3527,7 @@ id frost
 id fullscreen_header
 id ghost_view
 id ghost_view_holder
+id glide_custom_view_target_tag
 id gone
 id graph
 id graph_wrap
@@ -3528,6 +3557,7 @@ id inward
 id is_pooling_container_tag
 id italic
 id item_touch_helper_previous_elevation
+id ivAvatar
 id ivFood
 id ivLogo
 id ivQR
@@ -3535,6 +3565,7 @@ id jumpToEnd
 id jumpToStart
 id labeled
 id layout
+id layoutInput
 id left
 id leftToRight
 id legacy
@@ -3659,6 +3690,7 @@ id parent_matrix
 id password_toggle
 id path
 id pathRelative
+id paymentMethodGroup
 id peekHeight
 id percent
 id pin
@@ -3671,7 +3703,11 @@ id progress_circular
 id progress_horizontal
 id radio
 id ratio
+id rbCard
+id rbCash
+id rbUPI
 id rectangles
+id recyclerChat
 id report_drawn
 id reverseSawtooth
 id right
@@ -3731,6 +3767,7 @@ id snapMargins
 id south
 id spacer
 id special_effects_controller_view_tag
+id spinnerLanguage
 id spline
 id split_action_bar
 id spread
@@ -3791,6 +3828,7 @@ id tilLocation
 id tilName
 id tilPassword
 id tilQueueName
+id tilSearch
 id tilServiceTime
 id time
 id title
@@ -3828,6 +3866,8 @@ id tvName
 id tvNotifyBanner
 id tvOrder
 id tvOrderStatus
+id tvPayment
+id tvPoints
 id tvPosition
 id tvPrice
 id tvQty
@@ -3835,10 +3875,12 @@ id tvQueueCount
 id tvQueueName
 id tvQueueNotice
 id tvQueuePaused
+id tvRating
 id tvRecentOrders
 id tvRegister
 id tvResult
 id tvRole
+id tvSender
 id tvServedToday
 id tvServiceTime
 id tvStatus
@@ -3852,7 +3894,9 @@ id tvTotal
 id tvUserName
 id tvUsersAhead
 id tvWaitTime
+id tvWaitingUsers
 id tvWelcome
+id tvYourLocation
 id unchecked
 id uniform
 id unlabeled
@@ -4009,6 +4053,7 @@ layout abc_tooltip
 layout activity_admin_analytics
 layout activity_admin_menu
 layout activity_admin_panel
+layout activity_chat
 layout activity_create_queue
 layout activity_dashboard
 layout activity_favorites_recent
@@ -4046,6 +4091,7 @@ layout ime_secondary_split_test_activity
 layout item_admin_menu
 layout item_admin_queue
 layout item_cart
+layout item_chat_message
 layout item_manage_entry
 layout item_menu
 layout item_notification
@@ -4365,11 +4411,14 @@ string search_menu_title
 string searchbar_scrolling_view_behavior
 string searchview_clear_text_content_description
 string searchview_navigation_content_description
+string send
 string served
 string service_time_minutes
 string side_sheet_accessibility_pane_title
 string side_sheet_behavior
 string status_bar_notification_info_overflow
+string support_chat
+string type_message
 string view_my_status
 string your_position
 string zxing_app_name

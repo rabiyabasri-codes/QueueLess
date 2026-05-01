@@ -24,7 +24,16 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
   private final CoordinatorLayout rootView;
 
   @NonNull
+  public final MaterialButton btnEnableLocation;
+
+  @NonNull
   public final MaterialButton btnJoinQueue;
+
+  @NonNull
+  public final MaterialButton btnShare;
+
+  @NonNull
+  public final MaterialButton btnShowQR;
 
   @NonNull
   public final ProgressBar progressBar;
@@ -54,16 +63,27 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
   public final TextView tvQueuePaused;
 
   @NonNull
+  public final TextView tvRating;
+
+  @NonNull
   public final TextView tvServiceTime;
 
+  @NonNull
+  public final TextView tvYourLocation;
+
   private ActivityQueueDetailBinding(@NonNull CoordinatorLayout rootView,
-      @NonNull MaterialButton btnJoinQueue, @NonNull ProgressBar progressBar,
-      @NonNull RecyclerView rvQueueEntries, @NonNull Toolbar toolbar,
-      @NonNull TextView tvDescription, @NonNull TextView tvEstimatedWait,
+      @NonNull MaterialButton btnEnableLocation, @NonNull MaterialButton btnJoinQueue,
+      @NonNull MaterialButton btnShare, @NonNull MaterialButton btnShowQR,
+      @NonNull ProgressBar progressBar, @NonNull RecyclerView rvQueueEntries,
+      @NonNull Toolbar toolbar, @NonNull TextView tvDescription, @NonNull TextView tvEstimatedWait,
       @NonNull TextView tvLocation, @NonNull TextView tvQueueCount, @NonNull TextView tvQueueNotice,
-      @NonNull TextView tvQueuePaused, @NonNull TextView tvServiceTime) {
+      @NonNull TextView tvQueuePaused, @NonNull TextView tvRating, @NonNull TextView tvServiceTime,
+      @NonNull TextView tvYourLocation) {
     this.rootView = rootView;
+    this.btnEnableLocation = btnEnableLocation;
     this.btnJoinQueue = btnJoinQueue;
+    this.btnShare = btnShare;
+    this.btnShowQR = btnShowQR;
     this.progressBar = progressBar;
     this.rvQueueEntries = rvQueueEntries;
     this.toolbar = toolbar;
@@ -73,7 +93,9 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
     this.tvQueueCount = tvQueueCount;
     this.tvQueueNotice = tvQueueNotice;
     this.tvQueuePaused = tvQueuePaused;
+    this.tvRating = tvRating;
     this.tvServiceTime = tvServiceTime;
+    this.tvYourLocation = tvYourLocation;
   }
 
   @Override
@@ -103,9 +125,27 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnEnableLocation;
+      MaterialButton btnEnableLocation = ViewBindings.findChildViewById(rootView, id);
+      if (btnEnableLocation == null) {
+        break missingId;
+      }
+
       id = R.id.btnJoinQueue;
       MaterialButton btnJoinQueue = ViewBindings.findChildViewById(rootView, id);
       if (btnJoinQueue == null) {
+        break missingId;
+      }
+
+      id = R.id.btnShare;
+      MaterialButton btnShare = ViewBindings.findChildViewById(rootView, id);
+      if (btnShare == null) {
+        break missingId;
+      }
+
+      id = R.id.btnShowQR;
+      MaterialButton btnShowQR = ViewBindings.findChildViewById(rootView, id);
+      if (btnShowQR == null) {
         break missingId;
       }
 
@@ -163,15 +203,28 @@ public final class ActivityQueueDetailBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvRating;
+      TextView tvRating = ViewBindings.findChildViewById(rootView, id);
+      if (tvRating == null) {
+        break missingId;
+      }
+
       id = R.id.tvServiceTime;
       TextView tvServiceTime = ViewBindings.findChildViewById(rootView, id);
       if (tvServiceTime == null) {
         break missingId;
       }
 
-      return new ActivityQueueDetailBinding((CoordinatorLayout) rootView, btnJoinQueue, progressBar,
-          rvQueueEntries, toolbar, tvDescription, tvEstimatedWait, tvLocation, tvQueueCount,
-          tvQueueNotice, tvQueuePaused, tvServiceTime);
+      id = R.id.tvYourLocation;
+      TextView tvYourLocation = ViewBindings.findChildViewById(rootView, id);
+      if (tvYourLocation == null) {
+        break missingId;
+      }
+
+      return new ActivityQueueDetailBinding((CoordinatorLayout) rootView, btnEnableLocation,
+          btnJoinQueue, btnShare, btnShowQR, progressBar, rvQueueEntries, toolbar, tvDescription,
+          tvEstimatedWait, tvLocation, tvQueueCount, tvQueueNotice, tvQueuePaused, tvRating,
+          tvServiceTime, tvYourLocation);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -4,6 +4,7 @@ package com.queueless.plus.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.queueless.plus.R;
 import java.lang.NullPointerException;
@@ -30,6 +32,18 @@ public final class ActivityOrderBinding implements ViewBinding {
   public final TextInputEditText etMenuSearch;
 
   @NonNull
+  public final RadioGroup paymentMethodGroup;
+
+  @NonNull
+  public final MaterialRadioButton rbCard;
+
+  @NonNull
+  public final MaterialRadioButton rbCash;
+
+  @NonNull
+  public final MaterialRadioButton rbUPI;
+
+  @NonNull
   public final RecyclerView rvCart;
 
   @NonNull
@@ -43,11 +57,17 @@ public final class ActivityOrderBinding implements ViewBinding {
 
   private ActivityOrderBinding(@NonNull CoordinatorLayout rootView,
       @NonNull MaterialButton btnPlaceOrder, @NonNull TextInputEditText etMenuSearch,
+      @NonNull RadioGroup paymentMethodGroup, @NonNull MaterialRadioButton rbCard,
+      @NonNull MaterialRadioButton rbCash, @NonNull MaterialRadioButton rbUPI,
       @NonNull RecyclerView rvCart, @NonNull RecyclerView rvMenu, @NonNull Toolbar toolbar,
       @NonNull TextView tvTotal) {
     this.rootView = rootView;
     this.btnPlaceOrder = btnPlaceOrder;
     this.etMenuSearch = etMenuSearch;
+    this.paymentMethodGroup = paymentMethodGroup;
+    this.rbCard = rbCard;
+    this.rbCash = rbCash;
+    this.rbUPI = rbUPI;
     this.rvCart = rvCart;
     this.rvMenu = rvMenu;
     this.toolbar = toolbar;
@@ -93,6 +113,30 @@ public final class ActivityOrderBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.paymentMethodGroup;
+      RadioGroup paymentMethodGroup = ViewBindings.findChildViewById(rootView, id);
+      if (paymentMethodGroup == null) {
+        break missingId;
+      }
+
+      id = R.id.rbCard;
+      MaterialRadioButton rbCard = ViewBindings.findChildViewById(rootView, id);
+      if (rbCard == null) {
+        break missingId;
+      }
+
+      id = R.id.rbCash;
+      MaterialRadioButton rbCash = ViewBindings.findChildViewById(rootView, id);
+      if (rbCash == null) {
+        break missingId;
+      }
+
+      id = R.id.rbUPI;
+      MaterialRadioButton rbUPI = ViewBindings.findChildViewById(rootView, id);
+      if (rbUPI == null) {
+        break missingId;
+      }
+
       id = R.id.rvCart;
       RecyclerView rvCart = ViewBindings.findChildViewById(rootView, id);
       if (rvCart == null) {
@@ -118,7 +162,7 @@ public final class ActivityOrderBinding implements ViewBinding {
       }
 
       return new ActivityOrderBinding((CoordinatorLayout) rootView, btnPlaceOrder, etMenuSearch,
-          rvCart, rvMenu, toolbar, tvTotal);
+          paymentMethodGroup, rbCard, rbCash, rbUPI, rvCart, rvMenu, toolbar, tvTotal);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

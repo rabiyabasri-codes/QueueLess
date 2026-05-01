@@ -2,17 +2,20 @@ package com.queueless.plus.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.firestore.FirebaseFirestore
 import com.queueless.plus.adapters.OrderHistoryAdapter
 import com.queueless.plus.databinding.ActivityOrderHistoryBinding
 import com.queueless.plus.models.Order
+import com.queueless.plus.models.Review
+import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
+import com.queueless.plus.utils.toast
+import kotlinx.coroutines.launch
 
 class OrderHistoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOrderHistoryBinding
-    private val db = FirebaseFirestore.getInstance()
     private lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,12 +31,46 @@ class OrderHistoryActivity : AppCompatActivity() {
     }
 
     private fun loadOrders() {
-        db.collection("orders")
-            .whereEqualTo("userId", session.userId)
-            .get()
-            .addOnSuccessListener { result ->
-                val list = result.toObjects(Order::class.java)
-                binding.rvOrders.adapter = OrderHistoryAdapter(list)
+        lifecycleScope.launch {
+            try {
+                val orders = FirestoreRepository.getOrdersForUser(session.userId)
+                binding.rvOrders.adapter = OrderHistoryAdapter(orders) { order ->
+                    openReviewDialog(order)
+                }
+                if (orders.isEmpty()) {
+                    toast("No past orders found.")
+                }
+            } catch (e: Exception) {
+                toast("Could not load order history: ${e.message}")
             }
+        }
+    }
+
+    private fun openReviewDialog(order: Order) {
+        // Simple dialog for review
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Leave a Review")
+            .setMessage("Rate this queue (1-5 stars) and add a comment.")
+            .setView(android.widget.EditText(this).apply { hint = "Comment" })
+            .setPositiveButton("Submit") { _, _ ->
+                // For simplicity, just add a review with rating 5
+                lifecycleScope.launch {
+                    try {
+                        val review = Review(
+                            userId = session.userId,
+                            queueId = order.queueId,
+                            rating = 5,
+                            comment = "Great service!"
+                        )
+                        FirestoreRepository.addReview(review)
+                        toast("Review submitted!")
+                    } catch (e: Exception) {
+                        toast("Failed: ${e.message}")
+                    }
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .create()
+        dialog.show()
     }
 }

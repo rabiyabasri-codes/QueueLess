@@ -2,11 +2,14 @@ package com.queueless.plus.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.queueless.plus.R
 import com.queueless.plus.databinding.ItemQueueBinding
 import com.queueless.plus.models.Queue
+import com.queueless.plus.utils.formatWaitTime
 
 class QueueAdapter(
     private val onClick: (Queue) -> Unit
@@ -21,6 +24,10 @@ class QueueAdapter(
 
     override fun onBindViewHolder(holder: QueueViewHolder, position: Int) {
         holder.bind(getItem(position))
+        // Add fade-in animation
+        holder.itemView.startAnimation(
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.fade_in)
+        )
     }
 
     inner class QueueViewHolder(
@@ -34,6 +41,8 @@ class QueueAdapter(
             binding.tvLocation.text     = queue.location
             binding.tvServiceTime.text  = "~${queue.avgServiceTime} min/person"
             binding.tvCount.text        = "${queue.currentCount} waiting"
+            val estimatedWait = queue.currentCount * queue.avgServiceTime
+            binding.tvEstimatedWait.text = "Est. wait: ${estimatedWait.formatWaitTime()}"
             binding.root.setOnClickListener { onClick(queue) }
         }
     }

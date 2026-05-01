@@ -4,6 +4,8 @@ package com.queueless.plus.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +26,12 @@ public final class ActivityProfileBinding implements ViewBinding {
   private final CoordinatorLayout rootView;
 
   @NonNull
+  public final MaterialButton btnChangeAvatar;
+
+  @NonNull
+  public final MaterialButton btnOpenChat;
+
+  @NonNull
   public final MaterialButton btnOpenFavoritesRecent;
 
   @NonNull
@@ -36,6 +44,12 @@ public final class ActivityProfileBinding implements ViewBinding {
   public final TextInputEditText etName;
 
   @NonNull
+  public final ImageView ivAvatar;
+
+  @NonNull
+  public final Spinner spinnerLanguage;
+
+  @NonNull
   public final SwitchMaterial switchDarkMode;
 
   @NonNull
@@ -45,21 +59,32 @@ public final class ActivityProfileBinding implements ViewBinding {
   public final TextView tvEmail;
 
   @NonNull
+  public final TextView tvPoints;
+
+  @NonNull
   public final TextView tvRole;
 
   private ActivityProfileBinding(@NonNull CoordinatorLayout rootView,
+      @NonNull MaterialButton btnChangeAvatar, @NonNull MaterialButton btnOpenChat,
       @NonNull MaterialButton btnOpenFavoritesRecent,
       @NonNull MaterialButton btnOpenNotificationCenter, @NonNull MaterialButton btnSaveProfile,
-      @NonNull TextInputEditText etName, @NonNull SwitchMaterial switchDarkMode,
-      @NonNull Toolbar toolbar, @NonNull TextView tvEmail, @NonNull TextView tvRole) {
+      @NonNull TextInputEditText etName, @NonNull ImageView ivAvatar,
+      @NonNull Spinner spinnerLanguage, @NonNull SwitchMaterial switchDarkMode,
+      @NonNull Toolbar toolbar, @NonNull TextView tvEmail, @NonNull TextView tvPoints,
+      @NonNull TextView tvRole) {
     this.rootView = rootView;
+    this.btnChangeAvatar = btnChangeAvatar;
+    this.btnOpenChat = btnOpenChat;
     this.btnOpenFavoritesRecent = btnOpenFavoritesRecent;
     this.btnOpenNotificationCenter = btnOpenNotificationCenter;
     this.btnSaveProfile = btnSaveProfile;
     this.etName = etName;
+    this.ivAvatar = ivAvatar;
+    this.spinnerLanguage = spinnerLanguage;
     this.switchDarkMode = switchDarkMode;
     this.toolbar = toolbar;
     this.tvEmail = tvEmail;
+    this.tvPoints = tvPoints;
     this.tvRole = tvRole;
   }
 
@@ -90,6 +115,18 @@ public final class ActivityProfileBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnChangeAvatar;
+      MaterialButton btnChangeAvatar = ViewBindings.findChildViewById(rootView, id);
+      if (btnChangeAvatar == null) {
+        break missingId;
+      }
+
+      id = R.id.btnOpenChat;
+      MaterialButton btnOpenChat = ViewBindings.findChildViewById(rootView, id);
+      if (btnOpenChat == null) {
+        break missingId;
+      }
+
       id = R.id.btnOpenFavoritesRecent;
       MaterialButton btnOpenFavoritesRecent = ViewBindings.findChildViewById(rootView, id);
       if (btnOpenFavoritesRecent == null) {
@@ -114,6 +151,18 @@ public final class ActivityProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.ivAvatar;
+      ImageView ivAvatar = ViewBindings.findChildViewById(rootView, id);
+      if (ivAvatar == null) {
+        break missingId;
+      }
+
+      id = R.id.spinnerLanguage;
+      Spinner spinnerLanguage = ViewBindings.findChildViewById(rootView, id);
+      if (spinnerLanguage == null) {
+        break missingId;
+      }
+
       id = R.id.switchDarkMode;
       SwitchMaterial switchDarkMode = ViewBindings.findChildViewById(rootView, id);
       if (switchDarkMode == null) {
@@ -132,15 +181,21 @@ public final class ActivityProfileBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tvPoints;
+      TextView tvPoints = ViewBindings.findChildViewById(rootView, id);
+      if (tvPoints == null) {
+        break missingId;
+      }
+
       id = R.id.tvRole;
       TextView tvRole = ViewBindings.findChildViewById(rootView, id);
       if (tvRole == null) {
         break missingId;
       }
 
-      return new ActivityProfileBinding((CoordinatorLayout) rootView, btnOpenFavoritesRecent,
-          btnOpenNotificationCenter, btnSaveProfile, etName, switchDarkMode, toolbar, tvEmail,
-          tvRole);
+      return new ActivityProfileBinding((CoordinatorLayout) rootView, btnChangeAvatar, btnOpenChat,
+          btnOpenFavoritesRecent, btnOpenNotificationCenter, btnSaveProfile, etName, ivAvatar,
+          spinnerLanguage, switchDarkMode, toolbar, tvEmail, tvPoints, tvRole);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

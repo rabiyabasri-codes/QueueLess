@@ -58,34 +58,18 @@ class LoginActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 // 🔥 1. Firebase login
-                val firebaseUser = com.google.firebase.auth.FirebaseAuth
-                    .getInstance()
-                    .signInWithEmailAndPassword(email, password)
-                    .await()
-                    .user ?: throw Exception("Login failed")
-
+                val firebaseUser = AuthManager.login(email, password)
                 val uid = firebaseUser.uid
 
-                // 🔥 2. Fetch user directly from Firestore
-                val doc = com.google.firebase.firestore.FirebaseFirestore
-                    .getInstance()
-                    .collection("users")
-                    .document(uid)
-                    .get()
-                    .await()
-
-                if (!doc.exists()) {
-                    toast("User profile not found. Please register again.")
-                    return@launch
-                }
-
-                val name = doc.getString("name") ?: ""
-                val role = doc.getString("role") ?: "user"
+                // 🔥 2. Fetch user profile from Firestore
+                val user = FirestoreRepository.getUser(uid)
+                    ?: throw Exception("User profile not found. Please register again.")
 
                 // 🔥 3. Save session
                 session.userId = uid
-                session.userName = name
-                session.userRole = role
+                session.userName = user.name
+                session.userRole = user.role
+                session.fcmToken = user.fcmToken
 
                 // ✅ SUCCESS
                 toast("Login successful 🎉")

@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.firestore.FirebaseFirestore
+import com.queueless.plus.R
 import com.queueless.plus.adapters.CartAdapter
 import com.queueless.plus.adapters.MenuAdapter
 import com.queueless.plus.databinding.ActivityOrderBinding
 import com.queueless.plus.models.CartItem
 import com.queueless.plus.models.MenuItem
+import com.queueless.plus.models.Order
 import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.toast
@@ -22,7 +23,6 @@ import kotlinx.coroutines.launch
 class OrderActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityOrderBinding
-    private val db = FirebaseFirestore.getInstance()
     private lateinit var session: SessionManager
 
     private var entryId: String = ""
@@ -179,51 +179,55 @@ class OrderActivity : AppCompatActivity() {
             "${it.name} x${it.quantity}"
         }
 
-        db.collection("queueEntries")
-            .document(entryId)
-            .update(
-                mapOf(
-                    "orderDetails" to orderText,
-                    "orderStatus" to "waiting"
-                )
+        val selectedPaymentMethod = try {
+            val radioButton = binding.paymentMethodGroup.findViewById<android.widget.RadioButton>(
+                binding.paymentMethodGroup.checkedRadioButtonId
             )
-            .addOnSuccessListener {
+            radioButton?.text?.toString().orEmpty().ifBlank { "Cash on Delivery" }
+        } catch (t: Throwable) {
+            "Cash on Delivery"
+        }
 
-                val orderMap = hashMapOf(
-                    "userId" to session.userId,
-                    "items" to orderText,
-                    "total" to total,
-                    "timestamp" to System.currentTimeMillis()
+        val detailedOrderText = "$orderText\nPayment: $selectedPaymentMethod"
+
+        lifecycleScope.launch {
+            try {
+                val order = Order(
+                    userId = session.userId,
+                    queueId = queueId,
+                    items = orderText,
+                    total = total,
+                    paymentMethod = selectedPaymentMethod,
+                    timestamp = System.currentTimeMillis()
                 )
 
-                db.collection("orders").add(orderMap)
+                val orderId = FirestoreRepository.createOrder(order)
+                FirestoreRepository.updateOrderDetails(entryId, detailedOrderText)
+                FirestoreRepository.attachOrderToEntry(entryId, orderId)
+
+                // Add loyalty points
+                FirestoreRepository.addUserPoints(session.userId, 10) // 10 points per order
+
                 session.addRecentOrder(orderText, total)
 
-                // ✅ FIXED COROUTINE CALL
-                lifecycleScope.launch {
-                    try {
-                        FirestoreRepository.pushNotification(
-                            userId = session.userId,
-                            title = "Order placed",
-                            message = "Your order for Rs. $total has been placed."
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                    }
-                }
+                FirestoreRepository.pushNotification(
+                    userId = session.userId,
+                    title = "Order placed",
+                    message = "Your order for ₹$total has been placed."
+                )
 
                 toast("Order placed ₹$total")
 
-                val intent = Intent(this, UserStatusActivity::class.java)
+                val intent = Intent(this@OrderActivity, UserStatusActivity::class.java)
                 intent.putExtra(UserStatusActivity.EXTRA_QUEUE_ID, queueId)
                 startActivity(intent)
 
                 finish()
-            }
-            .addOnFailureListener {
-                toast("Error: ${it.message}")
+            } catch (e: Exception) {
+                toast("Error: ${e.message}")
                 binding.btnPlaceOrder.isEnabled = true
             }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

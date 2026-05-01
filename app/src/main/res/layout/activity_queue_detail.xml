@@ -23,25 +23,23 @@
         android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <!-- Queue Info Card -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
+            app:cardCornerRadius="16dp"
             app:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="18dp">
 
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="14sp" />
 
@@ -52,6 +50,26 @@
                     android:layout_marginTop="6dp"
                     android:textColor="@color/colorTextSecondary"
                     android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvYourLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Your location: unknown"
+                    android:textColor="@color/colorTextSecondary"
+                    android:textSize="13sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEnableLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Enable Location"
+                    app:cornerRadius="12dp"
+                    app:icon="@drawable/ic_location"
+                    app:iconGravity="textStart"
+                    app:iconPadding="8dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -86,6 +104,15 @@
                     android:textSize="12sp" />
 
                 <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
                     android:id="@+id/tvQueueNotice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -106,7 +133,6 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
-        <!-- Join Button -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnJoinQueue"
             android:layout_width="match_parent"
@@ -116,7 +142,22 @@
             android:textSize="16sp"
             app:cornerRadius="12dp" />
 
-        <!-- People in Queue -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShowQR"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Show QR Code for Sharing" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShare"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Share Queue" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

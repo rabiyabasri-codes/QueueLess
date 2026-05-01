@@ -180,7 +180,7 @@ class ManageQueueActivity : AppCompatActivity() {
     private fun updateOrder(entry: QueueEntry, status: String) {
         lifecycleScope.launch {
             try {
-                FirestoreRepository.updateOrderStatus(entry.entryId, status)
+                FirestoreRepository.updateQueueEntryOrderStatus(entry.entryId, status)
                 toast("Order updated to ${status.uppercase()}")
             } catch (e: Exception) {
                 toast("Error: ${e.message}")

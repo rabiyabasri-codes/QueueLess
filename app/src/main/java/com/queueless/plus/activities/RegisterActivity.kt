@@ -5,10 +5,10 @@ import android.os.Bundle
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import com.queueless.plus.databinding.ActivityRegisterBinding
 import com.queueless.plus.models.User
+import com.queueless.plus.utils.AuthManager
 import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
 import com.queueless.plus.utils.hide
@@ -75,10 +75,7 @@ class RegisterActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 // 🔥 1. Create Firebase Auth user
-                val firebaseUser = FirebaseAuth.getInstance()
-                    .createUserWithEmailAndPassword(email, password)
-                    .await()
-                    .user ?: throw Exception("User creation failed")
+                val firebaseUser = AuthManager.register(email, password)
 
                 // 🔥 2. Get FCM token
                 val fcmToken = try {
@@ -97,11 +94,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
 
                 // 🔥 4. Save to Firestore
-                com.google.firebase.firestore.FirebaseFirestore.getInstance()
-                    .collection("users")
-                    .document(user.userId)
-                    .set(user)
-                    .await()
+                FirestoreRepository.saveUser(user)
 
                 // 🔥 5. Save session
                 session.userId = user.userId
