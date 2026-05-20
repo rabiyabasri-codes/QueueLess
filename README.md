@@ -1,13 +1,13 @@
 # QueueLess+ – Smart Virtual Queue Management System
 
-A full-stack Android application that eliminates physical waiting lines by allowing users to join and manage queues digitally with real-time updates.
+A full-stack Android application that eliminates physical waiting lines by allowing users to join and manage queues digitally with real-time updates, admin QR sharing, and dark mode support.
 
 ---
 
 ## Project Structure
 
 ```
-QueueLessPlus/
+.
 ├── app/
 │   ├── build.gradle
 │   ├── proguard-rules.pro
@@ -15,42 +15,69 @@ QueueLessPlus/
 │       ├── AndroidManifest.xml
 │       ├── java/com/queueless/plus/
 │       │   ├── activities/
-│       │   │   ├── SplashActivity.kt
-│       │   │   ├── LoginActivity.kt
-│       │   │   ├── RegisterActivity.kt
-│       │   │   ├── DashboardActivity.kt
-│       │   │   ├── QueueDetailActivity.kt
-│       │   │   ├── UserStatusActivity.kt
-│       │   │   ├── QRScanActivity.kt
+│       │   │   ├── AdminAnalyticsActivity.kt
+│       │   │   ├── AdminMenuActivity.kt
 │       │   │   ├── AdminPanelActivity.kt
+│       │   │   ├── ChatActivity.kt
 │       │   │   ├── CreateQueueActivity.kt
-│       │   │   └── ManageQueueActivity.kt
+│       │   │   ├── DashboardActivity.kt
+│       │   │   ├── FavoritesRecentActivity.kt
+│       │   │   ├── LoginActivity.kt
+│       │   │   ├── ManageQueueActivity.kt
+│       │   │   ├── NotificationCenterActivity.kt
+│       │   │   ├── OrderActivity.kt
+│       │   │   ├── OrderHistoryActivity.kt
+│       │   │   ├── ProfileActivity.kt
+│       │   │   ├── QRScanActivity.kt
+│       │   │   ├── QueueDetailActivity.kt
+│       │   │   ├── RegisterActivity.kt
+│       │   │   ├── SplashActivity.kt
+│       │   │   └── UserStatusActivity.kt
 │       │   ├── adapters/
-│       │   │   ├── QueueAdapter.kt
-│       │   │   ├── QueueEntryAdapter.kt
+│       │   │   ├── AdminMenuAdapter.kt
 │       │   │   ├── AdminQueueAdapter.kt
-│       │   │   └── ManageEntryAdapter.kt
+│       │   │   ├── CartAdapter.kt
+│       │   │   ├── ChatAdapter.kt
+│       │   │   ├── ManageEntryAdapter.kt
+│       │   │   ├── MenuAdapter.kt
+│       │   │   ├── NotificationAdapter.kt
+│       │   │   ├── OrderHistoryAdapter.kt
+│       │   │   ├── QueueAdapter.kt
+│       │   │   └── QueueEntryAdapter.kt
 │       │   ├── models/
-│       │   │   ├── User.kt
+│       │   │   ├── AppNotification.kt
+│       │   │   ├── CartItem.kt
+│       │   │   ├── ChatMessage.kt
+│       │   │   ├── MenuItem.kt
+│       │   │   ├── Orders.kt
 │       │   │   ├── Queue.kt
-│       │   │   └── QueueEntry.kt
+│       │   │   ├── QueueEntry.kt
+│       │   │   ├── Review.kt
+│       │   │   └── User.kt
 │       │   └── utils/
 │       │       ├── AuthManager.kt
-│       │       ├── FirestoreRepository.kt
+│       │       ├── Extensions.kt
 │       │       ├── FCMService.kt
+│       │       ├── FirestoreRepository.kt
+│       │       ├── HuggingFaceClient.kt
+│       │       ├── NotificationReceiver.kt
+│       │       ├── NotificationScheduler.kt
+│       │       ├── SecurityGuards.kt
 │       │       ├── SessionManager.kt
-│       │       └── Extensions.kt
+│       │       └── ThemeUtils.kt
 │       └── res/
-│           ├── layout/           (10 XML layouts)
-│           ├── values/           (strings, colors, themes, dimens)
-│           ├── drawable/         (icons + shapes)
-│           └── xml/              (backup & extraction rules)
+│           ├── layout/
+│           ├── values/
+│           ├── drawable/
+│           └── xml/
 ├── firestore.rules
 ├── firestore.indexes.json
 ├── firebase.json
 ├── build.gradle
 ├── settings.gradle
-└── gradle.properties
+├── gradle.properties
+├── gradlew.bat
+└── local.properties
 ```
 
 ---
@@ -66,7 +93,7 @@ QueueLessPlus/
 | Database | Firebase Cloud Firestore |
 | Push | Firebase Cloud Messaging (FCM) |
 | QR Scanning | ZXing Android Embedded |
-| Architecture | Single-Activity / MVVM-lite |
+| Architecture | Activity-based Android app with Firebase backend |
 | Async | Kotlin Coroutines + Flow |
 
 ---
@@ -199,14 +226,13 @@ Generate QR codes using any QR generator library. The `QRScanActivity` parses th
 
 ---
 
-## Optional Enhancements
+## Implemented Enhancements
 
-- [ ] Dark mode (add `themes.xml` night variant)
-- [ ] Analytics (peak hours tracking via Firebase Analytics)
-- [ ] Multi-queue support (user joins multiple queues)
-- [ ] QR code generation in admin panel
-- [ ] Cloud Function to send FCM when position ≤ 2
-- [ ] Countdown timer refinement using server timestamp
+- Dark mode toggle now available in the admin panel and persisted through user session.
+- Admin queue cards can generate QR codes for queue sharing.
+- Admin QR dialog now includes a Share button to send queue invites via text.
+- QR codes use the `queueless://join?queueId=<QUEUE_ID>` payload format.
+- Firebase-driven admin queue management and queue editing remain intact.
 
 ---
 

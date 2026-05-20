@@ -1,15 +1,23 @@
 package com.queueless.plus.activities
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.firestore.ListenerRegistration
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.common.BitMatrix
 import com.queueless.plus.adapters.AdminQueueAdapter
 import com.queueless.plus.databinding.ActivityAdminPanelBinding
 import com.queueless.plus.models.Queue
 import com.queueless.plus.utils.FirestoreRepository
 import com.queueless.plus.utils.SessionManager
+import com.queueless.plus.utils.ThemeUtils
 import com.queueless.plus.utils.hide
 import com.queueless.plus.utils.show
 import kotlinx.coroutines.Dispatchers
@@ -24,14 +32,23 @@ class AdminPanelActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAdminPanelBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
         session = SessionManager(this)
+        ThemeUtils.applyTheme(this, session)
+
+        binding = ActivityAdminPanelBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         supportActionBar?.title = "Admin Panel"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.switchDarkMode.isChecked = session.isDarkMode
+        binding.switchDarkMode.setOnCheckedChangeListener { _, checked ->
+            session.isDarkMode = checked
+            ThemeUtils.applyTheme(this, session)
+            delegate.applyDayNight()
+        }
 
         setupRecyclerView()
 
@@ -45,7 +62,8 @@ class AdminPanelActivity : AppCompatActivity() {
     private fun setupRecyclerView() {
         adapter = AdminQueueAdapter(
             onManage = { queue -> openManageQueue(queue) },
-            onDelete = { queue -> deleteQueue(queue) }
+            onDelete = { queue -> deleteQueue(queue) },
+            onGenerateQr = { queue -> showQueueQrDialog(queue) }
         )
         binding.rvAdminQueues.adapter = adapter
     }
@@ -73,18 +91,61 @@ class AdminPanelActivity : AppCompatActivity() {
     }
 
     private fun deleteQueue(queue: Queue) {
-        androidx.appcompat.app.AlertDialog.Builder(this)
+        AlertDialog.Builder(this)
             .setTitle("Delete Queue")
             .setMessage("Are you sure you want to delete '${queue.queueName}'?")
             .setPositiveButton("Delete") { _, _ ->
-
-                // ✅ FIXED coroutine usage
                 lifecycleScope.launch(Dispatchers.IO) {
                     FirestoreRepository.deleteQueue(queue.queueId)
                 }
             }
             .setNegativeButton("Cancel", null)
             .show()
+    }
+
+    private fun showQueueQrDialog(queue: Queue) {
+        val qrContent = "queueless://join?queueId=${queue.queueId}"
+        val size = 500
+
+        try {
+            val bitMatrix: BitMatrix = MultiFormatWriter().encode(qrContent, BarcodeFormat.QR_CODE, size, size)
+            val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.RGB_565)
+            for (x in 0 until size) {
+                for (y in 0 until size) {
+                    bitmap.setPixel(x, y, if (bitMatrix[x, y]) Color.BLACK else Color.WHITE)
+                }
+            }
+
+            val imageView = ImageView(this).apply {
+                setImageBitmap(bitmap)
+                setPadding(24, 24, 24, 24)
+            }
+
+            AlertDialog.Builder(this)
+                .setTitle("QR for ${queue.queueName}")
+                .setView(imageView)
+                .setPositiveButton("Close", null)
+                .setNeutralButton("Share") { _, _ ->
+                    shareQueueQr(queue, qrContent)
+                }
+                .show()
+        } catch (exception: Exception) {
+            AlertDialog.Builder(this)
+                .setTitle("QR Generation Failed")
+                .setMessage("Unable to create QR code for ${queue.queueName}.")
+                .setPositiveButton("OK", null)
+                .show()
+        }
+    }
+
+    private fun shareQueueQr(queue: Queue, qrContent: String) {
+        val shareText = "Join ${queue.queueName} on QueueLess+ using this link:\n$qrContent"
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Join ${queue.queueName}")
+            putExtra(Intent.EXTRA_TEXT, shareText)
+        }
+        startActivity(Intent.createChooser(shareIntent, "Share QR link"))
     }
 
     override fun onDestroy() {

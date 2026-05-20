@@ -10,7 +10,8 @@ import com.queueless.plus.models.Queue
 
 class AdminQueueAdapter(
     private val onManage: (Queue) -> Unit,
-    private val onDelete: (Queue) -> Unit
+    private val onDelete: (Queue) -> Unit,
+    private val onGenerateQr: (Queue) -> Unit
 ) : ListAdapter<Queue, AdminQueueAdapter.AdminQueueViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminQueueViewHolder {
@@ -42,6 +43,10 @@ class AdminQueueAdapter(
 
             binding.btnDelete.setOnClickListener {
                 onDelete(queue)
+            }
+
+            binding.btnGenerateQr.setOnClickListener {
+                onGenerateQr(queue)
             }
         }
     }
