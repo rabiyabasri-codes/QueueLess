@@ -11,7 +11,7 @@ import org.json.JSONObject
 
 object HuggingFaceClient {
     private const val API_URL = "https://api-inference.huggingface.co/models/facebook/blenderbot-400M-distill"
-    private const val API_KEY = "YOUR_HUGGING_FACE_API_KEY"
+    private const val API_KEY = "" // Set this via local.properties or environment variable
     private val client = OkHttpClient()
 
     suspend fun getAssistantResponse(prompt: String): String {

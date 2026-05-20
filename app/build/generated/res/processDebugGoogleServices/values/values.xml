@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="gcm_defaultSenderId" translatable="false">925363734545</string>
-    <string name="google_api_key" translatable="false">AIzaSyBb8t4uZmnSx1iLZtpUxhYxpUoG2BXUnpU</string>
-    <string name="google_app_id" translatable="false">1:925363734545:android:ea5f648c9f1e438ae149b0</string>
-    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBb8t4uZmnSx1iLZtpUxhYxpUoG2BXUnpU</string>
-    <string name="google_storage_bucket" translatable="false">queuelessplus.firebasestorage.app</string>
-    <string name="project_id" translatable="false">queuelessplus</string>
-</resources>
