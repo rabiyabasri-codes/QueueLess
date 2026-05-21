@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Colors — Sage Green (slightly brighter for dark bg) -->
+    <color name="colorPrimary">#6EAA8A</color>
+    <color name="colorPrimaryDark">#4E8C6F</color>
+    <color name="colorPrimaryLight">#8DC4A8</color>
+    <color name="colorAccent">#6EAA8A</color>
+
+    <!-- Text Colors (Dark Mode) -->
+    <color name="colorTextPrimary">#E8F5EF</color>
+    <color name="colorTextSecondary">#A0C4B0</color>
+    <color name="text_secondary">#A0C4B0</color>
+    <color name="colorTextHint">#5A7A68</color>
+
+    <!-- Semantic Colors -->
+    <color name="colorSuccess">#5AAD7A</color>
+    <color name="colorWarning">#E8C04A</color>
+    <color name="colorError">#E57373</color>
+    <color name="colorInfo">#6EAA8A</color>
+
+    <!-- Surface Colors (Dark Mode) -->
+    <color name="white">#E8F5EF</color>
+    <color name="background">#121A15</color>
+    <color name="colorBackground">#121A15</color>
+    <color name="colorSurface">#1C2B22</color>
+    <color name="colorDivider">#2A3D30</color>
+
+    <!-- Primary alias -->
+    <color name="primary">#6EAA8A</color>
+
+    <!-- Badge / Chip -->
+    <color name="colorBadgeBackground">#1E3828</color>
+    <color name="colorBadgeText">#8DC4A8</color>
+
+    <!-- Position Circle -->
+    <color name="colorPositionBg">#6EAA8A</color>
+</resources>

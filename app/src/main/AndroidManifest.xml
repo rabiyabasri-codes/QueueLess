@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- Android 13+ alternative that doesn't require user approval in Settings -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <application
+        android:name=".QueueLessPlusApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.QueueLessPlus"
+        tools:targetApi="31">
+
+        <!-- 🔥 MAIN ENTRY (Launcher) -->
+        <activity
+            android:name=".activities.SplashActivity"
+            android:exported="true"
+            android:noHistory="true"
+            android:theme="@style/Theme.QueueLessPlus.Splash">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 🔐 Auth -->
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:exported="false" />
+
+        <!-- 👤 User -->
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.QueueDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.UserStatusActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.QRScanActivity"
+            android:exported="false" />
+
+        <!-- 🍔 Order -->
+        <activity
+            android:name=".activities.OrderActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.OrderHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.FavoritesRecentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.NotificationCenterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.ChatbotActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- 🛠 Admin -->
+        <activity
+            android:name=".activities.AdminPanelActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.CreateQueueActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.ManageQueueActivity"
+            android:exported="false" />
+
+        <activity android:name=".activities.AdminMenuActivity" android:exported="false"/>
+        <activity android:name=".activities.AdminAnalyticsActivity" android:exported="false"/>
+        <activity android:name=".activities.AdminDashboardActivity" android:exported="false"/>
+        <activity android:name=".activities.PaymentActivity" android:exported="false"/>
+        <activity android:name=".activities.UserManagementActivity" android:exported="false"/>
+
+        <!-- 🔔 Firebase Messaging -->
+        <service
+            android:name=".utils.FCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Notification Receiver -->
+        <receiver
+            android:name=".utils.NotificationReceiver"
+            android:exported="false" />
+
+    </application>
+
+</manifest>

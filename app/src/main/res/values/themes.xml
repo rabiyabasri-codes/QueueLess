@@ -1,0 +1,91 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme — DayNight follows system setting -->
+    <style name="Theme.QueueLessPlus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+        <!-- Primary colors -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
+
+        <!-- Background & surface -->
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorSurfaceVariant">@color/colorBackground</item>
+
+        <!-- Text colors -->
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimary</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondary</item>
+        <item name="android:textColorHint">@color/colorTextHint</item>
+
+        <!-- Material -->
+        <item name="colorOnSurface">@color/colorTextPrimary</item>
+        <item name="hintTextColor">@color/colorTextHint</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimaryDark</item>
+
+        <!-- Window -->
+        <item name="android:windowBackground">@color/colorBackground</item>
+
+        <!-- Text input -->
+        <item name="textInputStyle">@style/QueueLess.TextInputLayout</item>
+
+        <!-- Button -->
+        <item name="materialButtonStyle">@style/QueueLess.Button</item>
+
+    </style>
+
+    <!-- Splash Screen theme -->
+    <style name="Theme.QueueLessPlus.Splash" parent="Theme.QueueLessPlus">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+    </style>
+
+    <!-- ActionBar overlay -->
+    <style name="Theme.QueueLessPlus.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- Popup overlay -->
+    <style name="Theme.QueueLessPlus.PopupOverlay"
+        parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Text Input — outlined, rounded, green -->
+    <style name="QueueLess.TextInputLayout"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="android:textColor">@color/colorTextPrimary</item>
+        <item name="android:textColorHint">@color/colorTextHint</item>
+        <item name="hintTextColor">@color/colorTextSecondary</item>
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="colorOnSurface">@color/colorTextPrimary</item>
+    </style>
+
+    <!-- Primary Button -->
+    <style name="QueueLess.Button" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+    </style>
+
+    <!-- Outlined Button -->
+    <style name="QueueLess.Button.Outlined"
+        parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+</resources>
