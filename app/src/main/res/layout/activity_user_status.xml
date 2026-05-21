@@ -31,7 +31,7 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- 🔔 Notification -->
+            <!--  Notification -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/tvNotifyBanner"
                 android:layout_width="match_parent"
@@ -46,13 +46,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="14dp"
-                    android:text="🔔 Almost your turn!"
+                    android:text=" Almost your turn!"
                     android:textColor="@android:color/white"
                     android:gravity="center"
                     android:textStyle="bold"/>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 📍 POSITION -->
+            <!--  POSITION -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- ⏳ WAIT + ORDER -->
+            <!-- WAIT + ORDER -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -140,13 +140,13 @@
                         android:textColor="@android:color/black"
                         android:typeface="monospace"/>
 
-                    <!-- 🍔 Order Button -->
+                    <!-- Order Button -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnOrder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14dp"
-                        android:text="Place / Edit Order 🍔"
+                        android:text="Place Order"
                         app:cornerRadius="10dp"/>
 
                     <ImageView
@@ -174,7 +174,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- 🚪 Leave -->
+            <!-- Leave -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLeaveQueue"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"

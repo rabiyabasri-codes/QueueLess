@@ -1,4 +1,4 @@
-package com.queueless.plus.activities
+﻿package com.queueless.plus.activities
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -69,20 +69,28 @@ class UserStatusActivity : AppCompatActivity() {
             val entry = currentEntry
 
             if (entry == null) {
-                toast("Still joining queue... ⏳")
+                toast("Still joining queue...")
                 return@setOnClickListener
             }
 
             val intent = Intent(this, OrderActivity::class.java)
-            intent.putExtra("ENTRY_ID", entry.entryId)
-            intent.putExtra("QUEUE_ID", queueId)
+            intent.putExtra(OrderActivity.EXTRA_ENTRY_ID, entry.entryId)
+            intent.putExtra(OrderActivity.EXTRA_QUEUE_ID, queueId)
+
+            // If order already exists, open in edit mode
+            if (entry.orderId.isNotEmpty()) {
+                intent.putExtra(OrderActivity.EXTRA_IS_EDIT_MODE, true)
+                intent.putExtra(OrderActivity.EXTRA_ORDER_ID, entry.orderId)
+                intent.putExtra("EXISTING_ITEMS", entry.orderDetails)
+            }
+
             startActivity(intent)
         }
     }
 
     private fun attachListeners(queueId: String) {
 
-        // 🔥 Listen to specific entry
+        // Listen to specific entry
         if (entryId.isNotEmpty()) {
             entryListener = FirestoreRepository.listenToEntry(entryId) { entry ->
                 handleEntryUpdate(entry)
@@ -96,7 +104,7 @@ class UserStatusActivity : AppCompatActivity() {
             }
         }
 
-        // 🔥 Listen to full queue
+        // Listen to full queue
         entriesListener = FirestoreRepository.listenToQueueEntries(queueId) { entries ->
 
             val position = entries.indexOfFirst {
@@ -114,11 +122,11 @@ class UserStatusActivity : AppCompatActivity() {
 
             startCountdown(waitMinutes)
 
-            // 🔔 Notify when near
+            // Notify when near
             if (position <= 2 && currentEntry?.notified == false) {
 
                 binding.tvNotifyBanner.show()
-                binding.tvBannerText.text = "🔔 Almost your turn!"
+                binding.tvBannerText.text = " Almost your turn!"
 
                 currentEntry?.entryId?.let { id ->
                     lifecycleScope.launch(Dispatchers.IO) {
@@ -152,7 +160,7 @@ class UserStatusActivity : AppCompatActivity() {
         }
     }
 
-    // 🔥 HANDLE ENTRY UPDATE + QR
+    // HANDLE ENTRY UPDATE + QR
     private fun handleEntryUpdate(entry: QueueEntry?) {
 
         currentEntry = entry
@@ -164,24 +172,36 @@ class UserStatusActivity : AppCompatActivity() {
             return
         }
 
-        // 🍔 Order
+        // Order details
         binding.tvOrder.text =
             "Order: ${if (entry.orderDetails.isEmpty()) "Not placed" else entry.orderDetails}"
 
-        // 📦 Status
-        binding.tvOrderStatus.text =
-            "Status: ${entry.orderStatus.uppercase()}"
+        // Status
+        binding.tvOrderStatus.text = "Status: ${entry.orderStatus.uppercase()}"
 
-        // 🔳 Generate QR
+        // Update button text based on whether order exists
+        binding.btnOrder.text = if (entry.orderId.isNotEmpty() || entry.orderDetails.isNotEmpty())
+            "Update Order" else "Place Order"
+
+        // Generate QR for user's ticket
         generateQR(entry.entryId)
 
-        // 🔔 Ready alert
+        // ORDER COMPLETED BANNER
+        if (entry.orderStatus == QueueEntry.ORDER_COMPLETED) {
+            binding.tvNotifyBanner.show()
+            binding.tvBannerText.text = " Order Completed & Received!"
+            binding.tvBannerText.setTextColor(android.graphics.Color.WHITE)
+            (binding.tvNotifyBanner as? com.google.android.material.card.MaterialCardView)
+                ?.setCardBackgroundColor(android.graphics.Color.parseColor("#388E3C"))
+        }
+
+        // Ready alert
         if (entry.orderStatus == QueueEntry.ORDER_READY) {
-            toast("Your order is ready! 🍔")
+            toast("Your order is ready!")
         }
     }
 
-    // 🔥 QR CODE GENERATOR
+    // QR CODE GENERATOR
     private fun generateQR(entryId: String) {
         try {
             val encoder = BarcodeEncoder()
@@ -199,8 +219,12 @@ class UserStatusActivity : AppCompatActivity() {
     }
 
     private fun startCountdown(waitMinutes: Int) {
-
         countdownTimer?.cancel()
+
+        if (waitMinutes <= 0) {
+            binding.tvCountdown.text = "Ready now!"
+            return
+        }
 
         val totalMs = waitMinutes * 60 * 1000L
 

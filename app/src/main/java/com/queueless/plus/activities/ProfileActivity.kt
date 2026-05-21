@@ -41,8 +41,10 @@ class ProfileActivity : AppCompatActivity() {
         loadUserProfile()
 
         binding.switchDarkMode.setOnCheckedChangeListener { _, checked ->
-            session.isDarkMode = checked
-            recreate()
+            if (session.isDarkMode != checked) {
+                session.isDarkMode = checked
+                recreate()
+            }
         }
 
         binding.btnSaveProfile.setOnClickListener { saveProfile() }
@@ -86,7 +88,9 @@ class ProfileActivity : AppCompatActivity() {
                 binding.switchDarkMode.isChecked = session.isDarkMode
                 binding.spinnerLanguage.setSelection(if (getCurrentLanguage() == "hi") 1 else 0)
             } catch (e: Exception) {
-                toast("Failed to load profile: ${e.message}")
+                if (e !is kotlinx.coroutines.CancellationException) {
+                    toast("Failed to load profile: ${e.message}")
+                }
             }
         }
     }
@@ -120,7 +124,9 @@ class ProfileActivity : AppCompatActivity() {
                     .into(binding.ivAvatar)
                 toast("Avatar updated")
             } catch (e: Exception) {
-                toast("Failed to upload avatar: ${e.message}")
+                if (e !is kotlinx.coroutines.CancellationException) {
+                    toast("Failed to upload avatar: ${e.message}")
+                }
             }
         }
     }
@@ -137,7 +143,9 @@ class ProfileActivity : AppCompatActivity() {
                 session.userName = updatedName
                 toast("Profile updated")
             } catch (e: Exception) {
-                toast("Failed to update profile: ${e.message}")
+                if (e !is kotlinx.coroutines.CancellationException) {
+                    toast("Failed to update profile: ${e.message}")
+                }
             }
         }
     }
@@ -147,6 +155,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun setLocale(language: String) {
+        if (getCurrentLanguage() == language) return
         val locale = Locale(language)
         Locale.setDefault(locale)
         val config = Configuration(resources.configuration)

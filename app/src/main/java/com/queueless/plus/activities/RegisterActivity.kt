@@ -1,4 +1,4 @@
-package com.queueless.plus.activities
+﻿package com.queueless.plus.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -41,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
         val confirm  = binding.etConfirmPassword.text.toString()
 
-        // ✅ VALIDATION
+        // VALIDATION
         when {
             name.isEmpty() -> {
                 binding.etName.error = "Name is required"
@@ -74,17 +74,17 @@ class RegisterActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // 🔥 1. Create Firebase Auth user
+                // 1. Create Firebase Auth user
                 val firebaseUser = AuthManager.register(email, password)
 
-                // 🔥 2. Get FCM token
+                // 2. Get FCM token
                 val fcmToken = try {
                     FirebaseMessaging.getInstance().token.await()
                 } catch (e: Exception) {
                     ""
                 }
 
-                // 🔥 3. Create user object
+                // 3. Create user object — ALL new registrations default to 'user'
                 val user = User(
                     userId = firebaseUser.uid,
                     name = name,
@@ -93,19 +93,20 @@ class RegisterActivity : AppCompatActivity() {
                     fcmToken = fcmToken
                 )
 
-                // 🔥 4. Save to Firestore
+                // 4. Save to Firestore
                 FirestoreRepository.saveUser(user)
 
-                // 🔥 5. Save session
+                // 5. Save session
                 session.userId = user.userId
                 session.userName = user.name
                 session.userRole = user.role
                 session.fcmToken = fcmToken
 
-                // ✅ SUCCESS
-                toast("Account created successfully 🎉")
+                // SUCCESS — new users are always 'user' role
+                toast("Account created successfully")
 
-                startActivity(Intent(this@RegisterActivity, DashboardActivity::class.java))
+                val dest = if (session.isAdmin) AdminDashboardActivity::class.java else DashboardActivity::class.java
+                startActivity(Intent(this@RegisterActivity, dest))
                 finishAffinity()
 
             } catch (e: Exception) {

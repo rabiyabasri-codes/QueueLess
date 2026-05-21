@@ -1,4 +1,4 @@
-package com.queueless.plus.activities
+﻿package com.queueless.plus.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -51,7 +51,7 @@ class ManageQueueActivity : AppCompatActivity() {
         setupControls(queueId)
     }
 
-    // 🔥 Load queue details
+    // Load queue details
     private fun loadQueue(queueId: String) {
         lifecycleScope.launch {
             try {
@@ -70,19 +70,20 @@ class ManageQueueActivity : AppCompatActivity() {
         binding.etBroadcast.setText(q.broadcastMessage)
     }
 
-    // 🔥 Setup RecyclerView
+    // Setup RecyclerView
     private fun setupRecyclerView() {
         adapter = ManageEntryAdapter(
             onServed = { entry -> markServed(entry) },
             onRemove = { entry -> removeEntry(entry) },
             onPreparing = { entry -> updateOrder(entry, QueueEntry.ORDER_PREPARING) },
-            onReady = { entry -> updateOrder(entry, QueueEntry.ORDER_READY) }
+            onReady = { entry -> updateOrder(entry, QueueEntry.ORDER_READY) },
+            onCompleted = { entry -> markOrderCompleted(entry) }
         )
 
         binding.rvEntries.adapter = adapter
     }
 
-    // 🔥 Listen to queue entries (REAL-TIME)
+    // Listen to queue entries (REAL-TIME)
     private fun attachEntriesListener(queueId: String) {
         binding.progressBar.show()
 
@@ -176,7 +177,7 @@ class ManageQueueActivity : AppCompatActivity() {
         }
     }
 
-    // 🔥 Update order status (Preparing / Ready)
+    // Update order status (Preparing / Ready)
     private fun updateOrder(entry: QueueEntry, status: String) {
         lifecycleScope.launch {
             try {
@@ -188,7 +189,25 @@ class ManageQueueActivity : AppCompatActivity() {
         }
     }
 
-    // 🔥 Mark user served
+    // 🟢 Mark order Completed & Received
+    private fun markOrderCompleted(entry: QueueEntry) {
+        lifecycleScope.launch {
+            try {
+                FirestoreRepository.updateQueueEntryOrderStatus(entry.entryId, QueueEntry.ORDER_COMPLETED)
+                // Push notification to user
+                FirestoreRepository.pushNotification(
+                    userId = entry.userId,
+                    title = "Order Completed",
+                    message = "Your order has been completed and received! Thank you."
+                )
+                toast("${entry.userName}'s order marked Completed")
+            } catch (e: Exception) {
+                toast("Error: ${e.message}")
+            }
+        }
+    }
+
+    // Mark user served
     private fun markServed(entry: QueueEntry) {
         lifecycleScope.launch {
             try {
@@ -203,7 +222,7 @@ class ManageQueueActivity : AppCompatActivity() {
         }
     }
 
-    // 🔥 Remove user
+    // Remove user
     private fun removeEntry(entry: QueueEntry) {
         androidx.appcompat.app.AlertDialog.Builder(this)
             .setTitle("Remove from Queue")

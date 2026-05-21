@@ -1,4 +1,4 @@
-package com.queueless.plus.adapters
+﻿package com.queueless.plus.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -33,7 +33,7 @@ class AdminQueueAdapter(
 
             // 🟢 Basic Info
             binding.tvQueueName.text = queue.queueName
-            binding.tvLocation.text = "📍 ${queue.location}"
+            binding.tvLocation.text = " ${queue.location}"
             binding.tvServiceTime.text = "⏱ ${queue.avgServiceTime} min/person"
 
             // 🟢 Buttons

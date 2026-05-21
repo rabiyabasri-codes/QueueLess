@@ -1,4 +1,4 @@
-package com.queueless.plus.adapters
+﻿package com.queueless.plus.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -33,7 +33,7 @@ class CartAdapter(
             val currentPos = holder.adapterPosition
             if (currentPos != RecyclerView.NO_POSITION) {
                 items[currentPos].quantity++
-                notifyDataSetChanged()   // 🔥 SAFE FIX
+                notifyDataSetChanged()   // SAFE FIX
                 onUpdate()
             }
         }
@@ -43,7 +43,7 @@ class CartAdapter(
             if (currentPos != RecyclerView.NO_POSITION) {
                 if (items[currentPos].quantity > 1) {
                     items[currentPos].quantity--
-                    notifyDataSetChanged()   // 🔥 SAFE FIX
+                    notifyDataSetChanged()   // SAFE FIX
                     onUpdate()
                 }
             }

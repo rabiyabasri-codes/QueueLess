@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Base application theme -->
+    <!-- Base application theme — DayNight follows system setting -->
     <style name="Theme.QueueLessPlus" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
         <!-- Primary colors -->
@@ -8,14 +8,14 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/white</item>
 
-        <item name="colorSecondary">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/colorPrimaryLight</item>
 
         <!-- Background & surface -->
         <item name="android:colorBackground">@color/colorBackground</item>
         <item name="colorSurface">@color/colorSurface</item>
-        <item name="colorSurfaceVariant">#EDE7F6</item>
+        <item name="colorSurfaceVariant">@color/colorBackground</item>
 
         <!-- Text colors -->
         <item name="android:textColor">@color/colorTextPrimary</item>
@@ -23,9 +23,9 @@
         <item name="android:textColorSecondary">@color/colorTextSecondary</item>
         <item name="android:textColorHint">@color/colorTextHint</item>
 
-        <!-- Material fix -->
+        <!-- Material -->
         <item name="colorOnSurface">@color/colorTextPrimary</item>
-        <item name="hintTextColor">#888888</item>
+        <item name="hintTextColor">@color/colorTextHint</item>
 
         <!-- Status bar -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/colorPrimaryDark</item>
@@ -33,8 +33,11 @@
         <!-- Window -->
         <item name="android:windowBackground">@color/colorBackground</item>
 
-        <!-- 🔥 IMPORTANT: Use custom TextInput style -->
+        <!-- Text input -->
         <item name="textInputStyle">@style/QueueLess.TextInputLayout</item>
+
+        <!-- Button -->
+        <item name="materialButtonStyle">@style/QueueLess.Button</item>
 
     </style>
 
@@ -45,49 +48,44 @@
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 
-    <!-- ActionBar theme -->
+    <!-- ActionBar overlay -->
     <style name="Theme.QueueLessPlus.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <!-- Popup theme -->
+    <!-- Popup overlay -->
     <style name="Theme.QueueLessPlus.PopupOverlay"
         parent="ThemeOverlay.AppCompat.Light" />
 
-    <!-- 🔥 TEXT INPUT FIX (VERY IMPORTANT) -->
+    <!-- Text Input — outlined, rounded, green -->
     <style name="QueueLess.TextInputLayout"
         parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <!-- Corners -->
-        <item name="boxCornerRadiusTopStart">12dp</item>
-        <item name="boxCornerRadiusTopEnd">12dp</item>
-        <item name="boxCornerRadiusBottomStart">12dp</item>
-        <item name="boxCornerRadiusBottomEnd">12dp</item>
-
-        <!-- 🔥 TEXT VISIBILITY FIX -->
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
         <item name="android:textColor">@color/colorTextPrimary</item>
-        <item name="android:textColorHint">#888888</item>
-        <item name="hintTextColor">#888888</item>
-
-        <!-- Border color -->
+        <item name="android:textColorHint">@color/colorTextHint</item>
+        <item name="hintTextColor">@color/colorTextSecondary</item>
         <item name="boxStrokeColor">@color/colorPrimary</item>
-
-        <!-- Material text fix -->
         <item name="colorOnSurface">@color/colorTextPrimary</item>
-
     </style>
 
-    <!-- Buttons -->
+    <!-- Primary Button -->
     <style name="QueueLess.Button" parent="Widget.MaterialComponents.Button">
-        <item name="cornerRadius">12dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:letterSpacing">0.02</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.04</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
     </style>
 
     <!-- Outlined Button -->
     <style name="QueueLess.Button.Outlined"
         parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="cornerRadius">12dp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="strokeColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

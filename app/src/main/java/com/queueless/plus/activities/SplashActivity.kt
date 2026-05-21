@@ -26,10 +26,10 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateNext() {
-        val destination = if (AuthManager.isLoggedIn) {
-            DashboardActivity::class.java
-        } else {
-            LoginActivity::class.java
+        val destination = when {
+            !AuthManager.isLoggedIn            -> LoginActivity::class.java
+            SessionManager(this).isAdmin       -> AdminDashboardActivity::class.java
+            else                               -> DashboardActivity::class.java
         }
         startActivity(Intent(this, destination))
         finish()

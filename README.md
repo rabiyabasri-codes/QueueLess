@@ -1,241 +1,190 @@
-# QueueLess+ – Smart Virtual Queue Management System
+# QueueLess+ — Smart Virtual Queue Management
 
-A full-stack Android application that eliminates physical waiting lines by allowing users to join and manage queues digitally with real-time updates, admin QR sharing, and dark mode support.
+An Android app that eliminates physical waiting lines. Users join queues digitally and track their position in real-time. Admins manage queues, orders, and users from a dedicated dashboard.
 
 ---
 
-## Project Structure
+## How to Make It Work (Quick Start)
 
+### Step 1 — Firebase Setup (Required)
+
+The app runs entirely on Firebase. You must set this up first.
+
+1. Go to [console.firebase.google.com](https://console.firebase.google.com)
+2. Click **Add project** → name it `QueueLessPlus`
+3. Click the **Android icon** to add an Android app
+4. Enter package name: `com.queueless.plus`
+5. Click **Register app**
+6. Download `google-services.json`
+7. Copy it into the `app/` folder (replace the existing one)
+
+> **Without this file the app will not build or run.**
+
+---
+
+### Step 2 — Enable Firebase Services
+
+In the Firebase Console, enable these three services:
+
+| Service | Where | Setting |
+|---|---|---|
+| Authentication | Build → Authentication → Sign-in method | Enable **Email/Password** |
+| Firestore | Build → Firestore Database | Create database → **Production mode** |
+| Cloud Messaging | Build → Cloud Messaging | Enabled by default |
+
+---
+
+### Step 3 — Build the APK
+
+Open **PowerShell** inside the project folder and run:
+
+**Release APK** (for sharing with others):
+```powershell
+$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"; $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"; .\gradlew assembleRelease
 ```
-.
-├── app/
-│   ├── build.gradle
-│   ├── proguard-rules.pro
-│   └── src/main/
-│       ├── AndroidManifest.xml
-│       ├── java/com/queueless/plus/
-│       │   ├── activities/
-│       │   │   ├── AdminAnalyticsActivity.kt
-│       │   │   ├── AdminMenuActivity.kt
-│       │   │   ├── AdminPanelActivity.kt
-│       │   │   ├── ChatActivity.kt
-│       │   │   ├── CreateQueueActivity.kt
-│       │   │   ├── DashboardActivity.kt
-│       │   │   ├── FavoritesRecentActivity.kt
-│       │   │   ├── LoginActivity.kt
-│       │   │   ├── ManageQueueActivity.kt
-│       │   │   ├── NotificationCenterActivity.kt
-│       │   │   ├── OrderActivity.kt
-│       │   │   ├── OrderHistoryActivity.kt
-│       │   │   ├── ProfileActivity.kt
-│       │   │   ├── QRScanActivity.kt
-│       │   │   ├── QueueDetailActivity.kt
-│       │   │   ├── RegisterActivity.kt
-│       │   │   ├── SplashActivity.kt
-│       │   │   └── UserStatusActivity.kt
-│       │   ├── adapters/
-│       │   │   ├── AdminMenuAdapter.kt
-│       │   │   ├── AdminQueueAdapter.kt
-│       │   │   ├── CartAdapter.kt
-│       │   │   ├── ChatAdapter.kt
-│       │   │   ├── ManageEntryAdapter.kt
-│       │   │   ├── MenuAdapter.kt
-│       │   │   ├── NotificationAdapter.kt
-│       │   │   ├── OrderHistoryAdapter.kt
-│       │   │   ├── QueueAdapter.kt
-│       │   │   └── QueueEntryAdapter.kt
-│       │   ├── models/
-│       │   │   ├── AppNotification.kt
-│       │   │   ├── CartItem.kt
-│       │   │   ├── ChatMessage.kt
-│       │   │   ├── MenuItem.kt
-│       │   │   ├── Orders.kt
-│       │   │   ├── Queue.kt
-│       │   │   ├── QueueEntry.kt
-│       │   │   ├── Review.kt
-│       │   │   └── User.kt
-│       │   └── utils/
-│       │       ├── AuthManager.kt
-│       │       ├── Extensions.kt
-│       │       ├── FCMService.kt
-│       │       ├── FirestoreRepository.kt
-│       │       ├── HuggingFaceClient.kt
-│       │       ├── NotificationReceiver.kt
-│       │       ├── NotificationScheduler.kt
-│       │       ├── SecurityGuards.kt
-│       │       ├── SessionManager.kt
-│       │       └── ThemeUtils.kt
-│       └── res/
-│           ├── layout/
-│           ├── values/
-│           ├── drawable/
-│           └── xml/
-├── firestore.rules
-├── firestore.indexes.json
-├── firebase.json
-├── build.gradle
-├── settings.gradle
-├── gradle.properties
-├── gradlew.bat
-└── local.properties
+
+**Debug APK** (for testing on your own device):
+```powershell
+$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"; $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"; .\gradlew assembleDebug
+```
+
+**APK output locations:**
+```
+app\build\outputs\apk\release\app-release.apk   ← share this
+app\build\outputs\apk\debug\app-debug.apk        ← for testing
 ```
 
 ---
 
-## Technologies
+### Step 4 — Install on a Phone
+
+1. Transfer the APK to the phone (USB, WhatsApp, Google Drive, etc.)
+2. On the phone: **Settings → Security → Install unknown apps → Allow**
+3. Tap the APK to install
+4. Works on **Android 7.0+**
+
+---
+
+### Step 5 — Create the First Admin
+
+Every user who registers gets the `user` role by default. To make someone an admin:
+
+1. Open [Firebase Console](https://console.firebase.google.com) → **Firestore Database**
+2. Browse to **users** collection → find the user document
+3. Change the `role` field from `"user"` to `"admin"`
+4. Log out and log back in — the app will now show the **Admin Dashboard**
+
+> Alternatively, the **Admin Dashboard** has a "Manage Users" screen where existing admins can promote other users to admin directly from the app.
+
+---
+
+### Step 6 — Set Up Queues (Admin Only)
+
+Once logged in as admin:
+
+1. Go to **Admin Dashboard → Admin Panel**
+2. Tap the **+** button to create a queue
+3. Fill in: Queue Name, Description, Location, Average Service Time
+4. Tap **Create**
+5. The queue is now live and visible to all users
+
+---
+
+## How It Works — User Flow
+
+```
+Register / Login (email + password)
+        ↓
+User Dashboard — see all active queues
+        ↓
+Tap a queue → Queue Detail page
+        ↓
+Join Queue → get a position number + QR code
+        ↓
+Place Order (optional) → select menu items + payment method
+        ↓
+View Status → see live position countdown
+        ↓
+Admin marks order complete → user sees "Completed" status
+```
+
+---
+
+## How It Works — Admin Flow
+
+```
+Login as admin → Admin Dashboard
+        ↓
+Admin Panel — create/manage queues
+        ↓
+Manage Queue — see all people waiting
+        ↓
+Mark orders: Preparing → Ready → Completed
+        ↓
+Scan QR — scan a user's QR to see their order
+        ↓
+User Management — promote users to admin
+```
+
+---
+
+## Firestore Collections
+
+| Collection | Purpose |
+|---|---|
+| `users` | User profiles and roles |
+| `queues` | Queue definitions created by admins |
+| `queueEntries` | Each user's position in a queue |
+| `orders` | Orders placed by users |
+| `menu` | Menu items managed by admin |
+| `notifications` | In-app notifications |
+
+---
+
+## Build Commands Reference
+
+| Command | What it does |
+|---|---|
+| `.\gradlew assembleRelease` | Builds signed release APK |
+| `.\gradlew assembleDebug` | Builds unsigned debug APK |
+| `.\gradlew installDebug` | Builds + installs on connected device/emulator |
+| `.\gradlew clean` | Clears build cache |
+
+> Always prefix with:
+> ```powershell
+> $env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"; $env:PATH = "$env:JAVA_HOME\bin;$env:PATH";
+> ```
+
+---
+
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
 | Language | Kotlin |
-| IDE | Android Studio |
 | UI | XML + Material Design 3 |
-| Auth | Firebase Authentication |
-| Database | Firebase Cloud Firestore |
-| Push | Firebase Cloud Messaging (FCM) |
+| Authentication | Firebase Auth (Email/Password) |
+| Database | Firebase Firestore |
+| Push Notifications | Firebase Cloud Messaging |
 | QR Scanning | ZXing Android Embedded |
-| Architecture | Activity-based Android app with Firebase backend |
-| Async | Kotlin Coroutines + Flow |
+| Async | Kotlin Coroutines |
+| Theme | DayNight (light + dark mode) |
 
 ---
 
-## Setup Instructions
+## Troubleshooting
 
-### 1. Firebase Project Setup
-
-1. Go to [Firebase Console](https://console.firebase.google.com/)
-2. Create a new project named **QueueLessPlus**
-3. Add an Android app with package name `com.queueless.plus`
-4. Download `google-services.json` and place it in the `app/` directory
-5. Enable the following services:
-   - **Authentication** → Email/Password sign-in
-   - **Firestore Database** → Start in production mode
-   - **Cloud Messaging** → No extra setup needed
-
-### 2. Deploy Firestore Rules & Indexes
-
-```bash
-# Install Firebase CLI
-npm install -g firebase-tools
-
-# Login
-firebase login
-
-# Initialize (select your project)
-firebase init firestore
-
-# Deploy rules and indexes
-firebase deploy --only firestore:rules,firestore:indexes
-```
-
-### 3. Open in Android Studio
-
-1. Open Android Studio
-2. Select **File → Open** and choose the `QueueLessPlus/` folder
-3. Let Gradle sync complete
-4. Connect a device or start an emulator (API 24+)
-5. Click **Run**
-
----
-
-## Firestore Database Structure
-
-### `users` collection
-```
-users/{userId}
-  ├── userId: String
-  ├── name: String
-  ├── email: String
-  ├── role: "user" | "admin"
-  └── fcmToken: String
-```
-
-### `queues` collection
-```
-queues/{queueId}
-  ├── queueId: String
-  ├── queueName: String
-  ├── description: String
-  ├── location: String
-  ├── avgServiceTime: Int  (minutes)
-  ├── createdBy: String    (admin userId)
-  ├── isActive: Boolean
-  └── currentCount: Int
-```
-
-### `queueEntries` collection
-```
-queueEntries/{entryId}
-  ├── entryId: String
-  ├── userId: String
-  ├── queueId: String
-  ├── userName: String
-  ├── timestamp: Timestamp
-  ├── status: "waiting" | "completed" | "left"
-  └── notified: Boolean
-```
-
----
-
-## Core Algorithms
-
-### 1. Queue Position
-```kotlin
-// Sorted by timestamp (FIFO). Position = index + 1
-val entries = getWaitingEntries(queueId)   // sorted ASC by timestamp
-val position = entries.indexOfFirst { it.userId == userId } + 1
-```
-
-### 2. Estimated Wait Time
-```kotlin
-// waitTime = usersAhead × avgServiceTime
-val usersAhead = position - 1
-val waitMinutes = usersAhead * queue.avgServiceTime
-```
-
-### 3. Notification Trigger
-```kotlin
-// Notify when position ≤ 2
-if (position <= 2 && !entry.notified) {
-    // Show banner + mark notified in Firestore
-    FirestoreRepository.markEntryNotified(entry.entryId)
-}
-```
-
----
-
-## Setting an Admin User
-
-Admins are not self-registered. After a user signs up, update their role in Firestore:
-
-```
-Firebase Console → Firestore → users → {userId} → role = "admin"
-```
-
-Alternatively, use the Firebase Admin SDK or a Cloud Function to automate role assignment.
-
----
-
-## QR Code Format
-
-QR codes encode a URL-style payload:
-```
-queueless://join?queueId=<QUEUE_ID>
-```
-
-Generate QR codes using any QR generator library. The `QRScanActivity` parses this format and navigates directly to the queue detail screen.
-
----
-
-## Implemented Enhancements
-
-- Dark mode toggle now available in the admin panel and persisted through user session.
-- Admin queue cards can generate QR codes for queue sharing.
-- Admin QR dialog now includes a Share button to send queue invites via text.
-- QR codes use the `queueless://join?queueId=<QUEUE_ID>` payload format.
-- Firebase-driven admin queue management and queue editing remain intact.
+| Problem | Fix |
+|---|---|
+| App won't build | Make sure `app/google-services.json` exists |
+| Login fails | Check Firebase Auth has Email/Password enabled |
+| No queues showing | Admin must create queues first |
+| "User profile not found" | Register again; Firestore write may have failed |
+| App crashes on order screen | Scroll only — RecyclerViews replaced with LinearLayout |
+| Dark mode not persisting | Toggle using the icon in the top toolbar |
 
 ---
 
 ## License
 
-This project is created for academic purposes. Free to use and modify.
+Created for academic purposes. Free to use and modify.

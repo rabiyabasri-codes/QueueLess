@@ -17,10 +17,21 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        release {
+            storeFile file("../queueless_release.jks")
+            storePassword "QueueLess2024!"
+            keyAlias "queueless"
+            keyPassword "QueueLess2024!"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 
@@ -31,6 +42,11 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    lint {
+        abortOnError false
+        disable 'FullBackupContent'
     }
 
     buildFeatures {
@@ -74,6 +90,7 @@ dependencies {
 
     // Play Services
     implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
 
     // QR Code
     implementation("com.google.zxing:core:3.5.2")

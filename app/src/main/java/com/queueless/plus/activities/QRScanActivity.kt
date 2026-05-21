@@ -1,11 +1,11 @@
-package com.queueless.plus.activities
+﻿package com.queueless.plus.activities
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
-import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.queueless.plus.databinding.ActivityQrScanBinding
 import com.queueless.plus.models.QueueEntry
@@ -30,23 +30,28 @@ class QRScanActivity : AppCompatActivity() {
         session = SessionManager(this)
         if (!requireAdminAccess(session)) return
 
-        setSupportActionBar(null)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        binding.btnScan.setOnClickListener {
-            startScan()
+        binding.btnScan.setOnClickListener { startScan() }
+
+        binding.btnSetPreparing.setOnClickListener {
+            updateOrderStatus(QueueEntry.ORDER_PREPARING, "Preparing 🍳")
+        }
+
+        binding.btnSetReady.setOnClickListener {
+            updateOrderStatus(QueueEntry.ORDER_READY, "Ready")
         }
 
         binding.btnMarkReady.setOnClickListener {
-            markOrderReady()
+            updateOrderStatus(QueueEntry.ORDER_COMPLETED, "Completed & Received ✔")
         }
     }
 
-    // 🔥 QR SCANNER
+    // QR SCANNER
     private val scanner = registerForActivityResult(ScanContract()) { result ->
         if (result.contents != null) {
-
             scannedEntryId = result.contents
-
             fetchUserDetails(scannedEntryId)
         } else {
             toast("Scan cancelled")
@@ -55,69 +60,86 @@ class QRScanActivity : AppCompatActivity() {
 
     private fun startScan() {
         val options = ScanOptions()
-        options.setPrompt("Scan User QR")
+        options.setPrompt("Scan User QR Code")
         options.setBeepEnabled(true)
         options.setOrientationLocked(true)
-
         scanner.launch(options)
     }
 
-    // 🔥 FETCH USER DATA
+    // FETCH RICH USER DATA
     private fun fetchUserDetails(entryId: String) {
-
         db.collection("queueEntries")
             .document(entryId)
             .get()
             .addOnSuccessListener { doc ->
-
                 if (!doc.exists()) {
-                    binding.tvResult.text = "❌ Invalid QR"
+                    toast("❌ Invalid QR — entry not found")
                     return@addOnSuccessListener
                 }
 
-                val name = doc.getString("userName") ?: "Unknown"
-                val order = doc.getString("orderDetails") ?: "No order"
-                val status = doc.getString("orderStatus") ?: "waiting"
+                val name    = doc.getString("userName") ?: "Unknown"
+                val order   = doc.getString("orderDetails") ?: "No order placed"
+                val status  = doc.getString("orderStatus") ?: QueueEntry.ORDER_WAITING
+                val payment = try {
+                    // payment stored in order details line
+                    val lines = order.lines()
+                    lines.firstOrNull { it.startsWith("Payment:") }?.removePrefix("Payment:")?.trim()
+                        ?: "Cash on Delivery"
+                } catch (e: Exception) { "Cash on Delivery" }
 
-                binding.tvResult.text =
-                    "👤 $name\n🍔 $order\n📦 Status: $status"
+                // Show order items (exclude Payment line)
+                val itemsOnly = order.lines()
+                    .filter { !it.startsWith("Payment:") }
+                    .joinToString("\n")
 
-                binding.btnMarkReady.visibility = android.view.View.VISIBLE
+                binding.tvUserName.text    = name
+                binding.tvOrderItems.text  = itemsOnly.ifBlank { "No items" }
+                binding.tvPayment.text     = payment
+                binding.tvOrderStatus.text = status.replaceFirstChar { it.uppercase() }
+                binding.cardResult.visibility = View.VISIBLE
             }
             .addOnFailureListener {
                 toast("Error: ${it.message}")
             }
     }
 
-    // 🔥 MARK ORDER READY
-    private fun markOrderReady() {
-
+    // UPDATE ORDER STATUS
+    private fun updateOrderStatus(status: String, label: String) {
         if (scannedEntryId.isEmpty()) {
-            toast("Scan first")
+            toast("Scan a QR code first")
             return
         }
 
-        db.collection("queueEntries")
-            .document(scannedEntryId)
-            .get()
-            .addOnSuccessListener { doc ->
-                val orderId = doc.getString("orderId")
-                if (orderId != null) {
-                    lifecycleScope.launch {
-                        try {
-                            FirestoreRepository.updateQueueEntryOrderStatus(scannedEntryId, QueueEntry.ORDER_READY)
-                            toast("Order marked READY ✅")
-                            binding.btnMarkReady.visibility = android.view.View.GONE
-                        } catch (e: Exception) {
-                            toast("Failed: ${e.message}")
+        lifecycleScope.launch {
+            try {
+                FirestoreRepository.updateQueueEntryOrderStatus(scannedEntryId, status)
+
+                // Push notification to user if completed
+                if (status == QueueEntry.ORDER_COMPLETED) {
+                    db.collection("queueEntries").document(scannedEntryId)
+                        .get()
+                        .addOnSuccessListener { snapshot ->
+                            val userId = snapshot.getString("userId") ?: return@addOnSuccessListener
+                            lifecycleScope.launch {
+                                FirestoreRepository.pushNotification(
+                                    userId = userId,
+                                    title = "Order Completed",
+                                    message = "Your order has been completed and received!"
+                                )
+                            }
                         }
-                    }
-                } else {
-                    toast("No order attached")
                 }
+
+                binding.tvOrderStatus.text = status.replaceFirstChar { it.uppercase() }
+                toast("Status updated to $label")
+            } catch (e: Exception) {
+                toast("Failed: ${e.message}")
             }
-            .addOnFailureListener {
-                toast("Failed: ${it.message}")
-            }
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
     }
 }

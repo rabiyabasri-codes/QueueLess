@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Brand Colors -->
-    <color name="colorPrimary">#6A1B9A</color>
-    <color name="colorPrimaryDark">#4A148C</color>
-    <color name="colorPrimaryLight">#8E24AA</color>
-    <color name="colorAccent">#FF7043</color>
+    <!-- Brand Colors — Sage Green -->
+    <color name="colorPrimary">#4E8C6F</color>
+    <color name="colorPrimaryDark">#336B52</color>
+    <color name="colorPrimaryLight">#6EAA8A</color>
+    <color name="colorAccent">#4E8C6F</color>
 
-    <!-- Text Colors -->
-    <color name="colorTextPrimary">#000000</color>
-    <color name="colorTextSecondary">#666666</color>
-    <color name="text_secondary">#666666</color>
-    <color name="colorTextHint">#BDBDBD</color>
+    <!-- Text Colors (Light Mode) -->
+    <color name="colorTextPrimary">#1A2920</color>
+    <color name="colorTextSecondary">#4A6657</color>
+    <color name="text_secondary">#4A6657</color>
+    <color name="colorTextHint">#A0B8AE</color>
 
     <!-- Semantic Colors -->
-    <color name="colorSuccess">#4CAF50</color>
-    <color name="colorWarning">#FFC107</color>
-    <color name="colorError">#F44336</color>
-    <color name="colorInfo">#2196F3</color>
+    <color name="colorSuccess">#3A7D5A</color>
+    <color name="colorWarning">#D4A017</color>
+    <color name="colorError">#C0392B</color>
+    <color name="colorInfo">#3A7D5A</color>
 
-    <!-- Surface Colors -->
+    <!-- Surface Colors (Light Mode) -->
     <color name="white">#FFFFFF</color>
-    <color name="background">#F3E5F5</color>
-    <color name="colorBackground">#F3E5F5</color>
+    <color name="background">#F0F7F3</color>
+    <color name="colorBackground">#F0F7F3</color>
     <color name="colorSurface">#FFFFFF</color>
-    <color name="colorDivider">#D1C4E9</color>
+    <color name="colorDivider">#C8DDD4</color>
 
-    <!-- Primary Colors -->
-    <color name="primary">#6A1B9A</color>
+    <!-- Primary alias -->
+    <color name="primary">#4E8C6F</color>
 
     <!-- Badge / Chip -->
-    <color name="colorBadgeBackground">#E1BEE7</color>
-    <color name="colorBadgeText">#4A148C</color>
+    <color name="colorBadgeBackground">#D4EDDF</color>
+    <color name="colorBadgeText">#2E6B4A</color>
 
     <!-- Position Circle -->
-    <color name="colorPositionBg">#7B1FA2</color>
+    <color name="colorPositionBg">#4E8C6F</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.queueless.plus.activities
+﻿package com.queueless.plus.activities
 
 import android.Manifest
 import android.app.AlertDialog
@@ -6,13 +6,18 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.os.Looper
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.firebase.Timestamp
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -90,7 +95,7 @@ class QueueDetailActivity : AppCompatActivity() {
                     lifecycleScope.launch {
                         try {
                             val avgRating = FirestoreRepository.getAverageRating(q.queueId)
-                            binding.tvRating.text = if (avgRating > 0) "⭐ ${String.format("%.1f", avgRating)}/5" else "No ratings yet"
+                            binding.tvRating.text = if (avgRating > 0) " ${String.format("%.1f", avgRating)}/5" else "No ratings yet"
                         } catch (e: Exception) {
                             binding.tvRating.text = "Rating unavailable"
                         }
@@ -178,16 +183,46 @@ class QueueDetailActivity : AppCompatActivity() {
                 .addOnSuccessListener { location ->
                     if (location != null) {
                         binding.tvYourLocation.text =
-                            "Your location: ${String.format("%.4f", location.latitude)}, ${String.format("%.4f", location.longitude)}"
+                            " ${String.format("%.4f", location.latitude)}, ${String.format("%.4f", location.longitude)}"
                     } else {
-                        toast("Unable to get location. Try again.")
+                        // lastLocation returned null — request a fresh one
+                        requestFreshLocation()
                     }
                 }
                 .addOnFailureListener {
-                    toast("Location request failed")
+                    requestFreshLocation()
                 }
         } catch (e: Exception) {
             toast("Location error: ${e.message}")
+        }
+    }
+
+    private fun requestFreshLocation() {
+        try {
+            val request = LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY, 5000L
+            ).setMaxUpdates(1).build()
+
+            val callback = object : LocationCallback() {
+                override fun onLocationResult(result: LocationResult) {
+                    val loc = result.lastLocation
+                    if (loc != null) {
+                        binding.tvYourLocation.text =
+                            " ${String.format("%.4f", loc.latitude)}, ${String.format("%.4f", loc.longitude)}"
+                    } else {
+                        toast("Still unable to get location. Check GPS settings.")
+                    }
+                    fusedLocationClient.removeLocationUpdates(this)
+                }
+            }
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.requestLocationUpdates(request, callback, Looper.getMainLooper())
+                binding.tvYourLocation.text = "📡 Getting location..."
+            }
+        } catch (e: Exception) {
+            toast("Location fetch failed: ${e.message}")
         }
     }
 
@@ -259,14 +294,14 @@ class QueueDetailActivity : AppCompatActivity() {
     }
 
     private fun openUserStatus() {
-
-        if (currentEntryId.isEmpty()) {
-            toast("Try again")
+        val safeQueueId = queue?.queueId
+        if (currentEntryId.isEmpty() || safeQueueId.isNullOrBlank()) {
+            toast("Still loading, please try again")
             return
         }
 
         val intent = Intent(this, UserStatusActivity::class.java).apply {
-            putExtra(UserStatusActivity.EXTRA_QUEUE_ID, queue?.queueId)
+            putExtra(UserStatusActivity.EXTRA_QUEUE_ID, safeQueueId)
             putExtra(UserStatusActivity.EXTRA_ENTRY_ID, currentEntryId)
         }
 

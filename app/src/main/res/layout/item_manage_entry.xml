@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="12dp">
 
-    <!-- 🔢 Position -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <TextView
         android:id="@+id/tvPosition"
         android:layout_width="40dp"
@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 👤 Username -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <TextView
         android:id="@+id/tvUserName"
         android:layout_width="0dp"
@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="@id/tvPosition"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- 🍔 Order -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <TextView
         android:id="@+id/tvOrder"
         android:layout_width="0dp"
@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvUserName"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- 📦 Status -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <TextView
         android:id="@+id/tvStatus"
         android:layout_width="0dp"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvOrder"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- 👨‍🍳 Preparing -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnPreparing"
         android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
         app:layout_constraintStart_toStartOf="@id/tvUserName"
         app:layout_constraintTop_toBottomOf="@id/tvStatus"/>
 
-    <!-- ✅ Ready -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnReady"
         android:layout_width="wrap_content"
@@ -80,7 +80,19 @@
         app:layout_constraintStart_toEndOf="@id/btnPreparing"
         app:layout_constraintTop_toTopOf="@id/btnPreparing"/>
 
-    <!-- 🟢 Served -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCompleted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done ✔"
+        android:textSize="12sp"
+        app:backgroundTint="#388E3C"
+        app:cornerRadius="6dp"
+        app:layout_constraintStart_toEndOf="@id/btnReady"
+        app:layout_constraintTop_toTopOf="@id/btnPreparing"/>
+
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnServed"
         android:layout_width="wrap_content"
@@ -88,10 +100,10 @@
         android:text="Served"
         android:textSize="12sp"
         app:cornerRadius="6dp"
-        app:layout_constraintStart_toEndOf="@id/btnReady"
+        app:layout_constraintStart_toEndOf="@id/btnCompleted"
         app:layout_constraintTop_toTopOf="@id/btnPreparing"/>
 
-    <!-- ❌ Remove -->
+     $args[0].Value -replace '[^\x00-\x7F\r\n\t ]', '' 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnRemove"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"

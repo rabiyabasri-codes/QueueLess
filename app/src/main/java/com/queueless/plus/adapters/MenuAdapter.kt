@@ -1,4 +1,4 @@
-package com.queueless.plus.adapters
+﻿package com.queueless.plus.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -27,7 +27,7 @@ class MenuAdapter(
 
         val item = items[position]
 
-        // 🍔 Name & Price
+        // Name & Price
         holder.binding.tvName.text = item.name
         holder.binding.tvPrice.text = "₹${item.price}"
 
@@ -60,7 +60,7 @@ class MenuAdapter(
 
     override fun getItemCount(): Int = items.size
 
-    // 🔥 Update list dynamically from Firebase
+    // Update list dynamically from Firebase
     fun updateData(newList: List<MenuItem>) {
         allItems = newList
         items = newList

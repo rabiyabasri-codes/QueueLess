@@ -1,4 +1,4 @@
-package com.queueless.plus.adapters
+﻿package com.queueless.plus.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,8 @@ class ManageEntryAdapter(
     private val onServed: (QueueEntry) -> Unit,
     private val onRemove: (QueueEntry) -> Unit,
     private val onPreparing: (QueueEntry) -> Unit,
-    private val onReady: (QueueEntry) -> Unit
+    private val onReady: (QueueEntry) -> Unit,
+    private val onCompleted: (QueueEntry) -> Unit
 ) : ListAdapter<QueueEntry, ManageEntryAdapter.ManageEntryViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ManageEntryViewHolder {
@@ -36,14 +37,14 @@ class ManageEntryAdapter(
             binding.tvPosition.text = "#$position"
             binding.tvUserName.text = entry.userName
 
-            // 🍔 Order Details
+            // Order Details
             val orderText = if (entry.orderDetails.isBlank()) {
                 "Not placed"
             } else entry.orderDetails
 
             binding.tvOrder.text = "Order: $orderText"
 
-            // 🔥 Order Status (formatted)
+            // Order Status (formatted)
             val statusText = entry.orderStatus.replaceFirstChar { it.uppercase() }
             binding.tvStatus.text = "Status: $statusText"
 
@@ -51,26 +52,36 @@ class ManageEntryAdapter(
             binding.btnServed.setOnClickListener { onServed(entry) }
             binding.btnRemove.setOnClickListener { onRemove(entry) }
 
-            // 🔥 Order Actions
+            // Order Actions
             binding.btnPreparing.setOnClickListener { onPreparing(entry) }
             binding.btnReady.setOnClickListener { onReady(entry) }
+            binding.btnCompleted.setOnClickListener { onCompleted(entry) }
 
-            // 🚀 SMART UI CONTROL (IMPORTANT)
+            // 🚀 SMART UI CONTROL
             when (entry.orderStatus) {
 
                 QueueEntry.ORDER_WAITING -> {
                     binding.btnPreparing.isEnabled = true
                     binding.btnReady.isEnabled = false
+                    binding.btnCompleted.isEnabled = false
                 }
 
                 QueueEntry.ORDER_PREPARING -> {
                     binding.btnPreparing.isEnabled = false
                     binding.btnReady.isEnabled = true
+                    binding.btnCompleted.isEnabled = false
                 }
 
                 QueueEntry.ORDER_READY -> {
                     binding.btnPreparing.isEnabled = false
                     binding.btnReady.isEnabled = false
+                    binding.btnCompleted.isEnabled = true
+                }
+
+                QueueEntry.ORDER_COMPLETED -> {
+                    binding.btnPreparing.isEnabled = false
+                    binding.btnReady.isEnabled = false
+                    binding.btnCompleted.isEnabled = false
                 }
             }
         }

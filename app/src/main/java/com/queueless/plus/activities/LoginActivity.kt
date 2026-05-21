@@ -2,7 +2,6 @@ package com.queueless.plus.activities
 
 import android.content.Intent
 import android.os.Bundle
-import kotlinx.coroutines.tasks.await
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.queueless.plus.databinding.ActivityLoginBinding
@@ -29,10 +28,6 @@ class LoginActivity : AppCompatActivity() {
         session = SessionManager(this)
         ThemeUtils.applyTheme(this, session)
 
-        setupClickListeners()
-    }
-
-    private fun setupClickListeners() {
         binding.btnLogin.setOnClickListener { attemptLogin() }
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -40,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun attemptLogin() {
-        val email    = binding.etEmail.text.toString().trim()
+        val email = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString()
 
         if (!email.isValidEmail()) {
@@ -57,24 +52,22 @@ class LoginActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
-                // 🔥 1. Firebase login
                 val firebaseUser = AuthManager.login(email, password)
                 val uid = firebaseUser.uid
 
-                // 🔥 2. Fetch user profile from Firestore
                 val user = FirestoreRepository.getUser(uid)
                     ?: throw Exception("User profile not found. Please register again.")
 
-                // 🔥 3. Save session
                 session.userId = uid
                 session.userName = user.name
                 session.userRole = user.role
                 session.fcmToken = user.fcmToken
 
-                // ✅ SUCCESS
-                toast("Login successful 🎉")
+                toast("Login successful")
 
-                startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+                val dest = if (session.isAdmin) AdminDashboardActivity::class.java
+                           else DashboardActivity::class.java
+                startActivity(Intent(this@LoginActivity, dest))
                 finish()
 
             } catch (e: Exception) {

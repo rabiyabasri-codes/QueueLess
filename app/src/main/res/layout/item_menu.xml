@@ -16,7 +16,7 @@
         android:orientation="horizontal"
         android:padding="12dp">
 
-        <!-- 🍔 Food Image -->
+        <!-- Food Image -->
         <ImageView
             android:id="@+id/ivFood"
             android:layout_width="80dp"
@@ -35,7 +35,7 @@
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Burger 🍔"
+                android:text="Burger"
                 android:textColor="@android:color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />

@@ -1,4 +1,4 @@
-package com.queueless.plus.activities
+﻿package com.queueless.plus.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -56,14 +56,26 @@ class AdminMenuActivity : AppCompatActivity() {
         binding.rvMenu.adapter = adapter
     }
 
+    private var menuListener: com.google.firebase.firestore.ListenerRegistration? = null
+    private var hasAutoSeeded = false
+
     private fun listenMenu() {
-        FirestoreRepository.listenToMenu {
-            currentMenu = it
-            adapter.updateData(it)
+        menuListener = FirestoreRepository.listenToMenu { items ->
+            currentMenu = items
+            adapter.updateData(items)
+
+            // Show empty state hint
+            binding.tvEmpty.visibility = if (items.isEmpty()) android.view.View.VISIBLE else android.view.View.GONE
+
+            // Auto-seed sample items the very first time the menu is empty
+            if (items.isEmpty() && !hasAutoSeeded) {
+                hasAutoSeeded = true
+                seedSampleMenu()
+            }
         }
     }
 
-    // 🔥 ADD ITEM
+    // ADD ITEM
     private fun addItem() {
 
         val name = binding.etName.text?.toString()?.trim() ?: ""
@@ -87,7 +99,7 @@ class AdminMenuActivity : AppCompatActivity() {
         }
     }
 
-    // 🔥 DELETE ITEM
+    // DELETE ITEM
     private fun deleteItem(item: MenuItem) {
         lifecycleScope.launch {
             FirestoreRepository.deleteMenuItem(item.id)
@@ -95,7 +107,7 @@ class AdminMenuActivity : AppCompatActivity() {
         }
     }
 
-    // 🔥 ONLY 4 ITEMS
+    // ONLY 4 ITEMS
     private fun seedSampleMenu() {
 
         val existingNames = currentMenu.map { it.name.trim().lowercase() }.toSet()
@@ -127,5 +139,10 @@ class AdminMenuActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressedDispatcher.onBackPressed()
         return true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        menuListener?.remove()
     }
 }

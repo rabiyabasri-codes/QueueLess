@@ -1,9 +1,8 @@
-package com.queueless.plus.utils
+﻿package com.queueless.plus.utils
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.ListenerRegistration
-import com.google.firebase.firestore.Query
 import com.google.firebase.Timestamp
 import com.queueless.plus.models.AppNotification
 import com.queueless.plus.models.ChatMessage
@@ -31,7 +30,7 @@ object FirestoreRepository {
     private val notificationsRef = db.collection("notifications")
     private val reviewsRef      = db.collection("reviews")
 
-    // 🔥 NEW COLLECTION
+    // NEW COLLECTION
     private val menuRef         = db.collection("menu")
 
     // ═════════ USER ═════════
@@ -55,6 +54,15 @@ object FirestoreRepository {
 
     suspend fun updateUserAvatar(userId: String, avatarUrl: String) {
         usersRef.document(userId).update("avatarUrl", avatarUrl).await()
+    }
+
+    suspend fun getAllUsers(): List<User> {
+        val snap = usersRef.get().await()
+        return snap.toObjects(User::class.java).sortedBy { it.name }
+    }
+
+    suspend fun updateUserRole(userId: String, newRole: String) {
+        usersRef.document(userId).update("role", newRole).await()
     }
 
     suspend fun updateUserPoints(userId: String, points: Int) {
@@ -133,14 +141,35 @@ object FirestoreRepository {
     suspend fun getOrdersForUser(userId: String): List<Order> {
         val snap = ordersRef
             .whereEqualTo("userId", userId)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
             .get()
             .await()
         return snap.toObjects(Order::class.java)
+            .sortedByDescending { it.timestamp }
     }
 
     suspend fun updateOrderStatus(orderId: String, status: String) {
         ordersRef.document(orderId).update("status", status).await()
+    }
+
+    suspend fun updateOrder(orderId: String, order: Order) {
+        ordersRef.document(orderId).set(order).await()
+    }
+
+    suspend fun getAllPendingOrders(): List<Order> {
+        val snap = ordersRef
+            .whereEqualTo("status", "Placed")
+            .get()
+            .await()
+        return snap.toObjects(Order::class.java).sortedByDescending { it.timestamp }
+    }
+
+    fun listenToAllOrders(onUpdate: (List<Order>) -> Unit): ListenerRegistration {
+        return ordersRef
+            .addSnapshotListener { snap, _ ->
+                val orders = snap?.toObjects(Order::class.java)
+                    ?.sortedByDescending { it.timestamp } ?: emptyList()
+                onUpdate(orders)
+            }
     }
 
     suspend fun attachOrderToEntry(entryId: String, orderId: String) {
@@ -175,22 +204,23 @@ object FirestoreRepository {
         val snap = queueEntriesRef
             .whereEqualTo("queueId", queueId)
             .whereEqualTo("status", QueueEntry.STATUS_WAITING)
-            .orderBy("timestamp", Query.Direction.ASCENDING)
             .get()
             .await()
+        // Sort client-side to avoid requiring a Firestore composite index
         return snap.toObjects(QueueEntry::class.java)
+            .sortedBy { it.timestamp }
     }
 
     suspend fun getStaleWaitingEntries(queueId: String, olderThanMinutes: Long): List<QueueEntry> {
         val cutoffMillis = System.currentTimeMillis() - olderThanMinutes * 60_000
-        val cutoffTime = Timestamp(cutoffMillis / 1000, ((cutoffMillis % 1000) * 1_000_000).toInt())
         val snap = queueEntriesRef
             .whereEqualTo("queueId", queueId)
             .whereEqualTo("status", QueueEntry.STATUS_WAITING)
-            .whereLessThan("timestamp", cutoffTime)
             .get()
             .await()
+        // Filter by time client-side to avoid composite index requirement
         return snap.toObjects(QueueEntry::class.java)
+            .filter { it.timestamp.toDate().time < cutoffMillis }
     }
 
     fun listenToQueueEntries(
@@ -200,9 +230,11 @@ object FirestoreRepository {
         return queueEntriesRef
             .whereEqualTo("queueId", queueId)
             .whereEqualTo("status", QueueEntry.STATUS_WAITING)
-            .orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snap, _ ->
-                snap?.let { onUpdate(it.toObjects(QueueEntry::class.java)) }
+                // Sort client-side to avoid requiring a Firestore composite index
+                val sorted = snap?.toObjects(QueueEntry::class.java)
+                    ?.sortedBy { it.timestamp } ?: emptyList()
+                onUpdate(sorted)
             }
     }
 
@@ -284,7 +316,7 @@ object FirestoreRepository {
             .await()
     }
 
-    // ═════════ MENU SYSTEM (🔥 NEW) ═════════
+    // ═════════ MENU SYSTEM ( NEW) ═════════
 
     fun listenToMenu(onResult: (List<MenuItem>) -> Unit): ListenerRegistration {
         return menuRef.addSnapshotListener { snapshot, _ ->
@@ -363,11 +395,12 @@ object FirestoreRepository {
         val snap = queueEntriesRef
             .whereEqualTo("userId", userId)
             .whereEqualTo("status", QueueEntry.STATUS_WAITING)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
-            .limit(1)
+            .limit(5)
             .get()
             .await()
-        return snap.documents.firstOrNull()?.toObject(QueueEntry::class.java)
+        // Sort client-side descending to get the latest entry
+        return snap.toObjects(QueueEntry::class.java)
+            .maxByOrNull { it.timestamp }
     }
 
     suspend fun pushNotification(userId: String, title: String, message: String) {
@@ -389,11 +422,10 @@ object FirestoreRepository {
     ): ListenerRegistration {
         return notificationsRef
             .whereEqualTo("userId", userId)
-            .orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, _ ->
                 val items = snapshot?.documents?.mapNotNull { doc ->
                     doc.toObject(AppNotification::class.java)
-                } ?: emptyList()
+                }?.sortedByDescending { it.timestamp } ?: emptyList()
                 onResult(items)
             }
     }

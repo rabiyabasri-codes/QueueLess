@@ -16,7 +16,8 @@ data class QueueEntry(
 
     // 🍔 Order system
     val orderDetails: String = "",
-    val orderStatus: String = ORDER_WAITING
+    val orderStatus: String = ORDER_WAITING,
+    val orderId: String = ""
 
 ) {
 
@@ -30,6 +31,7 @@ data class QueueEntry(
         const val ORDER_WAITING    = "waiting"
         const val ORDER_PREPARING  = "preparing"
         const val ORDER_READY      = "ready"
+        const val ORDER_COMPLETED  = "completed"
     }
 
     // 🔥 Firestore safe map
@@ -45,7 +47,8 @@ data class QueueEntry(
 
             // Order fields (always included for consistency)
             "orderDetails" to orderDetails,
-            "orderStatus" to orderStatus
+            "orderStatus" to orderStatus,
+            "orderId" to orderId
         )
     }
 }
